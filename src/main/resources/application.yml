@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: dev
+  jackson:
+    defaultPropertyInclusion: NON_NULL
+server:    
+  http:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8 

@@ -1,0 +1,28 @@
+server:
+  port: 8080
+    
+management:
+  security:
+    enabled: false
+  contextPath: /actuator  
+  
+logging.level.root: INFO 
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/code_gen?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: changeit
+    driver-class-name: com.mysql.jdbc.Driver
+    max-idle: 10
+    max-wait: 10000
+    min-idle: 5
+    initial-size: 5
+  
+  jpa:
+    showSql: true
+    hibernate:
+      ddlAuto: update
+#      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl   
+      
+      
