@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import freemarker.template.Configuration;
@@ -44,12 +45,12 @@ public class GeneratorController {
 	}
 */
 	@PostMapping(path = "/vue/{id}")
-	public Map<String, Object> onGeneratePost (@PathVariable(name = "id") String id) throws IOException, TemplateException {
+	public Map<String, Object> onGeneratePost (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type) throws IOException, TemplateException {
 		Func func = funcRepository.findOne(Long.parseLong(id));
 		if (func == null) {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 		}
-		String result = genCode(func, "list.ftl");
+		String result = genCode(func, type + ".ftl");
 		System.out.println(result);
 		return ResHelper.success(result);
 	}

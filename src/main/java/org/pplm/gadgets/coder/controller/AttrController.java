@@ -26,8 +26,18 @@ public class AttrController {
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetQuery(@RequestParam(name = "fid", required = true) String fid, Pageable pageable){
 		//return ResHelper.success(funcRepository.findAll(pageable));
-		return ResHelper.success(attrRepository.findAllByFidAndDeleteFlag(Long.parseLong(fid), 0, pageable));
+		return ResHelper.success(attrRepository.findByFidAndDeleteFlag(Long.parseLong(fid), 0, pageable));
 	}
+	
+	@GetMapping(path = "/detail")
+	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
+		Attr attr = attrRepository.findOneByIdAndDeleteFlag(Long.parseLong(id), 0);
+		if (attr != null) {
+			return ResHelper.success(attr);
+		}
+		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
+	}
+	
 	/**
 	 * {"label": "标签", "name": "label"}
 	 * {"label": "名字", "name": "name"}

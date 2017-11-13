@@ -6,7 +6,15 @@
 <#if attr.name != "id">
             <Col span="6" style="margin-bottom: -15px;">
                 <FormItem label="${attr.label}" prop="${attr.name}">
+<#if attr.type == "datetime">
+                    <DatePicker :value="queryForm.${attr.name}" format="yyyy/MM/dd" type="daterange" placement="bottom-end" placeholder="请选择${attr.label}" style="width: 200px"></DatePicker>
+<#elsif attr.type == "enum">
+                    <Select v-model="queryForm.${attr.name}" clearable placeholder="请选择${attr.name}" style="width:174px">
+                        <Option v-for="item in dict.${attr.name}" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+<#else>
                     <Input type="text" v-model="queryForm.${attr.name}"></Input>
+</#if
                 </FormItem>
             </Col>
 </#if>
@@ -60,7 +68,7 @@ export default {
             queryForm: {
 <#list attrs as attr>
 <#if attr.name != "id">
-                ${attr.name}: ''<#if attr_has_next>,</#if>
+                ${attr.name}: <#if attr.type == "datetime">[]<#else>''</#if><#if attr_has_next>,</#if>
 </#if>
 </#list>
             },
@@ -71,14 +79,12 @@ export default {
             },
             columnsList:[
 <#list attrs as attr>
-<#if attr.name != "id">
                 {
                     title: '${attr.label}',
                     key: '${attr.name}',
-                    width: 100,
+                    width: 150,
                     align: 'center'
                 },
-</#if>
 </#list>
                 {
                     title: '操作',
@@ -86,58 +92,58 @@ export default {
                     fixed: 'right',
                     width: 200,
                     render: (h, params) => {
-                          return h('div', [
-                              h('Button', {
+                        return h('div', [
+                            h('Button', {
                                 props: {
                                     type: 'primary',
-                                      icon: 'document',
-                                      size: 'small'
+                                    icon: 'document',
+                                    size: 'small'
                                 },
                                 style: {
-                                      marginRight: '5px'
+                                    marginRight: '5px'
                                 },
                                 on: {
-                                      click: () => {
-                                         let argu = { order_id: params.row.order_id }
+                                    click: () => {
+                                        let argu = { order_id: params.row.order_id }
                                            //util.openNewPage(this, 'order_info', argu);
-                                           this.$router.push({
-                                               name: 'order_info',
-                                               params: argu
-                                           })
-                                       }
-                                   }
+                                        this.$router.push({
+                                            name: 'order_info',
+                                            params: argu
+                                        })
+                                    }
+                                }
                             }, '详情'),
                             h('Button', {
                                 props: {
                                     type: 'primary',
-                                      icon: 'compose',
-                                      size: 'small'
+                                    icon: 'compose',
+                                    size: 'small'
                                 },
                                 style: {
-                                      marginRight: '5px'
+                                    marginRight: '5px'
                                 },
                                 on: {
-                                      click: () => {
-                                          this.showModalUpdate(params.row.id)
-                                       }
-                                   }
+                                    click: () => {
+                                        this.showModalUpdate(params.row.id)
+                                    }
+                                }
                             }, '编辑'),
                             h('Button', {
                                 props: {
                                     type: 'primary',
-                                      icon: 'ios-trash-outline',
-                                      size: 'small'
+                                    icon: 'ios-trash-outline',
+                                    size: 'small'
                                 },
                                 style: {
-                                      marginRight: '5px'
+                                    marginRight: '5px'
                                 },
                                 on: {
-                                      click: () => {
-                                          this.doDelete(params.row.id)
-                                       }
-                                   }
+                                    click: () => {
+                                        this.doDelete(params.row.id)
+                                    }
+                                }
                             }, '删除')
-                          ])
+                        ])
                     }
                 }
             ],
@@ -145,8 +151,23 @@ export default {
             page: {
                 total: 0,
                 size: 10,
-                current: 1,
-                num: 0
+                current: 1
+            },
+            dict: {
+<#list attrs as attr>
+<#if attr.type == "eumn">
+                ${attr.name}: [
+                    {
+                        label: '请修改字典项1',
+                        value: 0
+                    },
+                    {
+                        label: '请修改字典项2',
+                        value: 1
+                    }
+                ],
+<#/if>
+</#list>            
             }
         }
     },
@@ -165,7 +186,7 @@ export default {
         doClear () {
 <#list attrs as attr>
 <#if attr.name != "id">
-            this.queryForm.${attr.name} = ''
+            this.queryForm.${attr.name} = <#if attr.type == "datetime">[]<#else>''</#if>
 </#if>
 </#list>
             this.doQuery()
@@ -205,13 +226,13 @@ export default {
         },
         getList () {
             let _self = this
-            util.ajax.get('/${name}/list?page=' + this.page.num + '&size=' + this.page.size).then(function (res) {
+            util.ajax.get('/${name}?page=' + this.page.current + '&limit=' + this.page.size).then(function (res) {
                 if (res.status === 200) {
-                    if (res.data.code === "0") {
-                        _self.tableData = res.data.data.content
-                        _self.page.total = res.data.data.totalElements
-                        _self.page.size = res.data.data.size
-                        _self.page.current = res.data.data.number + 1
+                    if (res.data.result === 1) {
+                        _self.tableData = res.data.content.data
+                        _self.page.total = res.data.content.total
+                        _self.page.size = res.data.content.per_page
+                        _self.page.current = res.data.content.current_page
                     }
                 }
             }).catch(function (error) {
@@ -245,10 +266,8 @@ export default {
         clearPage () {
             this.page.size = 10
             this.page.current = 1
-            this.page.num = 0
         },
-        changePage (number) {
-            this.page.num = number - 1
+        changePage () {
             this.getList()
         }
     }
