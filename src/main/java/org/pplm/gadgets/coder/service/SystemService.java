@@ -14,8 +14,10 @@ public class SystemService {
 	public User login(User user) {
 		User userResult = systemRepository.findOneByUsernameAndDeleteFlag(user.getUsername(), 0);
 		if (userResult != null && userResult.getPassword().equals(user.getPassword())) {
+			userResult.setToken(user.getPassword());
 			userResult.setPassword("********");
+			return userResult;
 		}
-		return userResult;
+		return null;
 	}
 }
