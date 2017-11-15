@@ -12,7 +12,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		InterceptorRegistration interceptorRegistration = registry.addInterceptor(new AuthorizationInterceptor());
-		interceptorRegistration.excludePathPatterns("/**/system/**");
+		interceptorRegistration.excludePathPatterns("/*/system/**", "/actuator/**");
 		interceptorRegistration.addPathPatterns("/**");
 		super.addInterceptors(registry);
 	}
