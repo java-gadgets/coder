@@ -16,6 +16,7 @@ public class ResHelper {
 	public static final String MESSAGE_ERROR_PARAM = "parameter error";
 	public static final String MESSAGE_ERROR_ID = "invalid id";
 	public static final String MESSAGE_ERROR_BODY = "invalid body";
+	public static final String MESSAGE_ERROR_AUTH = "error auth";
 	
 	public static Map<String, Object> success() {
 		Map<String, Object> map = new HashMap<>();

@@ -2,6 +2,8 @@ package org.pplm.gadgets.coder.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.pplm.gadgets.coder.entity.Func;
 import org.pplm.gadgets.coder.repository.FuncRepository;
 import org.pplm.gadgets.coder.utils.ResHelper;
@@ -24,8 +26,9 @@ public class FuncController {
 	private FuncRepository funcRepository;
 	
 	@GetMapping(path = "/list")
-	public Map<String, Object> onGetQuery(Pageable pageable){
+	public Map<String, Object> onGetQuery(HttpServletRequest request, Pageable pageable){
 		//return ResHelper.success(funcRepository.findAll(pageable));
+		System.out.println();
 		return ResHelper.success(funcRepository.findAllByDeleteFlag(0, pageable));
 	}
 	/**

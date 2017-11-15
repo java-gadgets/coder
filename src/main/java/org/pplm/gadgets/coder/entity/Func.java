@@ -4,12 +4,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity(name = "func")
-@Inheritance
+@Entity
+@Table(name = "func")
 public class Func extends Base {
 
 	private String label;
@@ -18,6 +18,10 @@ public class Func extends Base {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="fid")
 	private List<Attr> attrs;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="fid")
+	private List<Opt> opts;
 
 	public Func() {
 		super();
@@ -45,6 +49,14 @@ public class Func extends Base {
 
 	public void setAttrs(List<Attr> attrs) {
 		this.attrs = attrs;
+	}
+
+	public List<Opt> getOpts() {
+		return opts;
+	}
+
+	public void setOpts(List<Opt> opts) {
+		this.opts = opts;
 	}
 	
 }

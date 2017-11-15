@@ -25,7 +25,7 @@
                 <FormItem>
                     <Button type="primary" icon="android-search" @click="doQuery">查询</Button>
                     <Button type="error" icon="android-refresh" @click="doClear">清空</Button>
-                    <Button type="success" icon="archive">导出</Button>
+                    <Button type="success" icon="archive" @click="doExport">导出</Button>
                 </FormItem>
             </Col>
         </Row>
@@ -193,11 +193,11 @@ export default {
         },
         doSave () {
             let _self = this;
-            util.ajax.post('/${name}/save', this.saveForm).then(function (res) {
+            util.ajax.post('/${name}/save', this.saveForm).then(res => {
                 _self.saveModal.show = false
                 _self.$Message.info('操作成功')
                 _self.doQuery()
-              }).catch(function (err) {
+              }).catch(err => {
                 _self.saveModal.show = false
               })
         },
@@ -209,7 +209,7 @@ export default {
                 loading: true,
                 onOk: () => {
                     let _modal = this.$Modal
-                    util.ajax.post('/${name}/delete/' + id).then(function (res) {
+                    util.ajax.post('/${name}/delete/' + id).then(res => {
                         _modal.remove()
                         if (res.status === 200) {
                             if (res.data.code === "0") {
@@ -217,16 +217,30 @@ export default {
                                 _self.getList()
                             }
                         }
-                    }).catch(function (err) {
+                    }).catch(err => {
                         _modal.remove()
                         console.log(err)
                     })
                 }
             })
         },
+        doExport () {
+            let _self = this
+            util.ajax.post('/${name}/Export', this.processQueryForm()).then(res => {
+                if (res.status === 200) {
+                    if (res.data.result === 1) {
+                        window.open(res.data.content)
+                    } else {
+                        _self.$Message.error(res.data.message)
+                    }
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         getList () {
             let _self = this
-            util.ajax.get('/${name}?page=' + this.page.current + '&limit=' + this.page.size).then(function (res) {
+            util.ajax.get('/${name}?page=' + this.page.current + '&limit=' + this.page.size, {params: this.processQueryForm()}).then(res => {
                 if (res.status === 200) {
                     if (res.data.result === 1) {
                         _self.tableData = res.data.content.data
@@ -235,28 +249,31 @@ export default {
                         _self.page.current = res.data.content.current_page
                     }
                 }
-            }).catch(function (error) {
-                console.log(error)
-              })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        processQueryForm () {
+            return this.queryForm
         },
         showModalAdd() {
             this.clearSaveForm()
-            this.saveModal.title = '添加功能'
+            this.saveModal.title = '添加${label}'
             this.saveModal.show = true
         },
         showModalUpdate(id) {
             let _self = this
-            util.ajax.get('/${name}/detail?id=' + id).then(function (res) {
+            util.ajax.get('/${name}/detail?id=' + id).then(res => {
                 if (res.status === 200) {
                     if (res.data.code === "0") {
                         _self.saveForm = res.data.data
                     }
                 }
-            }).catch(function (error) {
-                console.log(error)
+            }).catch(err => {
+                console.log(err)
               })
             this.saveModal.show = true
-            this.saveModal.title = '修改功能'
+            this.saveModal.title = '修改${label}'
         },
         clearSaveForm () {
 <#list attrs as attr>

@@ -45,7 +45,7 @@ public class GeneratorController {
 	}
 */
 	@PostMapping(path = "/vue/{id}")
-	public Map<String, Object> onGeneratePost (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type) throws IOException, TemplateException {
+	public Map<String, Object> onPostList (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type) throws IOException, TemplateException {
 		Func func = funcRepository.findOne(Long.parseLong(id));
 		if (func == null) {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
@@ -65,4 +65,5 @@ public class GeneratorController {
 		template.process(func, stringWriter);
 		return stringWriter.toString();
 	}
+	
 }

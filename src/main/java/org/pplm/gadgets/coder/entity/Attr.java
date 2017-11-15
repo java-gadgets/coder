@@ -2,8 +2,11 @@ package org.pplm.gadgets.coder.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
-@Entity(name = "attr")
+@Entity
+@Table(name = "attr", indexes = @Index(columnList = "fid"))
 public class Attr extends Base {
 	private Long fid;
 	@Column(length = 128)
