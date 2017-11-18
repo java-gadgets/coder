@@ -10,22 +10,25 @@
     <Row>
         <Col span="24" class="small-title detail-subtitle-bar">基本信息</Col>
         <Col span="24" class="detail-line">
-            <Col span="2">&nbsp;</Col>
+            <Col span="1">&nbsp;</Col>
 <#if attrs?size == 0>
-            <Col span="22">&nbsp;</Col>
+            <Col span="23">&nbsp;</Col>
         </Col>
 <#else>
-<#list attrs as attr>
-            <Col span="7" class="detail-item-cell">${attr.label}：{{ <#if attr.type! == "enum">this.dict.${attr.name}.filter(item => {return detailData.${attr.name} == item.value}).map(item => {return item.label})[0]<#else>detailData.${attr.name}</#if> }}</Col>
+<#list attrs as attr>            
+            <Col span="7">
+                <Col span="12" class="detail-item-label">${attr.label}：</Col>
+                <Col span="12" class="detail-item-value">{{ detailData.${attr.name} }}</Col>
+            </Col>
 <#if attr_has_next>
 <#if (attr_index + 1) % 3 == 0>
-            <Col span="1">&nbsp;</Col>
+            <Col span="2">&nbsp;</Col>
         </Col>
         <Col span="24" class="detail-line">
-            <Col span="2">&nbsp;</Col>
+            <Col span="1">&nbsp;</Col>
 </#if>
 <#else>
-            <Col span="1">&nbsp;</Col>
+            <Col span="2">&nbsp;</Col>
         </Col>
 </#if>
 </#list>
@@ -43,8 +46,7 @@ import util from '@/libs/util';
 export default {
     data () {
         return {
-            detailData: {},
-<#include "common/data-dict.ftl" />            
+            detailData: {}
         }
     },
     activated () {

@@ -8,19 +8,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "func")
 public class Func extends Base {
 
 	private String label;
 	private String name;
+	private String relationName;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="fid")
+	@Where(clause="delete_flag = 0")
 	private List<Attr> attrs;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="fid")
+	@Where(clause="delete_flag = 0")
 	private List<Opt> opts;
 
 	public Func() {
@@ -41,6 +46,14 @@ public class Func extends Base {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getRelationName() {
+		return relationName;
+	}
+
+	public void setRelationName(String relationName) {
+		this.relationName = relationName;
 	}
 
 	public List<Attr> getAttrs() {
