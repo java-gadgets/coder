@@ -14,7 +14,8 @@ import javax.persistence.Table;
 @Table(name = "opt", indexes = @Index(columnList = "fid"))
 public class Opt extends Base {
 
-	private Long fid;
+	@Column(columnDefinition = "BIGINT(20)")
+	private String fid;
 
 	@Column(length = 128)
 	private String label;
@@ -31,7 +32,10 @@ public class Opt extends Base {
 	private String mode;
 
 	@Column(length = 255)
-	private String url;
+	private String preUrl;
+	
+	@Column(length = 255)
+	private String exeUrl;
 
 	@ManyToMany
 	@JoinTable(
@@ -44,11 +48,11 @@ public class Opt extends Base {
 		super();
 	}
 
-	public Long getFid() {
+	public String getFid() {
 		return fid;
 	}
 
-	public void setFid(Long fid) {
+	public void setFid(String fid) {
 		this.fid = fid;
 	}
 
@@ -84,15 +88,28 @@ public class Opt extends Base {
 		this.mode = mode;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getPreUrl() {
+		return preUrl;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setPreUrl(String preUrl) {
+		this.preUrl = preUrl;
+	}
+
+	public String getExeUrl() {
+		return exeUrl;
+	}
+
+	public void setExeUrl(String exeUrl) {
+		this.exeUrl = exeUrl;
 	}
 
 	public List<Attr> getAttrs() {
+		if (attrs != null) {
+			attrs.forEach(attr -> {
+				attr.setOpts(null);
+			});
+		}
 		return attrs;
 	}
 

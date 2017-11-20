@@ -1,9 +1,11 @@
 package org.pplm.gadgets.coder.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.pplm.gadgets.coder.entity.Attr;
 import org.pplm.gadgets.coder.repository.AttrRepository;
+import org.pplm.gadgets.coder.service.AttrService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,41 +23,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class AttrController {
 
 	@Autowired
+	private AttrService attrService;
+	
+	@Autowired
 	private AttrRepository attrRepository;
 	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetQuery(@RequestParam(name = "fid", required = true) String fid, Pageable pageable){
 		//return ResHelper.success(funcRepository.findAll(pageable));
-		return ResHelper.success(attrRepository.findByFidAndDeleteFlag(Long.parseLong(fid), 0, pageable));
+		return ResHelper.success(attrRepository.findByFidAndDeleteFlag(fid, 0, pageable));
 	}
 	
 	@GetMapping(path = "/detail")
 	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
-		Attr attr = attrRepository.findOneByIdAndDeleteFlag(Long.parseLong(id), 0);
+		Attr attr = attrRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (attr != null) {
 			return ResHelper.success(attr);
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
-	
-	/**
-	 * {"label": "标签", "name": "label"}
-	 * {"label": "名字", "name": "name"}
-	 * {"label": "类型", "name": "type"}
-	 * {"label": "长度", "name": "length"}
-	 * {"label": "精度", "name": "precise"}
-	 * {"label": "默认值", "name": "defaultValue"}
-	 * 
-	 * {"label": "功能", "name": "func"}
-	 * {"label": "名字", "name": "name"}
-	 * @param func
-	 * @return
-	 */
+
 	@PostMapping(path="/save/{fid}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> onPostCreate(@PathVariable("fid") String fid, @RequestBody Attr attr) {
 		if (attr != null) {
-			attr.setFid(Long.parseLong(fid));
-			return ResHelper.success(attrRepository.save(attr));
+			attr.setFid(fid);
+			return ResHelper.success(attrService.save(attr));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
@@ -63,14 +55,16 @@ public class AttrController {
 	@PostMapping(path="/delete/{id}")
 	public Map<String, Object> onPostDelete(@PathVariable("id") String id) {
 		if(id != null) {
-			Attr attr = attrRepository.findOneByIdAndDeleteFlag(Long.parseLong(id), 0);
-			if(attr != null) {
-				attr.setDeleteFlag(1);
-				attrRepository.save(attr);
-				return ResHelper.success();
-			}
+		    attrService.delete(id);
+			return ResHelper.success();
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
+	}
+	
+	@PostMapping(path="/bindOpt/{aid}")
+	public Map<String, Object> onPostBindOpt(@PathVariable("aid") String aid, @RequestBody List<String> oids) {
+		return null;
+		
 	}
 	
 }

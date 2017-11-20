@@ -27,16 +27,9 @@ public class FuncController {
 	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetQuery(HttpServletRequest request, Pageable pageable){
-		//return ResHelper.success(funcRepository.findAll(pageable));
-		System.out.println();
 		return ResHelper.success(funcRepository.findAllByDeleteFlag(0, pageable));
 	}
-	/**
-	 * {"label":"属性", "name":"attr"}
-	 * {"label":"功能", "name":"func"}
-	 * @param func
-	 * @return
-	 */
+
 	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> onPostCreate(@RequestBody Func func) {
 		if (func != null) {
@@ -47,7 +40,7 @@ public class FuncController {
 	
 	@GetMapping(path = "/detail")
 	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
-		Func func = funcRepository.findOneByIdAndDeleteFlag(Long.parseLong(id), 0);
+		Func func = funcRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (func != null) {
 			return ResHelper.success(func);
 		}
@@ -57,7 +50,7 @@ public class FuncController {
 	@PostMapping(path="/delete/{id}")
 	public Map<String, Object> onPostDelete(@PathVariable("id") String id) {
 		if(id != null) {
-			Func func = funcRepository.findOneByIdAndDeleteFlag(Long.parseLong(id), 0);
+			Func func = funcRepository.findOneByIdAndDeleteFlag(id, 0);
 			if(func != null) {
 				func.setDeleteFlag(1);
 				funcRepository.save(func);
@@ -66,4 +59,14 @@ public class FuncController {
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
+	
+	@GetMapping(path = "/attrs")
+	public Map<String, Object> onGetAttrs(@RequestParam("fid") String fid) {
+		Func func = funcRepository.findOneByIdAndDeleteFlag(fid, 0);
+		if (func != null) {
+			return ResHelper.success(func.getAttrs());
+		}
+		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
+	}
+	
 }

@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface BaseRepository<T> extends JpaRepository<T, Long>, JpaSpecificationExecutor<T> {
+public interface BaseRepository<T> extends JpaRepository<T, String>, JpaSpecificationExecutor<T> {
 	
 	public Page<T> findAllByDeleteFlag(Integer deleteFlag, Pageable pageable);
-	public T findOneByIdAndDeleteFlag(Long id, Integer deleteFlag);
+	public T findOneByIdAndDeleteFlag(String id, Integer deleteFlag);
 	
 }

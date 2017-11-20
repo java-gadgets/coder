@@ -31,13 +31,18 @@ public class OptController {
 	private OptAttrService optAttrService;
 	
 	@GetMapping(path = "/list")
-	public Map<String, Object> onGetQuery(@RequestParam(name = "fid", required = true) String fid, Pageable pageable){
-		return ResHelper.success(optRepository.findByFidAndDeleteFlag(Long.parseLong(fid), 0, pageable));
+	public Map<String, Object> onGetList(@RequestParam(name = "fid", required = true) String fid, Pageable pageable){
+		return ResHelper.success(optRepository.findByFidAndDeleteFlag(fid, 0, pageable));
+	}
+	
+	@GetMapping(path = "/listAll")
+	public Map<String, Object> onGetListAll(@RequestParam(name = "fid", required = true) String fid){
+		return ResHelper.success(optRepository.findByFidAndDeleteFlag(fid, 0));
 	}
 	
 	@GetMapping(path = "/detail")
 	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
-		Opt opt = optRepository.findOneByIdAndDeleteFlag(Long.parseLong(id), 0);
+		Opt opt = optRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (opt != null) {
 			return ResHelper.success(opt);
 		}
@@ -47,7 +52,7 @@ public class OptController {
 	@PostMapping(path="/save/{fid}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> onPostCreate(@PathVariable("fid") String fid, @RequestBody Opt opt) {
 		if (opt != null) {
-			opt.setFid(Long.parseLong(fid));
+			opt.setFid(fid);
 			return ResHelper.success(optRepository.save(opt));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
@@ -56,22 +61,25 @@ public class OptController {
 	@PostMapping(path="/delete/{id}")
 	public Map<String, Object> onPostDelete(@PathVariable("id") String id) {
 		if(id != null) {
-			Opt opt = optRepository.findOneByIdAndDeleteFlag(Long.parseLong(id), 0);
-			if(opt != null) {
-				opt.setDeleteFlag(1);
-				optRepository.save(opt);
-				return ResHelper.success();
-			}
+
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
-	@PostMapping(path="/bindAttr/{id}")
-	public Map<String, Object> onPostBindAttr(@PathVariable("id") String id, @RequestBody List<String> aids) {
-		final Long oid = Long.parseLong(id);
-		List<OptAttr> optAttrs = aids.stream().map(aid -> new OptAttr(oid, Long.parseLong(aid))).collect(Collectors.toList());
+	@PostMapping(path="/bindAttr/{oid}")
+	public Map<String, Object> onPostBindAttr(@PathVariable("oid") String oid, @RequestBody List<String> aids) {
+		List<OptAttr> optAttrs = aids.stream().map(aid -> new OptAttr(oid, aid)).collect(Collectors.toList());
 		optAttrService.bindAttr(oid, optAttrs);
 		return ResHelper.success();
+	}
+	
+	@GetMapping(path = "/attrs")
+	public Map<String, Object> onGetAttrs(@RequestParam("oid") String oid) {
+		Opt opt = optRepository.findOneByIdAndDeleteFlag(oid, 0);
+		if (opt != null) {
+			return ResHelper.success(opt.getAttrs());
+		}
+		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
 }

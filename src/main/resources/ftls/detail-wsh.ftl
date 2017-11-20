@@ -32,7 +32,7 @@
 </#if>
     </Row>
     <Row>
-        <Col span="20" style="text-align: center; margin-top: 20px;">
+        <Col span="24" style="text-align: center; margin-top: 20px;">
             <Button type="primary" icon="reply" @click="doBack">返回</Button>
         </Col>
     </Row>

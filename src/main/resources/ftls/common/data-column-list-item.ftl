@@ -1,4 +1,6 @@
-<#list attrs as attr>
+<#list opts as opt>
+<#if opt.type! == "list">
+<#list opt.attrs as attr>
                 {
                     title: '${attr.label}',
                     key: '${attr.name}',
@@ -15,4 +17,6 @@
 </#if>                    
                     align: 'center'
                 },
+</#list>
+</#if>
 </#list>

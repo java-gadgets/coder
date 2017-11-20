@@ -7,34 +7,51 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-@MappedSuperclass 
+@MappedSuperclass
 public class Base {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(columnDefinition = "BIGINT(20)")
+	private String id;
 	
-	@Column(length = 1, columnDefinition="tinyint default 0")
+	@Column(length = 1, columnDefinition="INT(1) default 0")
 	private Integer deleteFlag = 0;
 	
-	@CreatedDate
+	@Column(columnDefinition = "BIGINT(20)")
+	private String creatorId;
+
 	private Date createDate;
 	
-	@LastModifiedDate
-	private Date modifyDate;
+	@Column(columnDefinition = "BIGINT(20)")
+	private String updatorId;
+	
+	@OrderBy("desc")
+	private Date updateDate;
 
 	public Base() {
 		super();
 	}
 
-	public Long getId() {
+	@PrePersist
+    public void prePersist(){
+		this.createDate = new Date();
+		this.updateDate = this.createDate;
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        this.updateDate = new Date();                
+    }
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -46,6 +63,14 @@ public class Base {
 		this.deleteFlag = deleteFlag;
 	}
 
+	public String getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(String creatorId) {
+		this.creatorId = creatorId;
+	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -54,12 +79,20 @@ public class Base {
 		this.createDate = createDate;
 	}
 
-	public Date getModifyDate() {
-		return modifyDate;
+	public String getUpdatorId() {
+		return updatorId;
 	}
 
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
+	public void setUpdatorId(String updatorId) {
+		this.updatorId = updatorId;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
 }

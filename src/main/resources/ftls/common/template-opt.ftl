@@ -7,10 +7,14 @@
 <#elseif opt.type! == "query">
 <Card>
 </#if>
-    <Form :model="optForm.${optName}" :label-width="80" >
+<#if opt.type! == "query">
+    <p slot="title">${opt.label}</p>
+</#if>
+    <Form :model="optForm.${optName}" :label-width="100" >
         <Row>
-<#list attrs as attr>
-            <Col span="10" style="margin-bottom: -15px;">
+<#list opt.attrs as attr>
+<#if attr.name! != "id">
+            <Col span="8" style="margin-bottom: -14px;">
                 <FormItem label="${attr.label}" prop="${attr.name}">
 <#if attr.type! == "datetime">
                     <DatePicker :value="optForm.${optName}.${attr.name}" format="yyyy-MM-dd HH:mm:ss" type="<#if opt.type! == "query">datetimerange<#else>datetime</#if>" placement="bottom-end" placeholder="请选择${attr.label}" style="width: 200px"></DatePicker>
@@ -29,17 +33,25 @@
 </#if>
                 </FormItem>
             </Col>
+</#if>
 </#list>
         </Row>
     </Form>
 <#if opt.type! == "query">
         <Row>
-            <Col span="24" style="text-align: center; margin-bottom: -15px;">
+            <Col span="24" style="text-align: center;">
                 <Button type="primary" icon="android-search" @click="do${optName?cap_first}">查询</Button>
                 <Button type="error" icon="android-refresh" @click="do${optName?cap_first}Clear">清空</Button>
+<#list opts as optInner>
+<#assign optInnerName = optInner.name + optInner.type?cap_first />
+<#if optInner.type! == "export">
+                <Button type="success" icon="archive" @click="do${optInnerName?cap_first}">导出</Button>
+<#elseif optInner.type! == "add">
+                <Button type="primary" icon="plus" @click="go${optInnerName?cap_first}">添加</Button>
+</#if>            
+</#list>                
             </Col>
         </Row>
-
 </#if>
 <#if (opt.type! == "update" || opt.type! == "detail") && opt.mode! == "modal">
     <Spin size="large" fix v-if="optModal.${optName}.loading">
@@ -51,21 +63,5 @@
 <#if (opt.type! == "update" || opt.type! == "add" || opt.type! == "detail") && opt.mode! == "modal">
 </Modal>
 </#if>
-</#if>
-</#list>
-<#list opts as opt>
-<#assign optName = opt.name + opt.type?cap_first />
-<#if opt.type! == "export" || opt.type! == "add">
-<Card>
-    <Row>
-        <Col span="24" style="text-align: center; margin-bottom: -15px;">
-<#if opt.type! == "export">
-            <Button type="success" icon="archive" @click="do${optName?cap_first}">导出</Button>
-<#elseif opt.type! == "add">
-            <Button type="primary" icon="plus" @click="showModalAdd">添加</Button>
-</#if>            
-        </Col>
-    </Row>
-</Card>
 </#if>
 </#list>

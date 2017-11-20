@@ -2,7 +2,8 @@
                     title: '操作',
                     key: 'action',
                     fixed: 'right',
-                    width: 300,
+                    align: 'center',
+                    width: 240,
                     render: (h, params) => {
                         return h('div', [
 <#list opts as opt>

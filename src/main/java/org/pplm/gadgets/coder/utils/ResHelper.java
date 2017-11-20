@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class ResHelper {
 	public static final String CODE = "code";
-	public static final String MESSAGE = "msg";
-	public static final String DATA = "data";
+	public static final String MESSAGE = "message";
+	public static final String CONTENT = "content";
 	
 	public static final String CODE_ERROR = "1";
 	public static final String CODE_SUCCESS = "0";
@@ -29,7 +29,7 @@ public class ResHelper {
 		Map<String, Object> map = new HashMap<>();
 		map.put(CODE, CODE_SUCCESS);
 		map.put(MESSAGE, MESSAGE_SUCCESS);
-		map.put(DATA, object);
+		map.put(CONTENT, object);
 		return map;
 	}
 	

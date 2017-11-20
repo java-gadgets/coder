@@ -13,13 +13,13 @@
             this.get${opt.name?cap_first}List()
         },
         do${optName?cap_first}Clear () {
-<#list attrs as attr>
+<#list opt.attrs as attr>
             this.optForm.${optName}.${attr.name} = <#if opt.type! == "query" && (attr.type! == "datetime" || attr.type! == "date")>[]<#else>''</#if>
 </#list>
         },
         get${opt.name?cap_first}List () {
             let _self = this
-            util.ajax.get('${opt.url}?page=' + this.page.current + '&limit=' + this.page.size, {params: this.get${optName?cap_first}Form()}).then(res => {
+            util.ajax.get('${opt.exeUrl!}?page=' + this.page.current + '&limit=' + this.page.size, {params: this.get${optName?cap_first}Form()}).then(res => {
                 if (res.status === 200) {
                     if (res.data.result === 1) {
                         _self.tableData = res.data.content.data
@@ -38,7 +38,7 @@
 <#elseif opt.type! == "export">
         do${optName?cap_first} () {
             let _self = this
-            util.ajax.post('${opt.url}', this.get${optName?cap_first}Form()).then(res => {
+            util.ajax.post('${opt.exeUrl!}', this.get${optName?cap_first}Form()).then(res => {
                 if (res.status === 200) {
                     if (res.data.result === 1) {
                         window.open(res.data.content)
@@ -53,17 +53,19 @@
         get${optName?cap_first}Form () {
         },
 <#elseif opt.type! == "update" || opt.type! == "add" || opt.type! == "detail" || opt.type! == "delete">
-        go${optName?cap_first} (id) {
+        go${optName?cap_first} (<#if opt.type! != "add">id</#if>) {
 <#if opt.mode! == "modal">
-            this.showModal${optName?cap_first}(id)
+            this.showModal${optName?cap_first}(<#if opt.type! != "add">id</#if>)
 <#elseif opt.mode! == "page">
             this.$router.push({
                 name: '${opt.name}_${opt.type}',
+<#if opt.type! != "add">
                 params: {
                     id: id
                 }
+</#if>
             })
-<#elseif opt.mode! == "tip">
+<#elseif opt.mode! == "tip" || opt.type! == "delete">
             let _self = this
             this.$Modal.confirm({
                 title: '${opt.label}',
@@ -71,7 +73,7 @@
                 loading: true,
                 onOk: () => {
                     let _modal = this.$Modal
-                    util.ajax.post('${opt.url}/' + id).then(res => {
+                    util.ajax.post('${opt.exeUrl!}?id=' + id).then(res => {
                         if (res.status === 200) {
                             if (res.data.code === "0") {
                                 _self.$Message.info(res.data.message)
@@ -90,10 +92,10 @@
             })
 </#if>
         },
-<#if opt.type! == "update" || opt.type! == "add">
+<#if opt.mode! == "modal" && (opt.type! == "add" || opt.type! == "update")>
         do${optName?cap_first} () {
             let _self = this
-            util.ajax.post('${opt.url}', this.optForm.${optName}).then(function (res) {
+            util.ajax.post('${opt.exeUrl!}', this.optForm.${optName}).then(function (res) {
                 _self.optModal.${optName}.show = false
                 _self.$Message.info(res.data.message)
                 _self.afterDo${optName?cap_first}()
@@ -101,18 +103,22 @@
                 _self.optModal.${optName}.show = false
               })
         },
+</#if>
+<#if opt.mode! == "tip" || opt.mode! == "switch" || opt.type! == "delete" || (opt.mode! == "modal" && (opt.type! == "add" || opt.type! == "update"))>
         afterDo${optName?cap_first} (res) {
         },
 </#if>
 </#if>
-<#if opt.mode! == "modal">
+<#if opt.mode! == "modal" && (opt.type! == "detail" || opt.type! == "update" || opt.type! == "add")>
         showModal${optName?cap_first} (<#if opt.type! == "update" || opt.type! == "detail">id</#if>) {
 <#if opt.type! == "update" || opt.type! == "detail">
             let _self = this
-            util.ajax.get('${opt.url}?id=' + id).then(res => {
+            util.ajax.get('${opt.exeUrl!}?id=' + id).then(res => {
                 if (res.status === 200) {
                     if (res.data.result === 1) {
-                        _self.optForm.${optName} = res.data.content
+<#list opt.attrs as attr>
+                        _self.optForm.${optName}.${attr.name} = res.data.content.${attr.name}
+</#list>
                     }
                 }
                 this.optModal.${optName}.loading = false

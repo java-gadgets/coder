@@ -17,10 +17,6 @@ import util from '@/libs/util';
 export default {
     data () {
         return {
-            saveModal: {
-                show: false,
-                title: ''
-            },
 <#include "common/data-opt-form.ftl" />
 <#include "common/data-opt-modal.ftl" />
             columnsList:[

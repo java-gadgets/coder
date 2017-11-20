@@ -1,14 +1,23 @@
 package org.pplm.gadgets.coder.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
-@Table(name = "attr", indexes = @Index(columnList = "fid"))
+@Table(name = "attr")
 public class Attr extends Base {
-	private Long fid;
+
+	@Column(columnDefinition = "BIGINT(20)")
+	private String fid;
 	@Column(length = 128)
 	private String label;
 	@Column(length = 128)
@@ -20,16 +29,30 @@ public class Attr extends Base {
 	@Column(length = 1)
 	private Integer precise;
 	private String defaultValue;
+	@Column(length = 255)
+	private String remark;
+	
+	@ManyToMany
+	@JoinTable(
+		name = "opt_attr",
+		joinColumns = @JoinColumn(name = "aid", referencedColumnName = "ID"), 
+		inverseJoinColumns = @JoinColumn(name = "oid", referencedColumnName = "ID"))
+	@Where(clause="delete_flag = 0")
+	private List<Opt> opts;
+	
+	@OneToOne
+	@JoinColumn(name = "did")
+	private Dict dict;
 
 	public Attr() {
 		super();
 	}
 
-	public Long getFid() {
+	public String getFid() {
 		return fid;
 	}
 
-	public void setFid(Long fid) {
+	public void setFid(String fid) {
 		this.fid = fid;
 	}
 
@@ -79,6 +102,35 @@ public class Attr extends Base {
 
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public List<Opt> getOpts() {
+		if (opts != null) {
+			opts.forEach(opt -> {
+				opt.setAttrs(null);
+			});
+		}
+		return opts;
+	}
+
+	public void setOpts(List<Opt> opts) {
+		this.opts = opts;
+	}
+
+	public Dict getDict() {
+		return dict;
+	}
+
+	public void setDict(Dict dict) {
+		this.dict = dict;
 	}
 
 }
