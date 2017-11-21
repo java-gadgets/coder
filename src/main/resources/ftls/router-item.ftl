@@ -11,7 +11,7 @@
                 path: '/${opt.name!}${opt.type?cap_first}', 
                 title: '${opt.label!}',
                 name: '${opt.name!}_${opt.type!}',
-                component: resolve => { require(['./views/${name}/${opt.name!}${opt.type?cap_first}.vue'], resolve); } 
+                component: resolve => { require(['@/views/${name}/${opt.name!}${opt.type?cap_first}.vue'], resolve); } 
             },
 </#if>
 </#list>

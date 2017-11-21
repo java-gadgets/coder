@@ -2,7 +2,7 @@
 <#assign optName = opt.name + opt.type?cap_first />
 <#if opt.type! == "query" || ((opt.type! == "update" || opt.type! == "add" || opt.type == "detail") && opt.mode! == "modal")>
 <#if (opt.type! == "update" || opt.type! == "add" || opt.type == "detail") && opt.mode! == "modal">
-<Modal width="800" v-model="optModal.${optName}.show" loading @on-ok="do${optName?cap_first}" :title="optModal.${optName}.title">
+<Modal width="800" v-model="optModal.${optName}.show" :mask-closable="false" loading @on-ok="do${optName?cap_first}" :title="optModal.${optName}.title">
 <Card :bordered="false" dis-hover>
 <#elseif opt.type! == "query">
 <Card>

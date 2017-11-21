@@ -47,7 +47,7 @@ export default {
 <#include "common/data-dict.ftl" />            
         }
     },
-    activated () {
+    mounted () {
         this.init()
     },
     methods: {
