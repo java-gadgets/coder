@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.pplm.gadgets.coder.entity.Dict;
 import org.pplm.gadgets.coder.repository.DictRepository;
+import org.pplm.gadgets.coder.service.DictService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,15 +23,18 @@ public class DictController {
 	@Autowired
 	private DictRepository dictRepsitory;
 	
+	@Autowired
+	private DictService dictService;
+	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetList(Pageable pageable) {
-		return ResHelper.success(dictRepsitory.findAll(pageable));
+		return ResHelper.success(dictRepsitory.findAllByDeleteFlag(0, pageable));
 	}	
 	
 	@PostMapping(path = "/save")
 	public Map<String, Object> onPostSave(@RequestBody Dict dict) {
 		if (dict != null) {
-			return ResHelper.success(dictRepsitory.save(dict));
+			return ResHelper.success(dictService.save(dict));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
@@ -41,6 +45,11 @@ public class DictController {
 		dict.setDeleteFlag(1);
 		dictRepsitory.save(dict);
 		return ResHelper.success();
+	}
+	
+	@GetMapping(path = "/detail")
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
+		return ResHelper.success(dictRepsitory.findOneByIdAndDeleteFlag(id, 0));
 	}
 	
 }

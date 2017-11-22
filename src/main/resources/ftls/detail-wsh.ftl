@@ -53,7 +53,7 @@ export default {
     methods: {
         init () {
             let _self = this
-            util.ajax.get('MemberManagement/MemberDetail?id=' + this.$route.params.id).then(res => {
+            util.ajax.get('${(opt.exeUrl)!}?id=' + this.$route.params.id).then(res => {
                 if (res.status === 200) {
                     if (res.data.result === 1) {
                         _self.detailData = res.data.content
@@ -70,4 +70,4 @@ export default {
         }
     }
 }
-</script>    
+</script>

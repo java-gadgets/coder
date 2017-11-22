@@ -1,16 +1,15 @@
+<#assign optName = name + type?cap_first />
 <style lang="less">
     @import '../../styles/common.less';
 </style>
 <template><div>
 <Card>
     <p slot="title">
-        {{ card.title }}广告
+        {{ card.title }}${name}
     </p>
     <Form :model="optForm" :label-width="100" >
         <Row>
-<#list opts as opt>
-<#if (opt.type! == "save" && opt.mode! == "page")>
-<#list opt.attrs as attr>
+<#list attrs as attr>
 <#if attr.name! != "id">
             <Col span="8">
                 <FormItem label="${attr.label}" prop="${attr.name}">
@@ -33,8 +32,6 @@
             </Col>
 </#if>
 </#list>
-</#if>
-</#list>
         </Row>
     </Form>
     <Row>
@@ -50,20 +47,13 @@ import util from '@/libs/util';
 export default {
     data () {
         return {
-<#if opts? size gt 0>
             optForm: {
-<#list opts as opt>
-<#assign optName = opt.name + opt.type?cap_first />
-<#if (opt.type! == "save" && opt.mode! == "page")>
                 ${optName}: {
-<#list opt.attrs as attr>
+<#list attrs as attr>
                     ${attr.name}: ''<#if attr_has_next>,</#if>
 </#list>
                 },
-</#if>
-</#list>
             },
-</#if>
             card: {
                 title: ''
             },
@@ -78,7 +68,7 @@ export default {
         init () {
             if (this.optForm.id) {
                 let _self = this
-                util.ajax.get('/AdvertisingService/ExportAdvertising?id=' + this.optForm.id).then(res => {
+                util.ajax.get('${preUrl}?id=' + this.optForm.id).then(res => {
                     if (res.status === 200) {
                         if (res.data.result === 1) {
                             _self.detailData = res.data.content

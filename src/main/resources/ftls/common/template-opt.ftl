@@ -29,7 +29,7 @@
                         <Option v-for="item in dict.${attr.name}" :value="item.value" :key="item.value">{{ item.label }}</Option>
                     </Select>
 <#else>
-                    <Input type="text" v-model="optForm.${optName}.${attr.name}"></Input>
+                    <Input type="<#if attr.type! == "textarea">textarea<#elseif attr.type! == "password">password<#else>text</#if>" v-model="optForm.${optName}.${attr.name}"></Input>
 </#if>
                 </FormItem>
             </Col>
