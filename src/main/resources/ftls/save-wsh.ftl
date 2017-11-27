@@ -1,42 +1,15 @@
-<#assign optName = name + type?cap_first />
 <style lang="less">
     @import '../../styles/common.less';
 </style>
 <template><div>
 <Card>
     <p slot="title">
-        {{ card.title }}${name}
+        {{ card.title }}广告
     </p>
-    <Form :model="optForm" :label-width="100" >
-        <Row>
-<#list attrs as attr>
-<#if attr.name! != "id">
-            <Col span="8">
-                <FormItem label="${attr.label}" prop="${attr.name}">
-<#if attr.type! == "datetime">
-                    <DatePicker :value="optForm.${attr.name}" format="yyyy-MM-dd HH:mm:ss" type="datetime" placement="bottom-end" placeholder="请选择${attr.label}" style="width: 200px"></DatePicker>
-<#elseif attr.type! == "date">
-                    <DatePicker :value="optForm.${attr.name}" format="yyyy/MM/dd" type="date" placement="bottom-end" placeholder="请选择${attr.label}" style="width: 200px"></DatePicker>
-<#elseif attr.type! == "year">
-                    <DatePicker :value="optForm.${attr.name}" format="yyyy" type="date" placement="bottom-end" placeholder="请选择${attr.label}" style="width: 200px"></DatePicker>
-<#elseif attr.type! == "month">
-                    <DatePicker :value="optForm.${attr.name}" format="yyyy-MM" type="date" placement="bottom-end" placeholder="请选择${attr.label}" style="width: 200px"></DatePicker>
-<#elseif attr.type! == "enum">
-                    <Select v-model="optForm.${attr.name}" clearable placeholder="请选择${attr.label}" style="width:174px">
-                        <Option v-for="item in dict.${attr.name}" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                    </Select>
-<#else>
-                    <Input type="text" v-model="optForm.${attr.name}"></Input>
-</#if>
-                </FormItem>
-            </Col>
-</#if>
-</#list>
-        </Row>
-    </Form>
+<#include "common/edit-template-form.ftl" />
     <Row>
         <Col span="24" style="text-align: center; margin-top: 20px;">
-            <Button type="primary" icon="ios-cloud-upload" @click="doBack">保存</Button>
+            <Button type="primary" icon="ios-cloud-upload" @click="doSave">保存</Button>
             <Button type="primary" icon="reply" @click="doBack">返回</Button>
         </Col>
     </Row>
@@ -48,20 +21,16 @@ export default {
     data () {
         return {
             optForm: {
-                ${optName}: {
+                id: '',
 <#list attrs as attr>
-                    ${attr.name}: ''<#if attr_has_next>,</#if>
+                ${attr.name}: ''<#if attr_has_next>,</#if>
 </#list>
-                },
-            },
-            card: {
-                title: ''
             },
 <#include "common/data-dict.ftl" />
         }
     },
-    activated () {
-        this.optForm.id = this.$route.params.id 
+    mounted () {
+        this.optForm.id = this.$route.params.id
         this.init()
     },
     methods: {
@@ -71,7 +40,7 @@ export default {
                 util.ajax.get('${preUrl}?id=' + this.optForm.id).then(res => {
                     if (res.status === 200) {
                         if (res.data.result === 1) {
-                            _self.detailData = res.data.content
+                            _self.optForm = res.data.content
                         } else {
                             _self.$Message.error(res.data.message)
                         }
@@ -81,9 +50,27 @@ export default {
                 })
             }
         },
+        doSave() {
+            let url = '${exeUrl}'
+            if (this.optForm.id) {
+                url = '${exeUrl}'
+            }
+            util.ajax.post(url, this.optForm).then(res => {
+                if (res.status === 200) {
+                    if (res.data.result === 1) {
+                        this.$Message.info(res.data.message) 
+                        this.doBack()   
+                    } else {
+                        this.$Message.info(res.data.message)
+                    }
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         doBack() {
             this.$router.go(-1)
-        }
+        },
     }
 }
-</script>    
+</script>

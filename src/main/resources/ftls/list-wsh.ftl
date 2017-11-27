@@ -2,7 +2,7 @@
     @import '../../styles/common.less';
 </style>
 <template><div>
-<#include "common/template-opt.ftl" />
+<#include "common/list-template-opt.ftl" />
 <Card>
     <Table :columns="columnsList" :data="tableData" border></Table>
     <div style="text-align: right; padding-top: 10px;">

@@ -25,6 +25,9 @@ public class Func extends Base {
 	private String relaAttr;
 	
 	@Column(length = 255)
+	private String permissionTag;
+	
+	@Column(length = 255)
 	private String remark;
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -95,6 +98,14 @@ public class Func extends Base {
 
 	public void setOpts(List<Opt> opts) {
 		this.opts = opts;
+	}
+
+	public String getPermissionTag() {
+		return permissionTag;
+	}
+
+	public void setPermissionTag(String permissionTag) {
+		this.permissionTag = permissionTag;
 	}
 
 }

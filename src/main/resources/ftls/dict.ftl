@@ -1,6 +1,6 @@
 <#list dictItems as dictItem>
-{
-    label: '${dictItem.label}',
-    value: '${dictItem.value}'
-},
+                    {
+                        label: '${dictItem.label}',
+                        value: '${dictItem.value}'
+                    },
 </#list>

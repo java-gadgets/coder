@@ -37,6 +37,9 @@ public class Opt extends Base {
 	@Column(length = 255)
 	private String exeUrl;
 
+	@Column(length = 255)
+	private String permissionTag;
+
 	@ManyToMany
 	@JoinTable(
 		name = "opt_attr",
@@ -115,6 +118,14 @@ public class Opt extends Base {
 
 	public void setAttrs(List<Attr> attrs) {
 		this.attrs = attrs;
+	}
+
+	public String getPermissionTag() {
+		return permissionTag;
+	}
+
+	public void setPermissionTag(String permissionTag) {
+		this.permissionTag = permissionTag;
 	}
 
 }

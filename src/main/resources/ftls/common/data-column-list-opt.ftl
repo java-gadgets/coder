@@ -1,3 +1,4 @@
+<#if opts? size gt 0>
                 {
                     title: '操作',
                     key: 'action',
@@ -28,3 +29,4 @@
                         ])
                     }
                 }
+</#if>

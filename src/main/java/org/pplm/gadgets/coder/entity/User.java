@@ -16,6 +16,9 @@ public class User extends Base {
 	@Column(length = 128)
 	private String password;
 	
+	@Column(columnDefinition = "INT(1) DEFAULT 1 COMMENT '用户状态：0停用，1正常'")
+	private String status;
+	
 	@Transient
 	private String token;
 	
@@ -45,6 +48,14 @@ public class User extends Base {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
