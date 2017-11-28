@@ -35,7 +35,7 @@ public class AttrController {
 	}
 	
 	@GetMapping(path = "/detail")
-	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
 		Attr attr = attrRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (attr != null) {
 			return ResHelper.success(attr);
@@ -43,8 +43,8 @@ public class AttrController {
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 
-	@PostMapping(path="/save/{fid}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> onPostCreate(@PathVariable("fid") String fid, @RequestBody Attr attr) {
+	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> onPostCreate(@RequestParam(name = "fid") String fid, @RequestBody Attr attr) {
 		if (attr != null) {
 			attr.setFid(fid);
 			return ResHelper.success(attrService.save(attr));
@@ -52,10 +52,9 @@ public class AttrController {
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
 	
-	@PostMapping(path="/delete/{id}")
-	public Map<String, Object> onPostDelete(@PathVariable("id") String id) {
-		if(id != null) {
-		    attrService.delete(id);
+	@PostMapping(path="/delete")
+	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
+	    if (attrService.delete(id)) {
 			return ResHelper.success();
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);

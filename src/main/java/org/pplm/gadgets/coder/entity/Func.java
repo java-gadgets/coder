@@ -5,11 +5,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "func")
@@ -30,12 +33,14 @@ public class Func extends Base {
 	@Column(length = 255)
 	private String remark;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name="fid")
 	@Where(clause="delete_flag = 0")
 	private List<Attr> attrs;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name="fid")
 	@Where(clause="delete_flag = 0")
 	private List<Opt> opts;

@@ -35,11 +35,15 @@ public class AttrService {
 		return attrResult;
 	}
 	
-	public void delete(String id) {
+	public boolean delete(String id) {
 		Attr attr = attrRepository.findOneByIdAndDeleteFlag(id, 0);
-		attr.setDeleteFlag(1);
-		attrRepository.save(attr);
-		optAttrRepository.deleteByAid(id);
+		if (attr != null) {
+			attr.setDeleteFlag(1);
+			attrRepository.save(attr);
+			optAttrRepository.deleteByAid(id);
+			return true;
+		}
+		return false;
 	}
 	
 }

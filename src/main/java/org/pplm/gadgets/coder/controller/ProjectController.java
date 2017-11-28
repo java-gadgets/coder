@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +38,7 @@ public class ProjectController {
 	}
 	
 	@GetMapping(path = "/detail")
-	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
 		Project project = projectRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (project != null) {
 			return ResHelper.success(project);
@@ -47,8 +46,8 @@ public class ProjectController {
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
-	@PostMapping(path="/delete/{id}")
-	public Map<String, Object> onPostDelete(@PathVariable("id") String id) {
+	@PostMapping(path="/delete")
+	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
 		if(id != null) {
 			Project project = projectRepository.findOneByIdAndDeleteFlag(id, 0);
 			if(project != null) {

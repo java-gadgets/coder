@@ -72,7 +72,7 @@ public class GeneratorController {
 	private String genCode(Base base, String templateFileName) throws IOException, TemplateException {
 		Configuration config = new Configuration(Configuration.VERSION_2_3_26);
 		config.setDefaultEncoding("utf-8");
-		TemplateLoader templateLoader = new SpringTemplateLoader(new DefaultResourceLoader(), "ftls");
+		TemplateLoader templateLoader = new SpringTemplateLoader(new DefaultResourceLoader(), "ftls/code-ui/iview-admin");
 		config.setTemplateLoader(templateLoader);
 		Template template = config.getTemplate(templateFileName, "utf-8");
 		StringWriter stringWriter = new StringWriter();

@@ -8,6 +8,7 @@ import org.pplm.gadgets.coder.entity.Opt;
 import org.pplm.gadgets.coder.entity.OptAttr;
 import org.pplm.gadgets.coder.repository.OptRepository;
 import org.pplm.gadgets.coder.service.OptAttrService;
+import org.pplm.gadgets.coder.service.OptService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/v1/opt", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OptController {
+	
+	@Autowired
+	private OptService optService;
 	
 	@Autowired
 	private OptRepository optRepository;
@@ -41,7 +45,7 @@ public class OptController {
 	}
 	
 	@GetMapping(path = "/detail")
-	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
 		Opt opt = optRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (opt != null) {
 			return ResHelper.success(opt);
@@ -49,8 +53,8 @@ public class OptController {
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 
-	@PostMapping(path="/save/{fid}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> onPostCreate(@PathVariable("fid") String fid, @RequestBody Opt opt) {
+	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> onPostCreate(@RequestParam(name = "fid", required = true) String fid, @RequestBody Opt opt) {
 		if (opt != null) {
 			opt.setFid(fid);
 			return ResHelper.success(optRepository.save(opt));
@@ -58,10 +62,10 @@ public class OptController {
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
 	
-	@PostMapping(path="/delete/{id}")
-	public Map<String, Object> onPostDelete(@PathVariable("id") String id) {
-		if(id != null) {
-
+	@PostMapping(path="/delete")
+	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
+		if (optService.delete(id)) {
+			return ResHelper.success();
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}

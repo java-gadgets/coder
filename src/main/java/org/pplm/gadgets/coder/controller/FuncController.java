@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,15 +30,16 @@ public class FuncController {
 	}
 
 	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> onPostCreate(@RequestBody Func func) {
+	public Map<String, Object> onPostCreate(@RequestParam(name = "pid", required = true)String pid, @RequestBody Func func) {
 		if (func != null) {
+			func.setPid(pid);
 			return ResHelper.success(funcRepository.save(func));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
 	
 	@GetMapping(path = "/detail")
-	public Map<String, Object> onGetDetail(@RequestParam("id") String id) {
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
 		Func func = funcRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (func != null) {
 			return ResHelper.success(func);
@@ -47,8 +47,8 @@ public class FuncController {
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
-	@PostMapping(path="/delete/{id}")
-	public Map<String, Object> onPostDelete(@PathVariable("id") String id) {
+	@PostMapping(path="/delete")
+	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
 		if(id != null) {
 			Func func = funcRepository.findOneByIdAndDeleteFlag(id, 0);
 			if(func != null) {

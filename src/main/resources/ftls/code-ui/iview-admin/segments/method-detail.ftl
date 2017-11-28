@@ -1,13 +1,14 @@
-        go${optName?cap_first} () {
+        go${optName?cap_first} (id) {
 <#if opt.mode! == "modal">
             this.showModal${optName?cap_first}(id);
 <#elseif opt.mode! == "page">
             this.$router.push({
-                name: '${opt.name}_${opt.type}',
+                name: '<#if opt.preUrl! == "" >${opt.name!}_${opt.type!}<#else>${opt.preUrl!}</#if>',
                 params: {
                     id: id
                 },
             });
+<#else>
 </#if>
         },
 <#if opt.mode! == "modal" >
@@ -17,16 +18,15 @@
                 if (res.status === 200) {
                     if (res.data.code === "0") {
 <#list opt.attrs as attr>
-                        _self.optForm.${optName}.${attr.name} = res.data.content.${attr.name};
+                        _self.optForm.${optName!}.${attr.name!} = res.data.content.${attr.name!};
 </#list>
                     }
                 }
-                this.optModal.${optName}.loading = false;
+                this.optModal.${optName!}.loading = false;
             }).catch(err => {
-                this.optModal.${optName}.loading = false;
+                this.optModal.${optName!}.loading = false;
                 console.log(err);
-            })
-</#if>
-            this.optModal.${optName}.show = true;
+            });
+            this.optModal.${optName!}.show = true;
         },
 </#if>

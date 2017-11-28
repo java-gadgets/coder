@@ -17,13 +17,15 @@ public class OptService {
 	@Autowired
 	private OptAttrRepository optAttrRepository;
 	
-	public void delete(String id) {
+	public boolean delete(String id) {
 		Opt opt = optRepository.findOneByIdAndDeleteFlag(id, 0);
 		if(opt != null) {
 			opt.setDeleteFlag(1);
 			optRepository.save(opt);
 			optAttrRepository.deleteByOid(id);
+			return true;
 		}
+		return false;
 	}
 	
 }

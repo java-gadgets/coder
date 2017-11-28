@@ -1,6 +1,6 @@
 <#list attrs as attr >
 <#if attr.type! == "enum" >
-                ${attr.name}: [
+                ${attr.name!}: [
                     {
                         label: '请修改字典项1',
                         value: '0'
@@ -11,4 +11,4 @@
                     }
                 ],
 </#if>
-</#list>  
+</#list>

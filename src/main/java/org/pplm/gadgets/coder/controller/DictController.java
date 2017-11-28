@@ -32,7 +32,7 @@ public class DictController {
 	}	
 	
 	@PostMapping(path = "/save")
-	public Map<String, Object> onPostSave(@RequestBody Dict dict) {
+	public Map<String, Object> onPostSave(@RequestParam(name = "pid", required = true) String pid, @RequestBody Dict dict) {
 		if (dict != null) {
 			return ResHelper.success(dictService.save(dict));
 		}
