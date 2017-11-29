@@ -2,14 +2,14 @@
     @import '../../styles/common.less';
 </style>
 <template><div>
+<Card>
 <#list opts as opt >
 <#if opt.type! == "query" >
-<Card>
 <#include "segments/template-form-query.ftl" />
-</Card>
 <#break>
 </#if>
 </#list>
+</Card>
 <Card>
     <Row>
         <Col span="24" class="table-top-opt">
@@ -38,6 +38,7 @@
             <Page :total="page.total" :current="page.current" :page-size="page.size" show-total show-elevator size="small" @on-change="changePage">总计 {{page.total}} 条</Page>
         </Col>
     </Row>
+    
 </Card>
 <#include "segments/template-modal-edit.ftl" />
 <#include "segments/template-modal-detail.ftl" />
@@ -55,16 +56,54 @@ export default {
                 num: 0
             },
             columns: [
+<#list opts as opt >
+<#if opt.type! == "list" >
 <#include "segments/data-columns.ftl" />
+<#break>
+</#if>
+</#list>
             ],
             optForm: {
-<#include "segments/data-optform.ftl" />
+<#if relaAttr! != "" >
+                ${relaAttr}: '',
+</#if>
+                queryForm: {
+<#list opts as opt >
+<#if opt.type! == "query" >
+<#list opt.attrs as attr>
+                    ${attr.name}: '',
+</#list>
+<#break>
+</#if>
+</#list>
+                },
+<#list opts as opt >
+<#assign optName = opt.name + opt.type?cap_first />
+<#if opt.mode! == "modal" && (opt.type! == "add" || opt.type! == "detail" || opt.type! == "save" || opt.type! == "update") >
+                ${optName}: {
+                    id: '',
+<#list opt.attrs as attr>
+<#if attr.name! != "id" >
+                    ${attr.name}: '${attr.defaultValue!}',
+</#if>
+</#list>
+                },
+</#if>
+</#list>
             },
             optModal: {
-<#include "segments/data-optmodal.ftl" />
-            },
-            optRule: {
-<#include "segments/data-optrule.ftl" />
+<#list opts as opt >
+<#assign optName = opt.name + opt.type?cap_first />
+<#if opt.mode! == "modal" && (opt.type! == "add" || opt.type! == "detail" || opt.type! == "save" || opt.type! == "update") >
+                ${optName}: {
+                    show: false,
+                    title: '${opt.label}',
+<#if opt.type! == "detail" || opt.type! == "save" || opt.type! == "update" >
+                    loading: true
+</#if>
+                },
+</#if>
+</#list>
             },
             dict: {
 <#include "segments/data-dict.ftl" />
@@ -87,7 +126,7 @@ export default {
         },
         getQueryForm () {
             let queryForm = this.optForm.queryForm;
-            queryForm.page = this.page.current - 1;
+            queryForm.page = this.page.current;
             queryForm.size = this.page.size;
 <#if relaAttr! != "" >
             queryForm.${relaAttr} = this.optForm.${relaAttr};
@@ -112,8 +151,16 @@ export default {
 </#if>
             util.ajax.get('${getTableDataUrl!}', { params: this.getQueryForm() }).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "spec/res-success.ftl" />) {
-<#include "spec/res-pageable.ftl" />
+                    if (res.data.result === 1) {
+                        if (res.data.content.data.length == 0 && _self.page.current > 1 ) {
+                            _self.page.current = _self.page.current - 1;
+                            _self.getTableData();
+                        } else {
+                            _self.tableData = res.data.content.data;
+                            _self.page.total = res.data.content.total;
+                            _self.page.size = res.data.content.per_page;
+                            _self.page.current = res.data.content.current_page;
+						}
                     } else {
                         _self.$Message.error(res.data.message);
                     }

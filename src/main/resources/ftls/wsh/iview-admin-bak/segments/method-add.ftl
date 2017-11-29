@@ -13,7 +13,7 @@
         },
         do${optName?cap_first} () {
             let _self = this;
-            util.ajax.post('${opt.exeUrl!}', this.process${optName?cap_first}Form()).then(res => {
+            util.ajax.post('${opt.exeUrl!}', this.optForm.${optName!}).then(res => {
                 _self.getTableData();
                 _self.clear${optName?cap_first}Form ();
                 _self.optModal.${optName!}.show = false;
@@ -21,16 +21,6 @@
             }).catch(err => {
                 _self.optModal.${optName!}.show = false;
             });
-        },
-        process${optName?cap_first}Form () {
-            let form = {
-<#list opt.attrs as attr>
-<#if attr.name! != "id" >
-                ${attr.name!}: this.optForm.${optName!}.${attr.name!},
-</#if>
-</#list>
-            };
-            return form;
         },
         clear${optName?cap_first}Form () {
             this.optForm.${optName!}.id = '';

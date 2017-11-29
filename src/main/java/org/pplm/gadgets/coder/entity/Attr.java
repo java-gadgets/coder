@@ -18,17 +18,28 @@ public class Attr extends Base {
 
 	@Column(columnDefinition = "BIGINT(20)")
 	private String fid;
+
 	@Column(length = 128)
 	private String label;
+
 	@Column(length = 128)
 	private String name;
+
 	@Column(length = 32)
 	private String type;
+	
+	@Column(columnDefinition = "INT(1) DEFAULT 0")
+	private String required;
+
 	@Column(length = 5)
 	private Integer length;
+
 	@Column(length = 1)
 	private Integer precise;
+
+	@Column(length = 128)
 	private String defaultValue;
+
 	@Column(length = 255)
 	private String remark;
 	
@@ -70,6 +81,14 @@ public class Attr extends Base {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getRequired() {
+		return required;
+	}
+
+	public void setRequired(String required) {
+		this.required = required;
 	}
 
 	public String getType() {

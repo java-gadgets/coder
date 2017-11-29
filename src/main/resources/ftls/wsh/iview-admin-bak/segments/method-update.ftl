@@ -18,7 +18,7 @@
                     let _modal = this.$Modal;
                     util.ajax.post('${opt.exeUrl!}?id=' + id).then(res => {
                         if (res.status === 200) {
-                            if (res.data.code === "0") {
+                            if (res.data.result === 1) {
                                 _self.getTableData();
                                 _self.$Message.info(res.data.message);
                             } else {
@@ -41,8 +41,13 @@
             let _self = this;
             util.ajax.get('${opt.preUrl!}?id=' + id).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "../spec/res-success.ftl" />) {
-                        _self.prepare${optName?cap_first}Form(form);
+                    if (res.data.result === 1) {
+                        _self.optForm.${optName!}.id = res.data.content.id;
+<#list opt.attrs as attr >
+<#if attr.name! != "id" >
+                        _self.optForm.${optName!}.${attr.name!} = res.data.content.${attr.name!};
+</#if>
+</#list>
                     }
                 }
                 this.optModal.${optName!}.loading = false;
@@ -54,7 +59,7 @@
         },
         do${optName?cap_first} () {
             let _self = this;
-            util.ajax.post('${opt.exeUrl!}', this.process${optName?cap_first}Form()).then(res => {
+            util.ajax.post('${opt.exeUrl!}', this.optForm.${optName!}).then(res => {
                 _self.getTableData();
                 _self.optModal.${optName!}.show = false;
                 _self.$Message.info(res.data.message);
@@ -62,23 +67,5 @@
                 console.log(err);
                 _self.optModal.${optName!}.show = false;
             });
-        },
-        prepare${optName?cap_first}Form (form) {
-            this.optForm.${optName!}.id = form.id;
-<#list opt.attrs as attr>
-<#if attr.name! != "id" >
-            this.optForm.${optName!}.${attr.name!} = form.${attr.name!};
-</#if>
-</#list>        
-        },
-        process${optName?cap_first}Form () {
-            let form = {
-<#list opt.attrs as attr>
-<#if attr.name! != "id" >
-                ${attr.name!}: this.optForm.${optName!}.${attr.name!},
-</#if>
-</#list>
-            };
-            return form;
         },
 </#if>

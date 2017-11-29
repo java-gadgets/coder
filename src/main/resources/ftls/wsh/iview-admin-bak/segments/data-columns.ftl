@@ -1,5 +1,3 @@
-<#list opts as opt >
-<#if opt.type! == "list" >
 <#list opt.attrs as attr >
                 {
                     title: '${attr.label!}',
@@ -13,7 +11,4 @@
 </#if>                    
                     align: 'center'
                 },
-</#list>
-<#break>
-</#if>
 </#list>

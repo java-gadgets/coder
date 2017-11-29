@@ -31,6 +31,11 @@ public class DictController {
 		return ResHelper.success(dictRepsitory.findAllByDeleteFlag(0, pageable));
 	}	
 	
+	@GetMapping(path = "/listAll")
+	public Map<String, Object> onGetAllList(@RequestParam(name = "pid", required = true) String pid) {
+		return ResHelper.success(dictRepsitory.findAllByPidAndDeleteFlag(pid, 0));
+	}
+	
 	@PostMapping(path = "/save")
 	public Map<String, Object> onPostSave(@RequestParam(name = "pid", required = true) String pid, @RequestBody Dict dict) {
 		if (dict != null) {

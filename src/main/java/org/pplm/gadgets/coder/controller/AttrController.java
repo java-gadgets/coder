@@ -3,6 +3,7 @@ package org.pplm.gadgets.coder.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.pplm.gadgets.coder.entity.Attr;
 import org.pplm.gadgets.coder.repository.AttrRepository;
 import org.pplm.gadgets.coder.service.AttrService;
@@ -30,7 +31,6 @@ public class AttrController {
 	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetQuery(@RequestParam(name = "fid", required = true) String fid, Pageable pageable){
-		//return ResHelper.success(funcRepository.findAll(pageable));
 		return ResHelper.success(attrRepository.findByFidAndDeleteFlag(fid, 0, pageable));
 	}
 	
@@ -47,6 +47,11 @@ public class AttrController {
 	public Map<String, Object> onPostCreate(@RequestParam(name = "fid") String fid, @RequestBody Attr attr) {
 		if (attr != null) {
 			attr.setFid(fid);
+			if (attr.getDict() != null) {
+				if (StringUtils.isBlank(attr.getDict().getId())) {
+					attr.setDict(null);
+				}
+			}
 			return ResHelper.success(attrService.save(attr));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);

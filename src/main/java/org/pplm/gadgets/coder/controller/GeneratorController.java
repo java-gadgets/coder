@@ -41,18 +41,18 @@ public class GeneratorController {
 	private DictRepository dictRepository;
 
 	@PostMapping(path = "/vue/{id}")
-	public Map<String, Object> onPostList (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type) throws IOException, TemplateException {
+	public Map<String, Object> onPostList (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type, @RequestParam(name = "project", required = false, defaultValue = "wsh") String project) throws IOException, TemplateException {
 		Func func = funcRepository.findOne(id);
 		if (func == null) {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 		}
-		return ResHelper.success(genCode(func, type + ".ftl"));
+		return ResHelper.success(genCode(func, type + ".ftl", "/" + project + "/iview-admin"));
 	}
 	
 	@PostMapping(path = "/vue/dict/{id}")
 	public Map<String, Object> onPostDictGen(@PathVariable(name = "id") String id) throws IOException, TemplateException {
 		Dict dict = dictRepository.findOne(id);
-		return ResHelper.success(genCode(dict, "dict.ftl"));
+		return ResHelper.success(genCode(dict, "dict.ftl", ""));
 	}
 	
 	@PostMapping(path = "/vue/opt/{type}/{id}")
@@ -66,13 +66,13 @@ public class GeneratorController {
 		} else {
 			return ResHelper.error("invalid type");
 		}
-		return ResHelper.success(genCode(opt, templateFileName));
+		return ResHelper.success(genCode(opt, templateFileName, ""));
 	}
 	
-	private String genCode(Base base, String templateFileName) throws IOException, TemplateException {
+	private String genCode(Base base, String templateFileName, String path) throws IOException, TemplateException {
 		Configuration config = new Configuration(Configuration.VERSION_2_3_26);
 		config.setDefaultEncoding("utf-8");
-		TemplateLoader templateLoader = new SpringTemplateLoader(new DefaultResourceLoader(), "ftls/code-ui/iview-admin");
+		TemplateLoader templateLoader = new SpringTemplateLoader(new DefaultResourceLoader(), "ftls" + path);
 		config.setTemplateLoader(templateLoader);
 		Template template = config.getTemplate(templateFileName, "utf-8");
 		StringWriter stringWriter = new StringWriter();

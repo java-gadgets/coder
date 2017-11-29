@@ -1,8 +1,3 @@
-${spaces!}    <Form :model="optForm.${optName!}" :label-width="100">
-${spaces!}        <Row>
-<#list opt.attrs as attr >
-${spaces!}            <Col span="11">
-${spaces!}                <FormItem label="${attr.label!}" prop="${attr.name!}">
 <#if attr.type! == "datetime">
 ${spaces!}                    <DatePicker :value="optForm.${optName!}.${attr.name!}" format="yyyy-MM-dd HH:mm:ss" type="datetime" placement="bottom-end" placeholder="请选择${attr.label!}"></DatePicker>
 <#elseif attr.type! == "date">
@@ -18,15 +13,3 @@ ${spaces!}                    </Select>
 <#else>
 ${spaces!}                    <Input type="<#if attr.type! == "textarea">textarea<#elseif attr.type! == "password">password<#else>text</#if>" v-model="optForm.${optName!}.${attr.name!}"></Input>
 </#if>
-${spaces!}                </FormItem>
-${spaces!}            </Col>
-<#if attr_has_next>
-<#if (attr_index + 1) % 2 == 0 >
-${spaces!}        </Row>
-${spaces!}        <Row>
-</#if>
-<#else>
-${spaces!}        </Row>
-</#if>
-</#list>
-${spaces!}    </Form>
