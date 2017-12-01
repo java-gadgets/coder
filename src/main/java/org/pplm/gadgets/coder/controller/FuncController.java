@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.pplm.gadgets.coder.entity.Func;
 import org.pplm.gadgets.coder.repository.FuncRepository;
+import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,8 @@ public class FuncController {
 	
 	@Autowired
 	private FuncRepository funcRepository;
+	@Autowired
+	private FuncService funcService;
 	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetQuery(@RequestParam(name = "pid", required = false) String pid, Pageable pageable){
@@ -35,7 +38,7 @@ public class FuncController {
 	public Map<String, Object> onPostCreate(@RequestParam(name = "pid", required = true)String pid, @RequestBody Func func) {
 		if (func != null) {
 			func.setPid(pid);
-			return ResHelper.success(funcRepository.save(func));
+			return ResHelper.success(funcService.save(func));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}

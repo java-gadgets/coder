@@ -71,24 +71,14 @@ export default {
             },
         }
     },
-    activated () {
-<#if relaAttr! != "" >
-        this.optForm.${relaAttr} = this.$route.params.id
-</#if>
-        this.page.current = 1;
-        this.getTableData();
-    },
-    mounted () {
-        this.init();
-    },
+<#include "spec/list-init.ftl" />
     methods: {
         init () {
         	this.setOpts();
         },
         getQueryForm () {
             let queryForm = this.optForm.queryForm;
-            queryForm.page = this.page.current - 1;
-            queryForm.size = this.page.size;
+<#include "../spec/queryform-page" />
 <#if relaAttr! != "" >
             queryForm.${relaAttr} = this.optForm.${relaAttr};
 </#if>

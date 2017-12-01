@@ -13,14 +13,21 @@
         },
         do${optName?cap_first} () {
             let _self = this;
-            util.ajax.post('${opt.exeUrl!}', this.process${optName?cap_first}Form()).then(res => {
-                _self.getTableData();
-                _self.clear${optName?cap_first}Form ();
-                _self.optModal.${optName!}.show = false;
-                _self.$Message.info(res.data.message);
-            }).catch(err => {
-                _self.optModal.${optName!}.show = false;
-            });
+            this.$refs.${optName!}Form.validate((valid) => {
+                if (valid) {
+		            util.ajax.post('${opt.exeUrl!}', this.process${optName?cap_first}Form()).then(res => {
+		                _self.getTableData();
+		                _self.clear${optName?cap_first}Form ();
+		                _self.optModal.${optName!}.show = false;
+		                _self.$Message.info(res.data.message);
+		            }).catch(err => {
+		                _self.optModal.${optName!}.show = false;
+		            });
+                } else {
+                    _self.optModal.${optName!}.okLoading = false;
+                    _self.$nextTick(() => _self.optModal.${optName!}.okLoading = true);
+                }
+		    });
         },
         process${optName?cap_first}Form () {
             let form = {
