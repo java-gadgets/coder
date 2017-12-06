@@ -16,7 +16,7 @@
             let _self = this;
             util.ajax.get('${opt.exeUrl!}?id=' + id).then(res => {
                 if (res.status === 200) {
-                    if (res.data.code === "0") {
+                    if (res.data.<#include "spec/res-success.ftl" />) {
 <#list opt.attrs as attr>
                         _self.optForm.${optName!}.${attr.name!} = res.data.content.${attr.name!};
 </#list>

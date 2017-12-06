@@ -59,10 +59,12 @@ public class GeneratorController {
 	public Map<String, Object> onPostSaveGen(@PathVariable(name = "type") String type, @PathVariable(name = "id") String id) throws IOException, TemplateException {
 		Opt opt = optRepository.findOne(id);
 		String templateFileName = null;
-		if ("update".equals(type) || "add".equals(type) || "save".equals(type)) {
+		if ("update".equals(type) || "add".equals(type)) {
 			templateFileName = "save-wsh.ftl";
+		} else if ("save".equals(type)) {
+			templateFileName = "/wsh/iview-admin/save-wsh.ftl";
 		} else if ("detail".equals(type)) {
-			templateFileName = "detail-wsh.ftl";
+			templateFileName = "/wsh/iview-admin/detail-wsh.ftl";
 		} else {
 			return ResHelper.error("invalid type");
 		}

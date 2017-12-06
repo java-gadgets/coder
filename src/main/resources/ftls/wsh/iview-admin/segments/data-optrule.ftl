@@ -3,17 +3,7 @@
 <#assign optName = opt.name + opt.type?cap_first />
                 ${optName}: {
 <#list opt.attrs as attr >
-<#if attr.required! == "1" >
-                    ${attr.name!}: [
-<#if attr.type! == "date" || attr.type! == "datetime" >
-                        { required: true, type: 'date', message: '请选择${attr.label!}', trigger: 'change' },
-<#elseif attr.type! == "enum" >
-                        { required: true, message: '请选择${attr.label!}', trigger: 'change' },
-<#else>
-                        { required: true, message: '${attr.label!}不能为空', trigger: 'blur' },
-</#if>
-                    ],
-</#if>
+<#include "data-optrule-item.ftl" />
 </#list>
                 },
 </#if>

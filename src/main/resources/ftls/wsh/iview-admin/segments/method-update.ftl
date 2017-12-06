@@ -18,7 +18,7 @@
                     let _modal = this.$Modal;
                     util.ajax.post('${opt.exeUrl!}?id=' + id).then(res => {
                         if (res.status === 200) {
-                            if (res.data.code === "0") {
+                            if (res.data.<#include "../spec/res-success.ftl" />) {
                                 _self.getTableData();
                                 _self.$Message.info(res.data.message);
                             } else {

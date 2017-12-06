@@ -20,10 +20,10 @@
 </#list>
 <#list opts as opt >
 <#if opt.type! == "add" >
-            <Button type="primary" icon="plus" size="small" @click="go${opt.name?cap_first}${opt.type?cap_first}">${opt.label!}</Button>            
+            <Button type="primary" icon="plus" size="small" @click="go${opt.name?cap_first}${opt.type?cap_first}()">${opt.label!}</Button>            
 </#if>
 <#if opt.type! == "save" >
-            <Button type="primary" icon="plus" size="small" @click="go${opt.name?cap_first}${opt.type?cap_first}">添加</Button>
+            <Button type="primary" icon="plus" size="small" @click="go${opt.name?cap_first}${opt.type?cap_first}()">添加</Button>
 </#if>
 </#list>
         </Col>
@@ -78,7 +78,7 @@ export default {
         },
         getQueryForm () {
             let queryForm = this.optForm.queryForm;
-<#include "../spec/queryform-page" />
+<#include "spec/queryform-page.ftl" />
 <#if relaAttr! != "" >
             queryForm.${relaAttr} = this.optForm.${relaAttr};
 </#if>

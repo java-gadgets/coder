@@ -7,10 +7,10 @@
         <Icon type="clipboard"></Icon>
         ${label}详情
     </p>
-    <Row>
+    <Row class="detail-line">
         <Col span="24" class="small-title detail-subtitle-bar">基本信息</Col>
     </Row>
-    <Row>
+    <Row class="detail-line">
         <Col span="2">&nbsp;</Col>
 <#if attrs?size == 0>
         <Col span="22">&nbsp;</Col>
@@ -21,8 +21,8 @@
 <#if attr_has_next>
 <#if (attr_index + 1) % 3 == 0>
         <Col span="1">&nbsp;</Col>
-    </ROw>
-        <Col span="24" class="detail-line">
+    </Row>
+    <Row class="detail-line">
         <Col span="2">&nbsp;</Col>
 </#if>
 <#else>
@@ -45,7 +45,9 @@ export default {
     data () {
         return {
             detailData: {},
-<#include "common/data-dict.ftl" />            
+            dict: {
+<#include "segments/data-dict.ftl" />
+            },
         }
     },
     mounted () {
@@ -54,7 +56,7 @@ export default {
     methods: {
         init () {
             let _self = this
-            util.ajax.get('${(opt.exeUrl)!}?id=' + this.$route.params.id).then(res => {
+            util.ajax.get('${exeUrl!}/' + this.$route.params.id).then(res => {
                 if (res.status === 200) {
                     if (res.data.result === 1) {
                         _self.detailData = res.data.content

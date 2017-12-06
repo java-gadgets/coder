@@ -6,7 +6,7 @@ ${spaces!}                    <DatePicker v-model="optForm.${optName!}.${attr.na
 ${spaces!}                    <DatePicker v-model="optForm.${optName!}.${attr.name!}" format="yyyy" type="date" placement="bottom-end" placeholder="请选择${attr.label!}"></DatePicker>
 <#elseif attr.type! == "month">
 ${spaces!}                    <DatePicker v-model="optForm.${optName!}.${attr.name!}" format="yyyy-MM" type="date" placement="bottom-end" placeholder="请选择${attr.label!}"></DatePicker>
-<#elseif attr.type! == "enum">
+<#elseif attr.type! == "select">
 ${spaces!}                    <Select v-model="optForm.${optName!}.${attr.name!}" clearable placeholder="请选择${attr.label!}">
 ${spaces!}                        <Option v-for="item in dict.${attr.name!}" :value="item.value" :key="item.value">{{ item.label }}</Option>
 ${spaces!}                    </Select>

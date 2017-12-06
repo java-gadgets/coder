@@ -2,12 +2,18 @@
 <#if opt.mode! == "modal" >
             this.showModal${optName?cap_first}(id);
 <#elseif opt.mode! == "page" >
-            this.$router.push({
-                name: '${opt.name!}_${opt.type!}',
-                params: {
-                    id: id
-                },
-            });
+            if (id) {
+	            this.$router.push({
+	                name: '${opt.name!}_${opt.type!}_update',
+	                params: {
+	                    id: id
+	                },
+	            });
+            } else {
+            	this.$router.push({
+	                name: '${opt.name!}_${opt.type!}_add',
+	            });
+            }
 </#if>
         },
 <#if opt.mode! == "modal" >
@@ -73,7 +79,7 @@
             this.optForm.${optName!}.id = '';
 <#list opt.attrs as attr>
 <#if attr.name! != "id" >
-            this.optForm.${optName!}.${attr.name} = '${attr.defaultValue!}';
+<#include "comm-form-expr-item.ftl" />
 </#if>
 </#list>        
         },

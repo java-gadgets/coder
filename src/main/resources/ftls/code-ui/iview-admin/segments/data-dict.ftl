@@ -1,5 +1,5 @@
 <#list attrs as attr >
-<#if attr.type! == "enum" >
+<#if attr.type! == "select" || attr.type! == "radio" >
                 ${attr.name!}: [
 <#if attr.dict?? >
 <#list attr.dict.dictItems as dictItem >

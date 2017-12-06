@@ -18,7 +18,7 @@
                     id: '',
 <#list opt.attrs as attr>
 <#if attr.name! != "id" >
-                    ${attr.name}: '${attr.defaultValue!}',
+<#include "comm-form-json-item.ftl" />
 </#if>
 </#list>
                 },
