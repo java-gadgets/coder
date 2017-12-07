@@ -15,12 +15,12 @@
         <Col span="24" class="table-top-opt">
 <#list opts as opt >
 <#if opt.type! == "export" >
-            <Button type="success" icon="archive" size="small" @click="do${opt.name?cap_first}${opt.type?cap_first}">${opt.label!}</Button>
+            <Button type="success" icon="archive" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="do${opt.name?cap_first}${opt.type?cap_first}">${opt.label!}</Button>
 </#if>
 </#list>
 <#list opts as opt >
 <#if opt.type! == "add" >
-            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.name?cap_first}${opt.type?cap_first}()">${opt.label!}</Button>            
+            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.name?cap_first}${opt.type?cap_first}()">${opt.label!}</Button>
 </#if>
 <#if opt.type! == "save" >
             <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.name?cap_first}${opt.type?cap_first}()">添加</Button>
