@@ -5,7 +5,7 @@
 <template><div>
 <Card>
     <p slot="title">
-        {{ card.title }}广告
+        {{ card.title }}
     </p>
     <Form ref="${optName!}Form" :model="optForm.${optName}" :label-width="100" :rules="optRule.${optName}" >
 <#list attrs as attr >
@@ -20,7 +20,7 @@
     </Form>
     <Row>
         <Col span="24" style="text-align: center; margin-top: 20px;">
-            <Button type="primary" icon="ios-cloud-upload" :loading="card.okLoading" @click="doBack">保存</Button>
+            <Button type="primary" icon="ios-cloud-upload" :loading="card.okLoading" @click="do${optName?cap_first}">保存</Button>
             <Button type="primary" icon="reply" @click="doBack">返回</Button>
         </Col>
     </Row>
@@ -36,7 +36,7 @@ export default {
                     id: '',
 <#list attrs as attr >
 <#if attr.name! != "id" >
-<#include "segment/comm-form-json-item.ftl" />
+<#include "segments/comm-form-json-item.ftl" />
 </#if>
 </#list>
                 },
@@ -50,7 +50,7 @@ export default {
             },
             card: {
                 title: '',
-                okLoading: true,
+                okLoading: false,
             },
             upload: {
                 url: util.uploadUrl,
@@ -70,57 +70,59 @@ export default {
         }
     },
     mounted () {
-        this.optForm.id = this.$route.params.id;
-        this.init();
+        this.init(this.$route.params.id);
     },
     methods: {
-        init () {
-            this.clearOptForm()
-            if (this.optForm.id) {
-                let _self = this
-                util.ajax.get('/AdvertisingService/AdvertisingById?id=' + this.optForm.id).then(res => {
-                    if (res.status === 200) {
-                        if (res.data.result === 1) {
-                            _self.optForm = res.data.content
-                        } else {
-                            _self.$Message.error(res.data.message)
-                        }
-                    }
-                }).catch(err => {
-                    console.log(err)
-                })
-            }
-            this.prepareUpload();
+        init (id) {
+	        if (id) {
+	            this.optForm.${optName}.id = id;
+	            this.card.title = '编辑${label!}';
+	            let _self = this;
+	            util.ajax.get('${preUrl!}?id=' + id).then(res => {
+	                if (res.status === 200) {
+	                    if (res.data.<#include "spec/res-success.ftl" />) {
+	                        _self.prepare${optName?cap_first}Form(res.data.content);
+	                        _self.prepareUpload();
+	                    }
+	                }
+	            }).catch(err => {
+	                console.log(err);
+	            });
+	        } else {
+	            this.card.title = '添加${label!}';
+	            this.prepareUpload();
+	        }
         },
         do${optName?cap_first} () {
+            this.card.okLoading = true;
             let _self = this;
             this.$refs.${optName!}Form.validate((valid) => {
                 if (valid) {
-                    util.ajax.post('${opt.exeUrl!}<#if relaAttr! != "" >?${relaAttr}=' + this.optForm.${relaAttr}<#else>'</#if>, this.process${optName?cap_first}Form()).then(res => {
+                    util.ajax.post('${exeUrl!}', this.process${optName?cap_first}Form()).then(res => {
                         _self.clear${optName?cap_first}Form ();
                         _self.$Message.info(res.data.message);
+                        _self.card.okLoading = false;
                         _self.doBack();
                     }).catch(err => {
                         console.log(err);
                     });
                 } else {
                     _self.card.okLoading = false;
-                    _self.$nextTick(() => _self.card.okLoading = true);
                 }
             });
         },
         prepare${optName?cap_first}Form (form) {
             this.optForm.${optName!}.id = form.id;
-<#list opt.attrs as attr>
+<#list attrs as attr>
 <#if attr.name! != "id" >
-            this.optForm.${optName!}.${attr.name!} = form.${attr.name!};
+            this.optForm.${optName!}.${attr.name!} = form.${attr.name!} + '';
 </#if>
 </#list>        
         },
         process${optName?cap_first}Form () {
             let form = {
                 id: this.optForm.${optName!}.id,
-<#list opt.attrs as attr>
+<#list attrs as attr>
 <#if attr.name! != "id" >
                 ${attr.name!}: this.optForm.${optName!}.${attr.name!},
 </#if>
@@ -132,51 +134,60 @@ export default {
             this.optForm.${optName!}.id = '';
 <#list attrs as attr>
 <#if attr.name! != "id" >
-<#include "segment/comm-form-expr-item.ftl" />
+<#include "segments/comm-form-expr-item.ftl" />
 </#if>
 </#list>        
         },
         doBack() {
-            this.$router.go(-1)
+            this.$router.go(-1);
         },
+        prepareUpload () {
+<#list attrs as attr >
+<#if attr.type! == "pic" >
+            this.upload.${attr.name!}.uploadList = this.$refs.${attr.name!}Upload.fileList;
+            if (this.optForm.${optName!}.${attr.name!} != '') {
+            	this.upload.${attr.name!}.uploadList.push({
+            	    response: {
+                        content: this.optForm.advertSave.advertising_url,
+                    },
+                    status: 'finished',
+            	});
+            }
+            
+</#if>
+</#list>
+        },
+<#list attrs as attr >
+<#if attr.type == "pic" >
+        ${attr.name!}HandleView (url) {
+            this.upload.${attr.name!}.imageUrl = url;
+            this.upload.${attr.name!}.visible = true;
+        },
+        ${attr.name!}HandleRemove (file) {
+            util.removeArray(this.$refs.${attr.name!}Upload.fileList, file);
+            this.optForm.${optName!}.${attr.name!} = '';
+        },
+        ${attr.name!}HandleSuccess (res, file) {
+            this.optForm.${optName!}.${attr.name!} = file.response.content;
+        },
+        ${attr.name!}HandleFormatError (file) {
+            this.$Notice.warning({
+                title: '不是有效的图片格式',
+                desc: file.name + '图片格式无效，只能是jpg或者png格式.'
+            });
+        },
+        ${attr.name!}HandleMaxSize (file) {
+            this.$Notice.warning({
+                title: '图片大小超过限制',
+                desc: '图片大小超过2mb.'
+            });
+        },
+        ${attr.name!}HandleBeforeUpload () {
+            util.clearArray(this.upload.${attr.name!}.uploadList);
+            return true;
+        }
+</#if>
+</#list>
     }
 }
 </script>
-<style>
-    .demo-upload-list{
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        line-height: 60px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        overflow: hidden;
-        background: #fff;
-        position: relative;
-        box-shadow: 0 1px 1px rgba(0,0,0,.2);
-        margin-right: 4px;
-    }
-    .demo-upload-list img{
-        width: 100%;
-        height: 100%;
-    }
-    .demo-upload-list-cover{
-        display: none;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0,0,0,.6);
-    }
-    .demo-upload-list:hover .demo-upload-list-cover{
-        display: block;
-    }
-    .demo-upload-list-cover i{
-        color: #fff;
-        font-size: 20px;
-        cursor: pointer;
-        margin: 0 2px;
-    }
-</style>

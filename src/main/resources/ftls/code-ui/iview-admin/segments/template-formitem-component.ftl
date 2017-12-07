@@ -10,6 +10,10 @@ ${spaces!}                    <DatePicker v-model="optForm.${optName!}.${attr.na
 ${spaces!}                    <Select v-model="optForm.${optName!}.${attr.name!}" clearable placeholder="请选择${attr.label!}">
 ${spaces!}                        <Option v-for="item in dict.${attr.name!}" :value="item.value" :key="item.value">{{ item.label }}</Option>
 ${spaces!}                    </Select>
+<#elseif attr.type! == "radio">
+${spaces!}                    <RadioGroup v-model="optForm.${optName!}.${attr.name!}">
+${spaces!}                        <Radio v-for="item in dict.${attr.name!}" :label="item.value" :key="item.value">{{ item.label }}</Radio>
+${spaces!}                    </RadioGroup>
 <#else>
 ${spaces!}                    <Input type="<#if attr.type! == "textarea">textarea<#elseif attr.type! == "password">password<#else>text</#if>" v-model="optForm.${optName!}.${attr.name!}"></Input>
 </#if>

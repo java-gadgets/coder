@@ -8,9 +8,11 @@ import org.pplm.gadgets.coder.entity.Base;
 import org.pplm.gadgets.coder.entity.Dict;
 import org.pplm.gadgets.coder.entity.Func;
 import org.pplm.gadgets.coder.entity.Opt;
+import org.pplm.gadgets.coder.entity.Project;
 import org.pplm.gadgets.coder.repository.DictRepository;
 import org.pplm.gadgets.coder.repository.FuncRepository;
 import org.pplm.gadgets.coder.repository.OptRepository;
+import org.pplm.gadgets.coder.repository.ProjectRepository;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -30,6 +32,9 @@ import freemarker.template.TemplateException;
 @RestController
 @RequestMapping(path = "/v1/gen", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GeneratorController {
+	
+	@Autowired
+	private ProjectRepository projectRepository;
 	
 	@Autowired
 	private FuncRepository funcRepository;
@@ -53,6 +58,12 @@ public class GeneratorController {
 	public Map<String, Object> onPostDictGen(@PathVariable(name = "id") String id) throws IOException, TemplateException {
 		Dict dict = dictRepository.findOne(id);
 		return ResHelper.success(genCode(dict, "dict.ftl", ""));
+	}
+	
+	@PostMapping(path = "/vue/permission/{pid}")
+	public Map<String, Object> onPermissionGen(@PathVariable(name = "pid") String pid) throws IOException, TemplateException {
+		Project project = projectRepository.findOne(pid);
+		return ResHelper.success(genCode(project, "/wsh/iview-admin/permission.ftl", ""));
 	}
 	
 	@PostMapping(path = "/vue/opt/{type}/{id}")
