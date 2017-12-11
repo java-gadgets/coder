@@ -2,6 +2,7 @@ package org.pplm.gadgets.coder.controller;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.List;
 import java.util.Map;
 
 import org.pplm.gadgets.coder.entity.Base;
@@ -63,6 +64,7 @@ public class GeneratorController {
 	@PostMapping(path = "/vue/permission/{pid}")
 	public Map<String, Object> onPermissionGen(@PathVariable(name = "pid") String pid) throws IOException, TemplateException {
 		Project project = projectRepository.findOne(pid);
+		List<Func> funcs = project.getFuncs();
 		return ResHelper.success(genCode(project, "/wsh/iview-admin/permission.ftl", ""));
 	}
 	
@@ -90,6 +92,7 @@ public class GeneratorController {
 		Template template = config.getTemplate(templateFileName, "utf-8");
 		StringWriter stringWriter = new StringWriter();
 		template.process(base, stringWriter);
+		System.out.println(stringWriter.toString());
 		return stringWriter.toString();
 	}
 	

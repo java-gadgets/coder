@@ -14,7 +14,7 @@ management:
     enabled: true
   contextPath: path
   
-logging.level.root: INFO 
+logging.level.root: INFO
 
 spring:
   datasource:
