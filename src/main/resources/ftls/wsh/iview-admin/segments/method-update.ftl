@@ -42,7 +42,7 @@
             util.ajax.get('${opt.preUrl!}?id=' + id).then(res => {
                 if (res.status === 200) {
                     if (res.data.<#include "../spec/res-success.ftl" />) {
-                        _self.prepare${optName?cap_first}Form(form);
+                        _self.prepare${optName?cap_first}Form(res.data.content);
                     }
                 }
                 this.optModal.${optName!}.loading = false;
