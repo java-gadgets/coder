@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.pplm.gadgets.coder.entity.Attr;
 import org.pplm.gadgets.coder.entity.Opt;
 import org.pplm.gadgets.coder.entity.OptAttr;
 import org.pplm.gadgets.coder.repository.OptRepository;
@@ -46,9 +47,9 @@ public class OptController {
 	
 	@GetMapping(path = "/detail")
 	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
-		Opt opt = optRepository.findOneByIdAndDeleteFlag(id, 0);
-		if (opt != null) {
-			return ResHelper.success(opt);
+		List<Attr> attrs = optService.findAllAttrsById(id);
+		if (attrs != null) {
+			return ResHelper.success(attrs);
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}

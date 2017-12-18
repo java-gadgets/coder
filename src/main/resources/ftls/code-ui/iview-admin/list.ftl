@@ -76,8 +76,17 @@ export default {
         init () {
         	this.setOpts();
         },
-        getQueryForm () {
-            let queryForm = this.optForm.queryForm;
+        processQueryForm () {
+            let queryForm = {
+<#list opts as opt >
+<#if opt.type! == "query" >
+<#list attr as opt.attrs >
+                ${attr.name!}: this.optForm.queryForm.${attr.name!},
+</#list>
+<#break>
+</#if>
+</#list>
+            };
 <#include "spec/queryform-page.ftl" />
 <#if relaAttr! != "" >
             queryForm.${relaAttr} = this.optForm.${relaAttr};
@@ -100,7 +109,7 @@ export default {
 </#if>
 </#list>
 </#if>
-            util.ajax.get('${getTableDataUrl!}', { params: this.getQueryForm() }).then(res => {
+            util.ajax.get('${getTableDataUrl!}', { params: this.processQueryForm() }).then(res => {
                 if (res.status === 200) {
                     if (res.data.<#include "spec/res-success.ftl" />) {
 <#include "spec/res-pageable.ftl" />

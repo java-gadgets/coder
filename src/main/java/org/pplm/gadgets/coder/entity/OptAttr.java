@@ -7,8 +7,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "opt_attr", indexes = {@Index(columnList = "oid"), @Index(columnList = "aid")})
+
 public class OptAttr extends Base {
-	
+
 	@Column(columnDefinition = "BIGINT(20)")
 	private String oid;
 	

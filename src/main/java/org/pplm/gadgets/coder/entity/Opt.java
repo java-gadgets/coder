@@ -10,6 +10,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name = "opt", indexes = @Index(columnList = "fid"))
 public class Opt extends Base {
@@ -22,7 +24,7 @@ public class Opt extends Base {
 
 	@Column(length = 128)
 	private String name;
-	
+
 	/** save(add and udpdate), add, update, delete, detail, list, query **/
 	@Column(length = 16)
 	private String type;
@@ -33,7 +35,7 @@ public class Opt extends Base {
 
 	@Column(length = 255)
 	private String preUrl;
-	
+
 	@Column(length = 255)
 	private String exeUrl;
 
@@ -41,10 +43,8 @@ public class Opt extends Base {
 	private String permissionTag;
 
 	@ManyToMany
-	@JoinTable(
-		name = "opt_attr",
-		joinColumns = @JoinColumn(name = "oid", referencedColumnName = "ID"), 
-		inverseJoinColumns = @JoinColumn(name = "aid", referencedColumnName = "ID"))
+	@JoinTable(name = "opt_attr", joinColumns = @JoinColumn(name = "oid", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "aid", referencedColumnName = "ID"))
+	@Where(clause = "delete_flag = 0")
 	private List<Attr> attrs;
 
 	public Opt() {

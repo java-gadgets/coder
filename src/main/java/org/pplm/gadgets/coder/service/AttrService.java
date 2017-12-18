@@ -27,11 +27,11 @@ public class AttrService {
 	
 	public Attr save(Attr attr) {
 		Attr attrResult = attrRepository.save(attr);
-		final String id = attrResult.getId();
-		List<Opt> opts = attr.getOpts();
-		if (opts != null) {
-			optAttrService.bindOpt(id, opts.stream().map(opt -> new OptAttr(opt.getId(), id)).collect(Collectors.toList()));
-		}
+//		final String id = attrResult.getId();
+//		List<Opt> opts = attr.getOpts();
+//		if (opts != null) {
+	//		optAttrService.bindOpt(id, opts.stream().map(opt -> new OptAttr(opt.getId(), id)).collect(Collectors.toList()));
+//		}
 		return attrResult;
 	}
 	
