@@ -33,6 +33,8 @@
 	                console.log(err);
 	            });
 	        } else {
+	            this.clear${optName?cap_first}Form ();
+                this.optModal.${optName!}.loading = false;
 	            this.optModal.${optName!}.title = '添加${opt.label!}';
 	        }
             this.optModal.${optName!}.show = true;

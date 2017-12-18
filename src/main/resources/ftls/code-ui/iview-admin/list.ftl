@@ -80,7 +80,7 @@ export default {
             let queryForm = {
 <#list opts as opt >
 <#if opt.type! == "query" >
-<#list attr as opt.attrs >
+<#list opt.attrs as attr >
                 ${attr.name!}: this.optForm.queryForm.${attr.name!},
 </#list>
 <#break>
