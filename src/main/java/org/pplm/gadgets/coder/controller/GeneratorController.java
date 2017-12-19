@@ -46,12 +46,12 @@ public class GeneratorController {
 	private DictRepository dictRepository;
 
 	@PostMapping(path = "/vue/{id}")
-	public Map<String, Object> onPostList (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type, @RequestParam(name = "project", required = false, defaultValue = "wsh") String project) throws IOException, TemplateException {
+	public Map<String, Object> onPostList (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type) throws IOException, TemplateException {
 		Func func = funcRepository.findOne(id);
 		if (func == null) {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 		}
-		return ResHelper.success(genCode(func, type + ".ftl", "/" + project + "/iview-admin"));
+		return ResHelper.success(genCode(func, type + ".ftl", "/iview-admin"));
 	}
 	
 	@PostMapping(path = "/vue/dict/{id}")

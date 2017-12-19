@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,8 +19,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "func")
 public class Func extends Base {
 
-	@Column(columnDefinition = "BIGINT(20)")
-	private String pid;
 	@Column(length = 128)
 	private String label;
 	@Column(length = 128)
@@ -32,6 +31,9 @@ public class Func extends Base {
 	
 	@Column(length = 255)
 	private String remark;
+	
+	@ManyToOne(targetEntity = Project.class, fetch = FetchType.LAZY)
+	private Project project;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -49,12 +51,13 @@ public class Func extends Base {
 		super();
 	}
 
-	public String getPid() {
-		return pid;
+	public Project getProject() {
+		project.setFuncs(null);
+		return project;
 	}
 
-	public void setPid(String pid) {
-		this.pid = pid;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public String getLabel() {

@@ -76,6 +76,9 @@ public class Project extends Base {
 	}
 
 	public List<Func> getFuncs() {
+		funcs.forEach(func -> {
+			func.setProject(null);
+		});
 		return funcs;
 	}
 
