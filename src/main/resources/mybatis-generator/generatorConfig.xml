@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<classPathEntry
+		location="/home/piao/.m2/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar" />
+	<context id="coder" targetRuntime="MyBatis3">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://47.95.213.130:7033/code_gen?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
+			userId="root" password="R4%!F4yo&amp;5a29">
+		</jdbcConnection>
+		<javaModelGenerator targetPackage="org.pplm.gadgets.coder.test.entity"
+			targetProject="src/main/java">
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="org.pplm.gadgets.coder.test.mapper"
+			targetProject="src/main/java">
+		</sqlMapGenerator>
+
+		<javaClientGenerator targetPackage="mappers"
+			targetProject="src/main/resources" type="XMLMAPPER">
+		</javaClientGenerator>
+
+		<table tableName="project" domainObjectName="Project" />
+	</context>
+</generatorConfiguration>
