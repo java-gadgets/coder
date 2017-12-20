@@ -32,5 +32,9 @@ spring:
     hibernate:
       ddlAuto: update
 #      naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl   
+
+mybatis: 
+  mapperLocations: classpath*:/mappers/*Mapper.xml
+  configLocation: classpath:mybatis-config.xml
       
       
