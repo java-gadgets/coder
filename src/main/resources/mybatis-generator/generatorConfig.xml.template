@@ -8,8 +8,8 @@
 		location="/home/piao/.m2/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar" />
 	<context id="coder" targetRuntime="MyBatis3">
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://47.95.213.130:7033/code_gen?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
-			userId="root" password="R4%!F4yo&amp;5a29">
+			connectionURL="jdbc:mysql://localhost:3306/schema?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
+			userId="root" password="changeit">
 		</jdbcConnection>
 		<javaModelGenerator targetPackage="org.pplm.gadgets.coder.test.entity"
 			targetProject="src/main/java">
