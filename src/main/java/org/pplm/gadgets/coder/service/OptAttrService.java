@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OptAttrService {
 	
-	@Autowired
+//	@Autowired
 	private OptAttrRepository optAttrRepository;
 	
 	public void bindAttr(String oid, List<OptAttr> optAttrs) {
 		optAttrRepository.deleteByOid(oid);
-		optAttrRepository.save(optAttrs);
+		//optAttrRepository.save(optAttrs);
 	}
 	
 	public void bindOpt(String aid, List<OptAttr> optAttrs) {
@@ -27,10 +27,10 @@ public class OptAttrService {
 		List<OptAttr> removes = filter(optAttrsTemp, optAttrs);
 		List<OptAttr> adds = filter(optAttrs, optAttrsTemp);
 		if (removes.size() > 0) {
-			optAttrRepository.delete(removes);
+			//optAttrRepository.delete(removes);
 		}
 		if (adds.size() > 0) {
-			optAttrRepository.save(adds);
+		//	optAttrRepository.save(adds);
 		}
 		//optAttrRepository.deleteByAid(aid);
 		//optAttrRepository.save(optAttrs);

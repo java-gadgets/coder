@@ -33,21 +33,21 @@ import freemarker.template.TemplateException;
 @RequestMapping(path = "/v1/gen", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GeneratorController {
 	
-	@Autowired
+//	@Autowired
 	private ProjectRepository projectRepository;
 	
-	@Autowired
+//	@Autowired
 	private FuncRepository funcRepository;
 	
-	@Autowired
+//	@Autowired
 	private OptRepository optRepository;
 	
-	@Autowired
+//	@Autowired
 	private DictRepository dictRepository;
 
 	@PostMapping(path = "/vue/{id}")
 	public Map<String, Object> onPostList (@PathVariable(name = "id") String id, @RequestParam(name = "type", required = false, defaultValue = "list") String type) throws IOException, TemplateException {
-		Func func = funcRepository.findOne(id);
+		Func func = null; //funcRepository.findOne(id);
 		if (func == null) {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 		}
@@ -56,19 +56,19 @@ public class GeneratorController {
 	
 	@PostMapping(path = "/vue/dict/{id}")
 	public Map<String, Object> onPostDictGen(@PathVariable(name = "id") String id) throws IOException, TemplateException {
-		Dict dict = dictRepository.findOne(id);
+		Dict dict = null; //dictRepository.findOne(id);
 		return ResHelper.success(genCode(dict, "dict.ftl", ""));
 	}
 	
 	@PostMapping(path = "/vue/permission/{pid}")
 	public Map<String, Object> onPermissionGen(@PathVariable(name = "pid") String pid) throws IOException, TemplateException {
-		Project project = projectRepository.findOne(pid);
+		Project project = null; //projectRepository.findOne(pid);
 		return ResHelper.success(genCode(project, "/wsh/iview-admin/permission.ftl", ""));
 	}
 	
 	@PostMapping(path = "/vue/opt/{type}/{id}")
 	public Map<String, Object> onPostSaveGen(@PathVariable(name = "type") String type, @PathVariable(name = "id") String id) throws IOException, TemplateException {
-		Opt opt = optRepository.findOne(id);
+		Opt opt = null; //optRepository.findOne(id);
 		String templateFileName = null;
 		if ("update".equals(type) || "add".equals(type)) {
 			templateFileName = "save-wsh.ftl";

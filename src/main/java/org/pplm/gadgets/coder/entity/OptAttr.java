@@ -1,19 +1,15 @@
 package org.pplm.gadgets.coder.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "opt_attr", indexes = {@Index(columnList = "oid"), @Index(columnList = "aid")})
+//@Entity
+//@Table(name = "opt_attr", indexes = {//@Index(columnList = "oid"), //@Index(columnList = "aid")})
 
 public class OptAttr extends Base {
 
-	@Column(columnDefinition = "BIGINT(20)")
+	//@Column(columnDefinition = "BIGINT(20)")
 	private String oid;
 	
-	@Column(columnDefinition = "BIGINT(20)")
+	//@Column(columnDefinition = "BIGINT(20)")
 	private String aid;
 	
 	public OptAttr() {

@@ -1,18 +1,15 @@
 package org.pplm.gadgets.coder.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "dict_item")
+//@Entity
+//@Table(name = "dict_item")
 public class DictItem extends Base {
 	
-	@Column(columnDefinition = "BIGINT(20)")
+	//	@Column(columnDefinition = "BIGINT(20)")
 	private String did;
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String label;
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String value;
 
 	public DictItem() {

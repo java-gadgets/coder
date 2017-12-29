@@ -2,41 +2,32 @@ package org.pplm.gadgets.coder.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table(name = "project")
+//@Entity
+//@Table(name = "project")
 public class Project extends Base {
 
-	@Column(length = 128)
+	//@Column(length = 128)
 	private String label;
 
-	@Column(length = 128)
+	//@Column(length = 128)
 	private String name;
 	
-	@Column(length = 255)
+	//@Column(length = 255)
 	private String remark;
 
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name="pid")
-	@Where(clause="delete_flag = 0")
+	//@JsonIgnore
+	//@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	//@JoinColumn(name="pid")
+	//@Where(clause="delete_flag = 0")
 	private List<Dict> dicts;
 	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name="pid")
-	@Where(clause="delete_flag = 0")
+	//@JsonIgnore
+	//@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	//@JoinColumn(name="pid")
+	//@Where(clause="delete_flag = 0")
 	private List<Func> funcs;
 	
 	public Project() {

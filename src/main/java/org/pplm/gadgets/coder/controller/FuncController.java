@@ -2,6 +2,8 @@ package org.pplm.gadgets.coder.controller;
 
 import java.util.Map;
 
+import org.pplm.gadgets.coder.bean.FuncExample;
+import org.pplm.gadgets.coder.bean.FuncExample.Criteria;
 import org.pplm.gadgets.coder.entity.Func;
 import org.pplm.gadgets.coder.entity.Project;
 import org.pplm.gadgets.coder.repository.FuncRepository;
@@ -22,36 +24,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/func", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FuncController {
 	
-	@Autowired
+//	@Autowired
 	private ProjectRepository projectRepository;
 	
-	@Autowired
+//	@Autowired
 	private FuncRepository funcRepository;
 	@Autowired
 	private FuncService funcService;
 	
 	@GetMapping(path = "/list")
-	public Map<String, Object> onGetQuery(@RequestParam(name = "pid", required = false) String pid, Pageable pageable){
-		if (pid == null) {
-			return ResHelper.success(funcRepository.findAllByDeleteFlag(0, pageable));
-		} else {
-			Project project = projectRepository.findOne(pid);
-			if (project == null) {
-				return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
-			}
-			return ResHelper.success(project.getFuncs());
+	public Map<String, Object> onGetQuery(@RequestParam(name = "pid", required = false) Long pid, Pageable pageable){
+		FuncExample funcExample = new FuncExample();
+		Criteria criteria = funcExample.createCriteria().andDeleteFlagEqualTo(0);		
+		if (pid != null) {
+			criteria.andPidEqualTo(pid);
 		}
+		return ResHelper.success(funcService.selectByExample(funcExample, pageable));
 	}
 
 	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> onPostCreate(@RequestParam(name = "pid", required = true)String pid, @RequestBody Func func) {
-		Project project = projectRepository.findOne(pid);
+		Project project = null; // projectRepository.findOne(pid);
 		if (project == null) {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID); 
 		}
 		if (func != null) {
 			func.setProject(project);
-			return ResHelper.success(funcService.save(func));
+			//return ResHelper.success(funcService.save(func));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
@@ -71,7 +70,7 @@ public class FuncController {
 			Func func = funcRepository.findOneByIdAndDeleteFlag(id, 0);
 			if(func != null) {
 				func.setDeleteFlag(1);
-				funcRepository.save(func);
+				//funcRepository.save(func);
 				return ResHelper.success();
 			}
 		}

@@ -2,49 +2,38 @@ package org.pplm.gadgets.coder.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Where;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table(name = "func")
+//@Entity
+//@Table(name = "func")
 public class Func extends Base {
 
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String label;
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String name;
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String relaAttr;
 	
-	@Column(length = 255)
+	//	@Column(length = 255)
 	private String permissionTag;
 	
-	@Column(length = 255)
+	//	@Column(length = 255)
 	private String remark;
 	
-	@ManyToOne(targetEntity = Project.class, fetch = FetchType.LAZY)
+	//	@ManyToOne(targetEntity = Project.class, fetch = FetchType.LAZY)
 	private Project project;
 	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name="fid")
-	@Where(clause="delete_flag = 0")
+	//	@JsonIgnore
+	//	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	//	@JoinColumn(name="fid")
+	//	@Where(clause="delete_flag = 0")
 	private List<Attr> attrs;
 	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name="fid")
-	@Where(clause="delete_flag = 0")
+	//	@JsonIgnore
+	//	@OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	//	@JoinColumn(name="fid")
+	//	@Where(clause="delete_flag = 0")
 	private List<Opt> opts;
 
 	public Func() {

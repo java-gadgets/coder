@@ -1,25 +1,19 @@
 package org.pplm.gadgets.coder.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-@Entity
-@Table(name = "user", indexes = @Index(columnList = "username"))
+//@Entity
+//@Table(name = "user", indexes = //@Index(columnList = "username"))
 public class User extends Base {
 
-	@Column(length = 128)
+	//@Column(length = 128)
 	private String username;
 	
-	@Column(length = 128)
+	//@Column(length = 128)
 	private String password;
 	
-	@Column(columnDefinition = "INT(1) DEFAULT 1 COMMENT '用户状态：0停用，1正常'")
+	//@Column(columnDefinition = "INT(1) DEFAULT 1 COMMENT '用户状态：0停用，1正常'")
 	private String status;
 	
-	@Transient
+	//@Transient
 	private String token;
 	
 	public User() {

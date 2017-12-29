@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DictService {
 
-	@Autowired
+//	@Autowired
 	private DictRepository dictRepository;
-	@Autowired
+//	@Autowired
 	private DictItemRepository dictItemRepository;
 	
 	
 	public Dict save(Dict dict) {
-		Dict dictResult = dictRepository.save(dict);
+		Dict dictResult = null; // dictRepository.save(dict);
 		dictItemRepository.deleteByDidIsNull();
 		return dictResult;
 	}

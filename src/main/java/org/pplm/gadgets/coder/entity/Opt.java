@@ -2,49 +2,40 @@ package org.pplm.gadgets.coder.entity;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
-@Entity
-@Table(name = "opt", indexes = @Index(columnList = "fid"))
+//@Entity
+//@Table(name = "opt", indexes = @Index(columnList = "fid"))
 public class Opt extends Base {
 
-	@Column(columnDefinition = "BIGINT(20)")
+	//	@Column(columnDefinition = "BIGINT(20)")
 	private String fid;
 
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String label;
 
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String name;
 
 	/** save(add and udpdate), add, update, delete, detail, list, query **/
-	@Column(length = 16)
+	//	@Column(length = 16)
 	private String type;
 
 	/** page, modal **/
-	@Column(length = 16)
+	//	@Column(length = 16)
 	private String mode;
 
-	@Column(length = 255)
+	//	@Column(length = 255)
 	private String preUrl;
 
-	@Column(length = 255)
+	//	@Column(length = 255)
 	private String exeUrl;
 
-	@Column(length = 255)
+	//	@Column(length = 255)
 	private String permissionTag;
 
-	@ManyToMany
-	@JoinTable(name = "opt_attr", joinColumns = @JoinColumn(name = "oid", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "aid", referencedColumnName = "ID"))
-	@Where(clause = "delete_flag = 0")
+	//@ManyToMany
+	//	@JoinTable(name = "opt_attr", joinColumns = @JoinColumn(name = "oid", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "aid", referencedColumnName = "ID"))
+	//	@Where(clause = "delete_flag = 0")
 	private List<Attr> attrs;
 
 	public Opt() {

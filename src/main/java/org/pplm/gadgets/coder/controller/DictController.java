@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/dict", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DictController {
 	
-	@Autowired
+//	@Autowired
 	private DictRepository dictRepsitory;
 	
 	@Autowired
@@ -47,9 +47,9 @@ public class DictController {
 	
 	@PostMapping(path = "/delete")
 	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
-		Dict dict = dictRepsitory.findOne(id);
-		dict.setDeleteFlag(1);
-		dictRepsitory.save(dict);
+		//Dict dict = dictRepsitory.findOne(id);
+		//dict.setDeleteFlag(1);
+		//dictRepsitory.save(dict);
 		return ResHelper.success();
 	}
 	

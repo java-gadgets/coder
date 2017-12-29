@@ -2,47 +2,37 @@ package org.pplm.gadgets.coder.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OrderBy;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
-@MappedSuperclass
 public class Base {
-	@Id
+/*	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(columnDefinition = "BIGINT(20)")
+	@Column(columnDefinition = "BIGINT(20)")*/
 	private String id;
 	
-	@Column(length = 1, columnDefinition="INT(1) default 0")
+	//	@Column(length = 1, columnDefinition="INT(1) default 0")
 	private Integer deleteFlag = 0;
 	
-	@Column(columnDefinition = "BIGINT(20)")
+	//	@Column(columnDefinition = "BIGINT(20)")
 	private String creatorId;
 
 	private Date createDate;
 	
-	@Column(columnDefinition = "BIGINT(20)")
+	//	@Column(columnDefinition = "BIGINT(20)")
 	private String updatorId;
 	
-	@OrderBy("desc")
+	//	@OrderBy("desc")
 	private Date updateDate;
 
 	public Base() {
 		super();
 	}
 
-	@PrePersist
+	//	@PrePersist
     public void prePersist(){
 		this.createDate = new Date();
 		this.updateDate = this.createDate;
     }
 
-    @PreUpdate
+    //    @PreUpdate
     public void preUpdate(){
         this.updateDate = new Date();                
     }

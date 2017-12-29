@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/user", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 	
-	@Autowired
+//	@Autowired
 	private UserRepository userRepository;
 	
 	@GetMapping(path = "/list")
@@ -33,7 +33,7 @@ public class UserController {
 	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object> onPostCreate(@RequestBody User user) {
 		if (user != null) {
-			return ResHelper.success(userRepository.save(user));
+			//return ResHelper.success(userRepository.save(user));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
@@ -53,7 +53,7 @@ public class UserController {
 			User user = userRepository.findOneByIdAndDeleteFlag(id, 0);
 			if(user != null) {
 				user.setDeleteFlag(1);
-				userRepository.save(user);
+				//userRepository.save(user);
 				return ResHelper.success();
 			}
 		}

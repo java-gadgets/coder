@@ -26,13 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/opt", produces = MediaType.APPLICATION_JSON_VALUE)
 public class OptController {
 	
-	@Autowired
+//	@Autowired
 	private OptService optService;
 	
-	@Autowired
+//	@Autowired
 	private OptRepository optRepository;
 	
-	@Autowired
+//	@Autowired
 	private OptAttrService optAttrService;
 	
 	@GetMapping(path = "/list")
@@ -58,7 +58,7 @@ public class OptController {
 	public Map<String, Object> onPostCreate(@RequestParam(name = "fid", required = true) String fid, @RequestBody Opt opt) {
 		if (opt != null) {
 			opt.setFid(fid);
-			return ResHelper.success(optRepository.save(opt));
+			//return ResHelper.success(optRepository.save(opt));
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}

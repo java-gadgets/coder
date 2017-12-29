@@ -2,7 +2,7 @@ package org.pplm.gadgets.coder.controller;
 
 import java.util.Map;
 
-import org.pplm.gadgets.coder.entity.User;
+import org.pplm.gadgets.coder.bean.User;
 import org.pplm.gadgets.coder.service.SystemService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,57 +2,47 @@ package org.pplm.gadgets.coder.entity;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.Where;
-
-@Entity
-@Table(name = "attr")
+//@Entity
+//@Table(name = "attr")
 public class Attr extends Base {
 
-	@Column(columnDefinition = "BIGINT(20)")
+	//@Column(columnDefinition = "BIGINT(20)")
 	private String fid;
 
-	@Column(length = 128)
+	//@Column(length = 128)
 	private String label;
 
-	@Column(length = 128)
+	//@Column(length = 128)
 	private String name;
 
-	@Column(length = 32)
+	//@Column(length = 32)
 	private String type;
 	
-	@Column(columnDefinition = "INT(1) DEFAULT 0")
+	//@Column(columnDefinition = "INT(1) DEFAULT 0")
 	private String required;
 
-	@Column(length = 5)
+	//@Column(length = 5)
 	private Integer length;
 
-	@Column(length = 1)
+	//@Column(length = 1)
 	private Integer precise;
 
-	@Column(length = 128)
+	//@Column(length = 128)
 	private String defaultValue;
 
-	@Column(length = 255)
+	//@Column(length = 255)
 	private String remark;
 	
-	@ManyToMany
+	/*@ManyToMany
 	@JoinTable(
 		name = "opt_attr",
 		joinColumns = @JoinColumn(name = "aid", referencedColumnName = "ID"), 
 		inverseJoinColumns = @JoinColumn(name = "oid", referencedColumnName = "ID"))
-	@Where(clause="delete_flag = 0")
+	@Where(clause="delete_flag = 0")*/
 	private List<Opt> opts;
 	
-	@OneToOne
-	@JoinColumn(name = "did")
+	/*@OneToOne
+	@JoinColumn(name = "did")*/
 	private Dict dict;
 
 	public Attr() {

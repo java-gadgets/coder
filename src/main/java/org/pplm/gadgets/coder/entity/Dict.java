@@ -2,32 +2,23 @@ package org.pplm.gadgets.coder.entity;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
-@Entity
-@Table(name = "dict")
+//@Entity
+//@Table(name = "dict")
 public class Dict extends Base {
 
-	@Column(columnDefinition = "BIGINT(20)")
+	//	@Column(columnDefinition = "BIGINT(20)")
 	private String pid;
 
-	@Column(length = 128)
+	//	@Column(length = 128)
 	private String label;
 	
-	@Column(length = 255)
+	//	@Column(length = 255)
 	private String remark;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "did")
-	@Where(clause="delete_flag = 0")
+	//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	//	@JoinColumn(name = "did")
+	//	@Where(clause="delete_flag = 0")
 	private List<DictItem> dictItems;
 	
 	public Dict() {

@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/attr", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AttrController {
 
-	@Autowired
+//	@Autowired
 	private AttrService attrService;
 	
-	@Autowired
+//	@Autowired
 	private AttrRepository attrRepository;
 	
 	@GetMapping(path = "/list")

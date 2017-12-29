@@ -18,20 +18,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class OptService {
 
-	@Autowired
+//	@Autowired
 	private OptRepository optRepository;
 	
-	@Autowired
+//	@Autowired
 	private OptAttrRepository optAttrRepository;
 	
-	@Autowired
+//	@Autowired
 	private AttrRepository attrRepository;
 	
 	public boolean delete(String id) {
 		Opt opt = optRepository.findOneByIdAndDeleteFlag(id, 0);
 		if(opt != null) {
 			opt.setDeleteFlag(1);
-			optRepository.save(opt);
+			//optRepository.save(opt);
 			optAttrRepository.deleteByOid(id);
 			return true;
 		}
@@ -43,7 +43,7 @@ public class OptService {
 		if (optAttrs != null) {
 			List<String> aids = optAttrs.stream().sorted((e1, e2) -> e1.getId().compareTo(e2.getId())).map(e -> e.getAid()).collect(Collectors.toList());
 			if (aids.size() > 0) {
-				return attrRepository.findAll(aids);
+			//	return attrRepository.findAll(aids);
 			}
 			return Collections.emptyList();
 		}

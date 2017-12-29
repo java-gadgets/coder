@@ -16,17 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AttrService {
 	
-	@Autowired
+//	@Autowired
 	private AttrRepository attrRepository;
 	
-	@Autowired
+//	@Autowired
 	private OptAttrRepository optAttrRepository;
 	
 	@Autowired
 	private OptAttrService optAttrService;
 	
 	public Attr save(Attr attr) {
-		Attr attrResult = attrRepository.save(attr);
+		Attr attrResult = null;
+		//Attr attrResult = attrRepository.save(attr);
 //		final String id = attrResult.getId();
 //		List<Opt> opts = attr.getOpts();
 //		if (opts != null) {
@@ -39,7 +40,7 @@ public class AttrService {
 		Attr attr = attrRepository.findOneByIdAndDeleteFlag(id, 0);
 		if (attr != null) {
 			attr.setDeleteFlag(1);
-			attrRepository.save(attr);
+		//	attrRepository.save(attr);
 			optAttrRepository.deleteByAid(id);
 			return true;
 		}
