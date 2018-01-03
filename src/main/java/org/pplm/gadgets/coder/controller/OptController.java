@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptExample;
 import org.pplm.gadgets.coder.entity.OptAttr;
@@ -84,13 +85,10 @@ public class OptController {
 		return ResHelper.success();
 	}
 	
-/*	@GetMapping(path = "/attrs")
-	public Map<String, Object> onGetAttrs(@RequestParam("oid") String oid) {
-		Opt opt = optRepository.findOneByIdAndDeleteFlag(oid, 0);
-		if (opt != null) {
-			return ResHelper.success(opt.getAttrs());
-		}
-		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
-	}*/
+	@GetMapping(path = "/attrs")
+	public Map<String, Object> onGetAttrs(@RequestParam("oid") Long oid) {
+		List<Attr> attrs = optService.selectAttrByOptPrimaryKey(oid);
+		return ResHelper.success(attrs);
+	}
 	
 }

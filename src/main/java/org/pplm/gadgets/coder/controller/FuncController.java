@@ -3,7 +3,9 @@ package org.pplm.gadgets.coder.controller;
 import java.util.Map;
 
 import org.pplm.gadgets.coder.bean.FuncExample;
+import org.pplm.gadgets.coder.bean.AttrExample;
 import org.pplm.gadgets.coder.bean.Func;
+import org.pplm.gadgets.coder.service.AttrService;
 import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class FuncController {
 	
 	@Autowired
 	private FuncService funcService;
+	
+	@Autowired
+	private AttrService attrService;
 	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetQuery(@RequestParam(name = "pid", required = false) Long pid, Pageable pageable){
@@ -68,12 +73,10 @@ public class FuncController {
 	}
 	
 	@GetMapping(path = "/attrs")
-	public Map<String, Object> onGetAttrs(@RequestParam("fid") String fid) {
-/*		Func func = funcRepository.findOneByIdAndDeleteFlag(fid, 0);
-		if (func != null) {
-			return ResHelper.success(func.getAttrs());
-		}
-*/		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
+	public Map<String, Object> onGetAttrs(@RequestParam("fid") Long fid) {
+		AttrExample example = new AttrExample();
+		example.createCriteria().andFidEqualTo(fid);
+		return ResHelper.success(attrService.selectByExample(example));
 	}
 	
 }

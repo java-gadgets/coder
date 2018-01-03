@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.pplm.gadgets.coder.mapper.OptAttrMapper">
+	<resultMap id="OptResultMap" type="org.pplm.gadgets.coder.bean.Opt">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
+		<result column="fid" jdbcType="BIGINT" property="fid" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="mode" jdbcType="VARCHAR" property="mode" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="pre_url" jdbcType="VARCHAR" property="preUrl" />
+		<result column="exe_url" jdbcType="VARCHAR" property="exeUrl" />
+		<result column="permission_tag" jdbcType="VARCHAR" property="permissionTag" />
+		<result column="sov" jdbcType="INTEGER" property="sov" />
+		<result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="updator_id" jdbcType="BIGINT" property="updatorId" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+	</resultMap>
+	<resultMap id="AttrResultMap" type="org.pplm.gadgets.coder.bean.Attr">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
+		<result column="fid" jdbcType="BIGINT" property="fid" />
+		<result column="did" jdbcType="BIGINT" property="did" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="length" jdbcType="INTEGER" property="length" />
+		<result column="precise" jdbcType="INTEGER" property="precise" />
+		<result column="required" jdbcType="INTEGER" property="required" />
+		<result column="default_value" jdbcType="VARCHAR" property="defaultValue" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="updator_id" jdbcType="BIGINT" property="updatorId" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+	</resultMap>
+	<sql id="Opt_Column_List">
+		o.id, o.delete_flag, o.fid, o.name, o.code, o.mode, o.type,
+		o.pre_url,
+		o.exe_url, o.permission_tag, o.sov, o.creator_id,
+		o.create_date, o.updator_id,
+		o.update_date
+	</sql>
+	<sql id="Attr_Column_List">
+		a.id, a.delete_flag, a.fid, a.did, a.name, a.code, a.type,
+		a.length, a.precise, required,
+		a.default_value, a.remark, a.creator_id,
+		a.create_date, a.updator_id, a.update_date
+	</sql>
+	<select id="selectOptByAttrPrimaryKey" resultMap="OptResultMap">
+		SELECT
+		<include refid="Opt_Column_List" />
+		FROM
+		opt_attr oa, opt o
+		WHERE
+		oa.oid = o.id AND o.delete_flag = 0 AND
+		oa.aid = #{aid}
+		ORDER BY oa.sov ASC
+	</select>
+	<select id="selectAttrByOptPrimaryKey" resultMap="AttrResultMap">
+		SELECT
+		<include refid="Attr_Column_List" />
+		FROM
+		opt_attr oa, attr a
+		WHERE
+		oa.aid = a.id AND a.delete_flag = 0 AND
+		oa.oid = #{oid}
+		ORDER BY oa.sov ASC
+	</select>
+	<insert id="bindOptByAttrPrimaryKey">
+		INSERT INTO opt_attr
+		(aid, oid, osv)
+		VALUES
+		(#{aid},
+		#{oid}, #{osv})
+	</insert>
+</mapper>

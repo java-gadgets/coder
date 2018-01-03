@@ -20,15 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AttrService extends BaseService<Attr, AttrExample> {
 
-	private AttrMapper mapper;
-
 	@Autowired
 	private OptAttrMapper optAttrMapper;
 
 	@Autowired
 	public AttrService(AttrMapper mapper) {
 		super(mapper);
-		this.mapper = mapper;
 	}
 
 	public Page<Attr> selectByExample(AttrExample example, Pageable pageable) {
@@ -72,7 +69,7 @@ public class AttrService extends BaseService<Attr, AttrExample> {
 
 	@Override
 	public Attr selectByPrimaryKey(Long id) {
-		List<Opt> opts = mapper.selectOptByAttrPrimaryKey(id);
+		List<Opt> opts = optAttrMapper.selectOptByAttrPrimaryKey(id);
 		Attr attr = super.selectByPrimaryKey(id);
 		attr.setOpts(opts);
 		return attr;
