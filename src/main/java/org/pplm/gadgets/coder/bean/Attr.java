@@ -1,11 +1,32 @@
 package org.pplm.gadgets.coder.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class Attr extends Record {
-    private Long id;
+	
+	private Dict dict;
+	private List<Opt> opts;
+	
+	public Dict getDict() {
+		return dict;
+	}
 
-    private Byte deleteFlag;
+	public void setDict(Dict dict) {
+		this.dict = dict;
+	}
+
+	public List<Opt> getOpts() {
+		return opts;
+	}
+
+	public void setOpts(List<Opt> opts) {
+		this.opts = opts;
+	}
+
+	private Long id;
+
+    private Integer deleteFlag;
 
     private Long fid;
 
@@ -43,11 +64,11 @@ public class Attr extends Record {
         this.id = id;
     }
 
-    public Byte getDeleteFlag() {
+    public Integer getDeleteFlag() {
         return deleteFlag;
     }
 
-    public void setDeleteFlag(Byte deleteFlag) {
+    public void setDeleteFlag(Integer deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
 

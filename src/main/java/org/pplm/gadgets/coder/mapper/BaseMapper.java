@@ -10,11 +10,11 @@ public interface BaseMapper <R extends Record, E extends Example> {
 
     public long countByExample(E example);
     public int deleteByExample(E example);
-    public int deleteByPrimaryKey(String id);
+    public int deleteByPrimaryKey(Long id);
     int insert(R record);
     int insertSelective(R record);
     public List<R> selectByExample(E example);
-    public R selectByPrimaryKey(String id);
+    public R selectByPrimaryKey(Long id);
     public int updateByExampleSelective(@Param("record") R record, @Param("example") E example);
     public int updateByExample(@Param("record") R record, @Param("example") E example);
     public int updateByPrimaryKeySelective(R record);

@@ -3,9 +3,8 @@ package org.pplm.gadgets.coder.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-import org.pplm.gadgets.coder.entity.Attr;
-import org.pplm.gadgets.coder.repository.AttrRepository;
+import org.pplm.gadgets.coder.bean.AttrExample;
+import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.service.AttrService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +22,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/attr", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AttrController {
 
-//	@Autowired
+	@Autowired
 	private AttrService attrService;
 	
-//	@Autowired
-	private AttrRepository attrRepository;
-	
 	@GetMapping(path = "/list")
-	public Map<String, Object> onGetQuery(@RequestParam(name = "fid", required = true) String fid, Pageable pageable){
-		return ResHelper.success(attrRepository.findByFidAndDeleteFlag(fid, 0, pageable));
+	public Map<String, Object> onGetQuery(@RequestParam(name = "fid", required = true) Long fid, Pageable pageable){
+		AttrExample example = new AttrExample();
+		example.createCriteria().andFidEqualTo(fid);
+		return ResHelper.success(attrService.selectByExample(example, pageable));
 	}
 	
 	@GetMapping(path = "/detail")
-	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
-		Attr attr = attrRepository.findOneByIdAndDeleteFlag(id, 0);
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) Long id) {
+		Attr attr = attrService.selectByPrimaryKey(id);
 		if (attr != null) {
 			return ResHelper.success(attr);
 		}
@@ -44,22 +42,23 @@ public class AttrController {
 	}
 
 	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> onPostCreate(@RequestParam(name = "fid") String fid, @RequestBody Attr attr) {
-		if (attr != null) {
-			attr.setFid(fid);
-			if (attr.getDict() != null) {
-				if (StringUtils.isBlank(attr.getDict().getId())) {
-					attr.setDict(null);
-				}
+	public Map<String, Object> onPostCreate(@RequestParam(name = "fid") Long fid, @RequestBody Attr attr) {
+		attr.setFid(fid);
+		if (attr.getId() == null) {
+			if (attrService.insertSelective(attr) == 1) {
+				return ResHelper.success();
 			}
-			return ResHelper.success(attrService.save(attr));
+		} else {
+			if (attrService.updateByPrimaryKeySelective(attr) == 1) {
+				return ResHelper.success();
+			}
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
 	
 	@PostMapping(path="/delete")
-	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
-	    if (attrService.delete(id)) {
+	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) Long id) {
+	    if (attrService.deleteByPrimaryKey(id) == 1) {
 			return ResHelper.success();
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);

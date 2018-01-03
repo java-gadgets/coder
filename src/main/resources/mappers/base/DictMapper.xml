@@ -103,7 +103,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.pplm.gadgets.coder.bean.Dict">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.pplm.gadgets.coder.bean.Dict">
     insert into dict (id, delete_flag, pid, 
       name, remark, creator_id, 
       create_date, updator_id, update_date
@@ -113,7 +113,7 @@
       #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.Dict">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.pplm.gadgets.coder.bean.Dict">
     insert into dict
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

@@ -2,8 +2,8 @@ package org.pplm.gadgets.coder.controller;
 
 import java.util.Map;
 
-import org.pplm.gadgets.coder.entity.Dict;
-import org.pplm.gadgets.coder.repository.DictRepository;
+import org.pplm.gadgets.coder.bean.DictExample;
+import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.service.DictService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,42 +20,55 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/dict", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DictController {
 	
-//	@Autowired
-	private DictRepository dictRepsitory;
-	
 	@Autowired
 	private DictService dictService;
 	
 	@GetMapping(path = "/list")
-	public Map<String, Object> onGetList(Pageable pageable) {
-		return ResHelper.success(dictRepsitory.findAllByDeleteFlag(0, pageable));
+	public Map<String, Object> onGetList(@RequestParam(name = "pid", required = false) Long pid, Pageable pageable) {
+		DictExample dictExample = new DictExample();
+		if (pid != null) {
+			dictExample.createCriteria().andPidEqualTo(pid);
+		}
+		return ResHelper.success(dictService.selectByExample(dictExample, pageable));
 	}	
 	
 	@GetMapping(path = "/listAll")
-	public Map<String, Object> onGetAllList(@RequestParam(name = "pid", required = true) String pid) {
-		return ResHelper.success(dictRepsitory.findAllByPidAndDeleteFlag(pid, 0));
+	public Map<String, Object> onGetAllList(@RequestParam(name = "pid", required = true) Long pid) {
+		DictExample dictExample = new DictExample();
+		dictExample.createCriteria().andPidEqualTo(pid);
+		return ResHelper.success(dictService.selectByExample(dictExample));
 	}
 	
 	@PostMapping(path = "/save")
-	public Map<String, Object> onPostSave(@RequestParam(name = "pid", required = false, defaultValue = "2") String pid, @RequestBody Dict dict) {
-		if (dict != null) {
-			dict.setPid(pid);
-			return ResHelper.success(dictService.save(dict));
+	public Map<String, Object> onPostSave(@RequestParam(name = "pid", required = false, defaultValue = "2") Long pid, @RequestBody Dict dict) {
+		dict.setPid(pid);
+		if (dict.getId() == null) {
+			if (dictService.insertSelective(dict) == 1) {
+				return ResHelper.success();
+			}
+		} else {
+			if (dictService.updateByPrimaryKeySelective(dict) == 1) {
+				return ResHelper.success();
+			}
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
 	
 	@PostMapping(path = "/delete")
-	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
-		//Dict dict = dictRepsitory.findOne(id);
-		//dict.setDeleteFlag(1);
-		//dictRepsitory.save(dict);
-		return ResHelper.success();
+	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) Long id) {
+		 if (dictService.deleteByPrimaryKey(id) == 1) {
+			 return ResHelper.success();
+		 }
+		 return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
 	@GetMapping(path = "/detail")
-	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
-		return ResHelper.success(dictRepsitory.findOneByIdAndDeleteFlag(id, 0));
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) Long id) {
+		Dict dict = dictService.selectByPrimaryKey(id);
+		if (dict != null) {
+			return ResHelper.success(dict);
+		}
+		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
 }

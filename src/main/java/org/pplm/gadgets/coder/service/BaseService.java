@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.pplm.gadgets.coder.bean.Example;
+import org.pplm.gadgets.coder.bean.Example.BaseCriteria;
 import org.pplm.gadgets.coder.bean.Record;
 import org.pplm.gadgets.coder.mapper.BaseMapper;
 import org.springframework.data.domain.Page;
@@ -24,7 +25,8 @@ public abstract class BaseService<R extends Record, E extends Example> {
 	}
 
 	public Page<R> selectByExample(E example, Pageable pageable) {
-		PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+		PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
+		selectProcessDeleteFlag(example);
 		List<R> list = mapper.selectByExample(example);
 		return new PageImpl<R>(list, pageable, ((com.github.pagehelper.Page<R>)list).getTotal());
 	}
@@ -36,8 +38,13 @@ public abstract class BaseService<R extends Record, E extends Example> {
     	return mapper.deleteByExample(example);
     }
     
-    public int deleteByPrimaryKey(String id) {
-    	return mapper.deleteByPrimaryKey(id);
+    public int deleteByPrimaryKey(Long id) {
+    	R record = mapper.selectByPrimaryKey(id);
+    	if (record != null && record.getDeleteFlag() == 0) {
+    		record.setDeleteFlag(1);
+    		return this.updateByPrimaryKeySelective(record);
+    	}
+    	return 0;
     }
     
     public int insert(R record) {
@@ -49,11 +56,16 @@ public abstract class BaseService<R extends Record, E extends Example> {
     }
     
     public List<R> selectByExample(E example) {
+    	selectProcessDeleteFlag(example);
     	return mapper.selectByExample(example);
     }
     
-    public R selectByPrimaryKey(String id) {
-    	return mapper.selectByPrimaryKey(id);
+    public R selectByPrimaryKey(Long id) {
+    	R record = mapper.selectByPrimaryKey(id);
+    	if (record.getDeleteFlag() == 0) {
+    		return record;
+    	}
+    	return null;
     }
     
     public int updateByExampleSelective(@Param("record") R record, @Param("example") E example) {
@@ -72,4 +84,13 @@ public abstract class BaseService<R extends Record, E extends Example> {
     	return mapper.updateByPrimaryKey(record);
     }
 
+    private void selectProcessDeleteFlag (Example example) {
+		List<? extends BaseCriteria> criterias = example.getOredCriteria();
+		if (criterias.size() > 0) {
+			criterias.forEach(criteria -> criteria.andDeleteFlagEqualTo(0));
+		} else {
+			example.createCriteria().andDeleteFlagEqualTo(0);
+		}
+    }
+    
 }

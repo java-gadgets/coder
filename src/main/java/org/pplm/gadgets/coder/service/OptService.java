@@ -1,33 +1,31 @@
 package org.pplm.gadgets.coder.service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.pplm.gadgets.coder.entity.Attr;
-import org.pplm.gadgets.coder.entity.Opt;
-import org.pplm.gadgets.coder.entity.OptAttr;
-import org.pplm.gadgets.coder.repository.AttrRepository;
-import org.pplm.gadgets.coder.repository.OptAttrRepository;
-import org.pplm.gadgets.coder.repository.OptRepository;
+import org.pplm.gadgets.coder.bean.OptExample;
+import org.pplm.gadgets.coder.bean.Opt;
+import org.pplm.gadgets.coder.mapper.OptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class OptService {
+public class OptService extends BaseService<Opt, OptExample> {
 
-//	@Autowired
+/*//	@Autowired
 	private OptRepository optRepository;
 	
 //	@Autowired
 	private OptAttrRepository optAttrRepository;
 	
 //	@Autowired
-	private AttrRepository attrRepository;
-	
-	public boolean delete(String id) {
+	private AttrRepository attrRepository;*/
+
+	@Autowired
+	public OptService(OptMapper mapper) {
+		super(mapper);
+	}
+
+/*	public boolean delete(String id) {
 		Opt opt = optRepository.findOneByIdAndDeleteFlag(id, 0);
 		if(opt != null) {
 			opt.setDeleteFlag(1);
@@ -48,6 +46,6 @@ public class OptService {
 			return Collections.emptyList();
 		}
 		return null;
-	}
+	}*/
 	
 }

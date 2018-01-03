@@ -9,10 +9,10 @@ public class AttrExample extends Example {
 
     protected boolean distinct;
 
-    protected List<Criteria> oredCriteria;
+    protected List<BaseCriteria> oredCriteria;
 
     public AttrExample() {
-        oredCriteria = new ArrayList<Criteria>();
+        oredCriteria = new ArrayList<>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -31,11 +31,11 @@ public class AttrExample extends Example {
         return distinct;
     }
 
-    public List<Criteria> getOredCriteria() {
+    public List<BaseCriteria> getOredCriteria() {
         return oredCriteria;
     }
 
-    public void or(Criteria criteria) {
+    public void or(BaseCriteria criteria) {
         oredCriteria.add(criteria);
     }
 
@@ -64,7 +64,7 @@ public class AttrExample extends Example {
         distinct = false;
     }
 
-    protected abstract static class GeneratedCriteria {
+    protected abstract static class GeneratedCriteria extends BaseCriteria {
         protected List<Criterion> criteria;
 
         protected GeneratedCriteria() {
@@ -175,52 +175,52 @@ public class AttrExample extends Example {
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagEqualTo(Byte value) {
+        public Criteria andDeleteFlagEqualTo(Integer value) {
             addCriterion("delete_flag =", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagNotEqualTo(Byte value) {
+        public Criteria andDeleteFlagNotEqualTo(Integer value) {
             addCriterion("delete_flag <>", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagGreaterThan(Byte value) {
+        public Criteria andDeleteFlagGreaterThan(Integer value) {
             addCriterion("delete_flag >", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagGreaterThanOrEqualTo(Byte value) {
+        public Criteria andDeleteFlagGreaterThanOrEqualTo(Integer value) {
             addCriterion("delete_flag >=", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagLessThan(Byte value) {
+        public Criteria andDeleteFlagLessThan(Integer value) {
             addCriterion("delete_flag <", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagLessThanOrEqualTo(Byte value) {
+        public Criteria andDeleteFlagLessThanOrEqualTo(Integer value) {
             addCriterion("delete_flag <=", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagIn(List<Byte> values) {
+        public Criteria andDeleteFlagIn(List<Integer> values) {
             addCriterion("delete_flag in", values, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagNotIn(List<Byte> values) {
+        public Criteria andDeleteFlagNotIn(List<Integer> values) {
             addCriterion("delete_flag not in", values, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagBetween(Byte value1, Byte value2) {
+        public Criteria andDeleteFlagBetween(Integer value1, Integer value2) {
             addCriterion("delete_flag between", value1, value2, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeleteFlagNotBetween(Byte value1, Byte value2) {
+        public Criteria andDeleteFlagNotBetween(Integer value1, Integer value2) {
             addCriterion("delete_flag not between", value1, value2, "deleteFlag");
             return (Criteria) this;
         }
@@ -1208,4 +1208,5 @@ public class AttrExample extends Example {
             this(condition, value, secondValue, null);
         }
     }
+
 }

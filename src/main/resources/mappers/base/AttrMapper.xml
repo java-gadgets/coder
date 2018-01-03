@@ -3,7 +3,7 @@
 <mapper namespace="org.pplm.gadgets.coder.mapper.AttrMapper">
   <resultMap id="BaseResultMap" type="org.pplm.gadgets.coder.bean.Attr">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="delete_flag" jdbcType="TINYINT" property="deleteFlag" />
+    <result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
     <result column="fid" jdbcType="BIGINT" property="fid" />
     <result column="did" jdbcType="BIGINT" property="did" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -118,14 +118,14 @@
       default_value, remark, creator_id, 
       create_date, updator_id, update_date
       )
-    values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=TINYINT}, #{fid,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER}, #{fid,jdbcType=BIGINT}, 
       #{did,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{length,jdbcType=INTEGER}, #{precise,jdbcType=INTEGER}, #{required,jdbcType=INTEGER}, 
       #{defaultValue,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT}, 
       #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.Attr">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.pplm.gadgets.coder.bean.Attr">
     insert into attr
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -182,7 +182,7 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="deleteFlag != null">
-        #{deleteFlag,jdbcType=TINYINT},
+        #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="fid != null">
         #{fid,jdbcType=BIGINT},
@@ -241,7 +241,7 @@
         id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.deleteFlag != null">
-        delete_flag = #{record.deleteFlag,jdbcType=TINYINT},
+        delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="record.fid != null">
         fid = #{record.fid,jdbcType=BIGINT},
@@ -293,7 +293,7 @@
   <update id="updateByExample" parameterType="map">
     update attr
     set id = #{record.id,jdbcType=BIGINT},
-      delete_flag = #{record.deleteFlag,jdbcType=TINYINT},
+      delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       fid = #{record.fid,jdbcType=BIGINT},
       did = #{record.did,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
@@ -316,7 +316,7 @@
     update attr
     <set>
       <if test="deleteFlag != null">
-        delete_flag = #{deleteFlag,jdbcType=TINYINT},
+        delete_flag = #{deleteFlag,jdbcType=INTEGER},
       </if>
       <if test="fid != null">
         fid = #{fid,jdbcType=BIGINT},
@@ -365,7 +365,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="org.pplm.gadgets.coder.bean.Attr">
     update attr
-    set delete_flag = #{deleteFlag,jdbcType=TINYINT},
+    set delete_flag = #{deleteFlag,jdbcType=INTEGER},
       fid = #{fid,jdbcType=BIGINT},
       did = #{did,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},

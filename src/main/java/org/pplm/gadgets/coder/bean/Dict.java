@@ -1,9 +1,23 @@
 package org.pplm.gadgets.coder.bean;
 
 import java.util.Date;
+import java.util.List;
+
+import org.pplm.gadgets.coder.bean.DictItem;
 
 public class Dict extends Record {
-    private Long id;
+
+	private List<DictItem> dictItems;
+    
+	public List<DictItem> getDictItems() {
+		return dictItems;
+	}
+
+	public void setDictItems(List<DictItem> dictItems) {
+		this.dictItems = dictItems;
+	}
+
+	private Long id;
 
     private Integer deleteFlag;
 

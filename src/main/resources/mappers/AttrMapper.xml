@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.pplm.gadgets.coder.mapper.AttrMapper">
+	<resultMap id="OptResultMap" type="org.pplm.gadgets.coder.bean.Opt">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
+		<result column="fid" jdbcType="BIGINT" property="fid" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="mode" jdbcType="VARCHAR" property="mode" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="pre_url" jdbcType="VARCHAR" property="preUrl" />
+		<result column="exe_url" jdbcType="VARCHAR" property="exeUrl" />
+		<result column="permission_tag" jdbcType="VARCHAR" property="permissionTag" />
+		<result column="sov" jdbcType="INTEGER" property="sov" />
+		<result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="updator_id" jdbcType="BIGINT" property="updatorId" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+	</resultMap>
+	<sql id="Opt_Column_List">
+		o.id, o.delete_flag, o.fid, o.name, o.code, o.mode, o.type, o.pre_url,
+		o.exe_url, o.permission_tag, o.sov, o.creator_id, o.create_date, o.updator_id,
+		o.update_date
+	</sql>
+	<select id="selectOptByAttrPrimaryKey" resultMap="OptResultMap">
+		SELECT
+		<include refid="Opt_Column_List" />
+		FROM
+		opt_attr oa, opt o
+		WHERE
+		oa.oid = o.id AND o.delete_flag = 0 AND
+		oa.aid = #{aid}
+		ORDER BY sov ASC
+	</select>
+	<insert id="bindOptByAttrPrimaryKey">
+		INSERT INTO opt_attr
+		(aid, oid, osv)
+		VALUES
+		(#{aid}, #{oid}, #{osv})
+	</insert>
+</mapper>

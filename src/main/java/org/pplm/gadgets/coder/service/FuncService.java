@@ -14,4 +14,9 @@ public class FuncService extends BaseService<Func, FuncExample> {
 		super(funcMapper);
 	}
 	
+	public Func selectByPrimaryKeyDeep(Long id) {
+		
+		return null;
+	}
+	
 }

@@ -1,9 +1,30 @@
 package org.pplm.gadgets.coder.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class Func extends Record {
-    private Long id;
+	
+	private List<Opt> opts;
+	private List<Attr> attr;
+	
+    public List<Opt> getOpts() {
+		return opts;
+	}
+
+	public void setOpts(List<Opt> opts) {
+		this.opts = opts;
+	}
+
+	public List<Attr> getAttr() {
+		return attr;
+	}
+
+	public void setAttr(List<Attr> attr) {
+		this.attr = attr;
+	}
+
+	private Long id;
 
     private Integer deleteFlag;
 

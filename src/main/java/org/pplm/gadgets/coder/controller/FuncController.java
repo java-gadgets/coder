@@ -3,11 +3,7 @@ package org.pplm.gadgets.coder.controller;
 import java.util.Map;
 
 import org.pplm.gadgets.coder.bean.FuncExample;
-import org.pplm.gadgets.coder.bean.FuncExample.Criteria;
-import org.pplm.gadgets.coder.entity.Func;
-import org.pplm.gadgets.coder.entity.Project;
-import org.pplm.gadgets.coder.repository.FuncRepository;
-import org.pplm.gadgets.coder.repository.ProjectRepository;
+import org.pplm.gadgets.coder.bean.Func;
 import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,40 +20,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/v1/func", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FuncController {
 	
-//	@Autowired
-	private ProjectRepository projectRepository;
-	
-//	@Autowired
-	private FuncRepository funcRepository;
 	@Autowired
 	private FuncService funcService;
 	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetQuery(@RequestParam(name = "pid", required = false) Long pid, Pageable pageable){
 		FuncExample funcExample = new FuncExample();
-		Criteria criteria = funcExample.createCriteria().andDeleteFlagEqualTo(0);		
 		if (pid != null) {
-			criteria.andPidEqualTo(pid);
+			funcExample.createCriteria().andPidEqualTo(pid);
 		}
 		return ResHelper.success(funcService.selectByExample(funcExample, pageable));
 	}
 
 	@PostMapping(path="/save", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> onPostCreate(@RequestParam(name = "pid", required = true)String pid, @RequestBody Func func) {
-		Project project = null; // projectRepository.findOne(pid);
-		if (project == null) {
+	public Map<String, Object> onPostCreate(@RequestParam(name = "pid", required = true) Long pid, @RequestBody Func func) {
+		if (pid == null) {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID); 
 		}
-		if (func != null) {
-			func.setProject(project);
-			//return ResHelper.success(funcService.save(func));
+		func.setPid(pid);
+		if (func.getId() == null) {
+			if (funcService.insertSelective(func) == 1) {
+				return ResHelper.success();
+			}
+		} else {
+			if (funcService.updateByPrimaryKeySelective(func) == 1) {
+				return ResHelper.success();
+			}
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_BODY);
 	}
 	
 	@GetMapping(path = "/detail")
-	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) String id) {
-		Func func = funcRepository.findOneByIdAndDeleteFlag(id, 0);
+	public Map<String, Object> onGetDetail(@RequestParam(name = "id", required = true) Long id) {
+		Func func = funcService.selectByPrimaryKey(id);
 		if (func != null) {
 			return ResHelper.success(func);
 		}
@@ -65,25 +60,20 @@ public class FuncController {
 	}
 	
 	@PostMapping(path="/delete")
-	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) String id) {
-		if(id != null) {
-			Func func = funcRepository.findOneByIdAndDeleteFlag(id, 0);
-			if(func != null) {
-				func.setDeleteFlag(1);
-				//funcRepository.save(func);
-				return ResHelper.success();
-			}
+	public Map<String, Object> onPostDelete(@RequestParam(name = "id", required = true) Long id) {
+		if (funcService.deleteByPrimaryKey(id) == 1 ) {
+			return ResHelper.success();
 		}
 		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
 	@GetMapping(path = "/attrs")
 	public Map<String, Object> onGetAttrs(@RequestParam("fid") String fid) {
-		Func func = funcRepository.findOneByIdAndDeleteFlag(fid, 0);
+/*		Func func = funcRepository.findOneByIdAndDeleteFlag(fid, 0);
 		if (func != null) {
 			return ResHelper.success(func.getAttrs());
 		}
-		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
+*/		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
 }
