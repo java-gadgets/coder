@@ -1,5 +1,5 @@
-<#if attr.required! == "1" >
-                    ${attr.name!}: [
+<#if attr.required! == 1 >
+                    ${attr.code!}: [
 <#if attr.type! == "date" || attr.type! == "datetime" >
                         { required: true, type: 'date', message: '请选择${attr.label!}', trigger: 'change' },
 <#elseif attr.type! == "select" || attr.type! == "radio" >

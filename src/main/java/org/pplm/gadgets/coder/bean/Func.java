@@ -4,11 +4,21 @@ import java.util.Date;
 import java.util.List;
 
 public class Func extends Record {
-	
+
+	private Project project;
 	private List<Opt> opts;
-	private List<Attr> attr;
+	private List<Attr> attrs;
+
 	
-    public List<Opt> getOpts() {
+    public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public List<Opt> getOpts() {
 		return opts;
 	}
 
@@ -16,12 +26,12 @@ public class Func extends Record {
 		this.opts = opts;
 	}
 
-	public List<Attr> getAttr() {
-		return attr;
+	public List<Attr> getAttrs() {
+		return attrs;
 	}
 
-	public void setAttr(List<Attr> attr) {
-		this.attr = attr;
+	public void setAttrs(List<Attr> attrs) {
+		this.attrs = attrs;
 	}
 
 	private Long id;

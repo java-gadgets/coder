@@ -15,15 +15,15 @@
         <Col span="24" class="table-top-opt">
 <#list opts as opt >
 <#if opt.type! == "export" >
-            <Button type="success" icon="archive" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="do${opt.name?cap_first}${opt.type?cap_first}">${opt.label!}</Button>
+            <Button type="success" icon="archive" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="do${opt.code?cap_first}${opt.type?cap_first}">${opt.name!}</Button>
 </#if>
 </#list>
 <#list opts as opt >
 <#if opt.type! == "add" >
-            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.name?cap_first}${opt.type?cap_first}()">${opt.label!}</Button>
+            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.code?cap_first}${opt.type?cap_first}()">${opt.name!}</Button>
 </#if>
 <#if opt.type! == "save" >
-            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.name?cap_first}${opt.type?cap_first}()">添加</Button>
+            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.code?cap_first}${opt.type?cap_first}()">添加</Button>
 </#if>
 </#list>
         </Col>
@@ -88,26 +88,16 @@ export default {
 <#list opts as opt >
 <#if opt.type! == "query" >
 <#list opt.attrs as attr >
-                ${attr.name!}: this.optForm.queryForm.${attr.name!},
+                ${attr.code!}: this.optForm.queryForm.${attr.code!},
 </#list>
 <#break>
 </#if>
 </#list>
             };
-<#include "spec/" + ${project.name!} + "/queryform-page.ftl" />
+<#include "spec/" + project.code + "/queryform-page.ftl" />
 <#if relaAttr! != "" >
-            queryForm.${relaAttr} = this.optForm.${relaAttr};
+            queryForm.${relaAttr} = this.project.code
 </#if>
-            return queryForm;
-        },
-        getTableData () {
-            let _self = this;
-<#list opts as opt >
-<#if opt.type! == "query" && opt.exeUrl! != "" >
-<#assign getTableDataUrl = opt.exeUrl />
-<#break>
-</#if>
-</#list>
 <#if getTableDataUrl! == "" >
 <#list opts as opt >
 <#if opt.type! == "list" && opt.exeUrl! != "" >
@@ -118,8 +108,8 @@ export default {
 </#if>
             util.ajax.get('${getTableDataUrl!}', { params: this.processQueryForm() }).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "spec/" + ${project.name!} + "/res-success.ftl" />) {
-<#include "spec/" + ${project.name!} + "/res-pageable.ftl" />
+                    if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
+<#include "spec/" + project.code + "/res-pageable.ftl" />
                     } else {
                         _self.$Message.error(res.data.message);
                     }
@@ -133,7 +123,7 @@ export default {
             this.getTableData();
         },
 <#list opts as opt >
-<#assign optName = opt.name + opt.type?cap_first />
+<#assign optName = opt.code + opt.type?cap_first />
 <#if opt.type! == "query">
 <#include "segments/method-query.ftl" />
 <#elseif opt.type! == "add" >
@@ -173,12 +163,12 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.go${opt.name?cap_first}${opt.type?cap_first}(params.row.id);
+                                    this.go${opt.code?cap_first}${opt.type?cap_first}(params.row.id);
                                 }
                             }
                         };
                     },
-                    label: '<#if opt.type! == "save" >修改<#else>${opt.label!}</#if>'
+                    label: '<#if opt.type! == "save" >修改<#else>${opt.name!}</#if>'
                 },
 </#if>
 </#list>

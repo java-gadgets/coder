@@ -3,7 +3,7 @@
             this.showModal${optName?cap_first}(id);
 <#elseif opt.mode! == "page" >
             this.$router.push({
-                name: '${opt.name!}_${opt.type!}',
+                name: '${opt.code!}_${opt.type!}',
                 params: {
                     id: id
                 },
@@ -11,8 +11,8 @@
 <#elseif opt.mode! == "tip" >
             let _self = this;
             this.$Modal.confirm({
-                title: '${opt.label!}',
-                content: '确定要${opt.label!}？',
+                title: '${opt.name!}',
+                content: '确定要${opt.name!}？',
                 loading: true,
                 onOk: () => {
                     let _modal = this.$Modal;
@@ -41,7 +41,7 @@
             let _self = this;
             util.ajax.get('${opt.preUrl!}?id=' + id).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "../spec/res-success.ftl" />) {
+                    if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
                         _self.prepare${optName?cap_first}Form(res.data.content);
                     }
                 }
@@ -73,16 +73,16 @@
         prepare${optName?cap_first}Form (form) {
             this.optForm.${optName!}.id = form.id;
 <#list opt.attrs as attr>
-<#if attr.name! != "id" >
-            this.optForm.${optName!}.${attr.name!} = form.${attr.name!}.toString();
+<#if attr.code! != "id" >
+            this.optForm.${optName!}.${attr.code!} = form.${attr.code!}.toString();
 </#if>
 </#list>        
         },
         process${optName?cap_first}Form () {
             let form = {
 <#list opt.attrs as attr>
-<#if attr.name! != "id" >
-                ${attr.name!}: this.optForm.${optName!}.${attr.name!},
+<#if attr.code! != "id" >
+                ${attr.code!}: this.optForm.${optName!}.${attr.code!},
 </#if>
 </#list>
             };

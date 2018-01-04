@@ -8,6 +8,7 @@ import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptAttr;
 import org.pplm.gadgets.coder.bean.OptAttrExample;
+import org.pplm.gadgets.coder.mapper.DictMapper;
 import org.pplm.gadgets.coder.mapper.OptAttrMapper;
 import org.pplm.gadgets.coder.mapper.OptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class OptService extends BaseService<Opt, OptExample> {
 
 	@Autowired
 	private OptAttrMapper optAttrMapper;
+	
+	@Autowired
+	private DictMapper dictMapper;
 	
 	@Autowired
 	public OptService(OptMapper mapper) {
@@ -37,5 +41,19 @@ public class OptService extends BaseService<Opt, OptExample> {
 		for (int i = 0; i < aids.size(); i++) {
 			optAttrMapper.insertSelective(new OptAttr(aids.get(i), oid, i + 1));
 		}
+	}
+	
+	public List<Opt> selectWithAttrsByExample(OptExample example) {
+		List<Opt> opts = super.selectByExample(example);
+		opts.forEach(opt -> {
+			List<Attr> attrs = selectAttrByOptPrimaryKey(opt.getId());
+			attrs.forEach(attr -> {
+				if (attr.getDid() != null) {
+					attr.setDict(dictMapper.selectByPrimaryKey(attr.getDid()));
+				}
+			});
+			opt.setAttrs(attrs);
+		});
+		return opts;
 	}
 }

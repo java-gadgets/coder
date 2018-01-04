@@ -1,6 +1,6 @@
 <#list opts as opt >
-<#if opt.mode == "modal" && opt.type == "detail" >
-<#assign optName = opt.name + opt.type?cap_first />
+<#if opt.mode! == "modal" && opt.type! == "detail" >
+<#assign optName = opt.code + opt.type?cap_first />
 <#assign spaces = "    "/>
 <Modal width="800" v-model="optModal.${optName!}.show" :mask-closable="false" @on-ok="optModal.${optName!}.show = false" :title="optModal.${optName!}.title">
     <Card :bordered="false" dis-hover>
@@ -11,7 +11,7 @@
         </Row>
 <#else>
 <#list opt.attrs as attr >
-            <Col span="10">${attr.label!}：{{ <#if attr.type! == "select" || attr.type! == "radio" >this.dict.${attr.name!}.filter(item => detailData.${attr.name!} == item.value).map(item => item.label)[0]<#else>detailData.${attr.name!}</#if> }}</Col>
+            <Col span="10">${attr.name!}：{{ <#if attr.type! == "select" || attr.type! == "radio" >this.dict.${attr.code!}.filter(item => detailData.${attr.code!} == item.value).map(item => item.label)[0]<#else>detailData.${attr.code!}</#if> }}</Col>
 <#if attr_has_next>
 <#if (attr_index + 1) % 2 == 0 >
             <Col span="1">&nbsp;</Col>

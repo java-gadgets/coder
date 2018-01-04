@@ -2,7 +2,7 @@
             let _self = this;
             util.ajax.post('${opt.exeUrl!}<#if relaAttr! != "" >?${relaAttr}=' + this.optForm.${relaAttr}<#else>'</#if>, this.optForm.queryForm).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "../spec/res-success.ftl" />) {
+                    if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
                         window.open(res.data.content);
                     } else {
                         _self.$Message.error(res.data.message);

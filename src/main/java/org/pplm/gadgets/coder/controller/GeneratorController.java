@@ -8,14 +8,17 @@ import javax.websocket.server.PathParam;
 
 import org.pplm.gadgets.coder.entity.Base;
 import org.pplm.gadgets.coder.entity.Dict;
-import org.pplm.gadgets.coder.entity.Func;
+import org.pplm.gadgets.coder.bean.Func;
+import org.pplm.gadgets.coder.bean.Record;
 import org.pplm.gadgets.coder.entity.Opt;
 import org.pplm.gadgets.coder.entity.Project;
 import org.pplm.gadgets.coder.repository.DictRepository;
 import org.pplm.gadgets.coder.repository.FuncRepository;
 import org.pplm.gadgets.coder.repository.OptRepository;
 import org.pplm.gadgets.coder.repository.ProjectRepository;
+import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.utils.ResHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.ui.freemarker.SpringTemplateLoader;
@@ -34,27 +37,18 @@ import freemarker.template.TemplateException;
 @RequestMapping(path = "/v1/gen", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GeneratorController {
 
-	// @Autowired
-	private ProjectRepository projectRepository;
-
-	// @Autowired
-	private FuncRepository funcRepository;
-
-	// @Autowired
-	private OptRepository optRepository;
-
-	// @Autowired
-	private DictRepository dictRepository;
+	@Autowired
+	private FuncService funcService;
 
 	@PostMapping(path = "/func/{framework}/{type}/{fid}")
 	public Map<String, Object> onPostGenOpt(@PathVariable(name = "framework", required = true) String framework,
 			@PathVariable(name = "type", required = true) String type,
-			@PathVariable(name = "fid", required = true) Long fid) {
-
-		return null;
+			@PathVariable(name = "fid", required = true) Long fid) throws IOException, TemplateException {
+		Func func = funcService.selectWithProjectAndOptsByPrimaryKey(fid);
+		return ResHelper.success(genCode(func, framework + "/list.ftl"));
 	}
 
-	@PostMapping(path = "/vue/{id}")
+/*	@PostMapping(path = "/vue/{id}")
 	public Map<String, Object> onPostList(@PathVariable(name = "id") String id,
 			@RequestParam(name = "type", required = false, defaultValue = "list") String type)
 			throws IOException, TemplateException {
@@ -63,7 +57,7 @@ public class GeneratorController {
 			return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 		}
 		return ResHelper.success(genCode(func, type + ".ftl", "/iview-admin"));
-	}
+	}*/
 
 	@PostMapping(path = "/vue/dict/{id}")
 	public Map<String, Object> onPostDictGen(@PathVariable(name = "id") String id)
@@ -104,6 +98,18 @@ public class GeneratorController {
 		Template template = config.getTemplate(templateFileName, "utf-8");
 		StringWriter stringWriter = new StringWriter();
 		template.process(base, stringWriter);
+		System.out.println(stringWriter.toString());
+		return stringWriter.toString();
+	}
+	
+	private String genCode(Record record, String templateFile) throws IOException, TemplateException {
+		Configuration config = new Configuration(Configuration.VERSION_2_3_26);
+		config.setDefaultEncoding("utf-8");
+		TemplateLoader templateLoader = new SpringTemplateLoader(new DefaultResourceLoader(), "ftls" + "");
+		config.setTemplateLoader(templateLoader);
+		Template template = config.getTemplate(templateFile, "utf-8");
+		StringWriter stringWriter = new StringWriter();
+		template.process(record, stringWriter);
 		System.out.println(stringWriter.toString());
 		return stringWriter.toString();
 	}

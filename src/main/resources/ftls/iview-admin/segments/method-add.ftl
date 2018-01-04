@@ -3,7 +3,7 @@
             this.showModal${optName?cap_first}();
 <#elseif opt.mode! == "page" >
             this.$router.push({
-                name: '${opt.name!}_${opt.type!}',
+                name: '${opt.code!}_${opt.type!}',
             });
 </#if>
         },
@@ -32,8 +32,8 @@
         process${optName?cap_first}Form () {
             let form = {
 <#list opt.attrs as attr>
-<#if attr.name! != "id" >
-                ${attr.name!}: this.optForm.${optName!}.${attr.name!},
+<#if attr.code! != "id" >
+                ${attr.code!}: this.optForm.${optName!}.${attr.code!},
 </#if>
 </#list>
             };
@@ -42,8 +42,8 @@
         clear${optName?cap_first}Form () {
             this.optForm.${optName!}.id = '';
 <#list opt.attrs as attr>
-<#if attr.name! != "id" >
-            this.optForm.${optName!}.${attr.name} = '${attr.defaultValue!}';
+<#if attr.code! != "id" >
+            this.optForm.${optName!}.${attr.code} = '${attr.defaultValue!}';
 </#if>
 </#list>        
         },

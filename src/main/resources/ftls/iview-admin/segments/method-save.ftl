@@ -4,14 +4,14 @@
 <#elseif opt.mode! == "page" >
             if (id) {
 	            this.$router.push({
-	                name: '${opt.name!}_${opt.type!}_update',
+	                name: '${opt.code!}_${opt.type!}_update',
 	                params: {
 	                    id: id
 	                },
 	            });
             } else {
             	this.$router.push({
-	                name: '${opt.name!}_${opt.type!}_add',
+	                name: '${opt.code!}_${opt.type!}_add',
 	            });
             }
 </#if>
@@ -19,7 +19,7 @@
 <#if opt.mode! == "modal" >
         showModal${optName?cap_first} (id) {
 	        if (id) {
-	            this.optModal.${optName!}.title = '编辑${opt.label!}';
+	            this.optModal.${optName!}.title = '编辑${opt.name!}';
 	            let _self = this;
 	            util.ajax.get('${opt.preUrl!}?id=' + id).then(res => {
 	                if (res.status === 200) {
@@ -35,7 +35,7 @@
 	        } else {
 	            this.clear${optName?cap_first}Form ();
                 this.optModal.${optName!}.loading = false;
-	            this.optModal.${optName!}.title = '添加${opt.label!}';
+	            this.optModal.${optName!}.title = '添加${opt.name!}';
 	        }
             this.optModal.${optName!}.show = true;
         },
@@ -61,8 +61,8 @@
         prepare${optName?cap_first}Form (form) {
             this.optForm.${optName!}.id = form.id;
 <#list opt.attrs as attr>
-<#if attr.name! != "id" >
-            this.optForm.${optName!}.${attr.name!} = form.${attr.name!}.toString();
+<#if attr.code! != "id" >
+            this.optForm.${optName!}.${attr.code!} = form.${attr.code!}.toString();
 </#if>
 </#list>        
         },
@@ -70,8 +70,8 @@
             let form = {
                 id: this.optForm.${optName!}.id,
 <#list opt.attrs as attr>
-<#if attr.name! != "id" >
-                ${attr.name!}: this.optForm.${optName!}.${attr.name!},
+<#if attr.code! != "id" >
+                ${attr.code!}: this.optForm.${optName!}.${attr.code!},
 </#if>
 </#list>
             };
@@ -80,7 +80,7 @@
         clear${optName?cap_first}Form () {
             this.optForm.${optName!}.id = '';
 <#list opt.attrs as attr>
-<#if attr.name! != "id" >
+<#if attr.code! != "id" >
 <#include "comm-form-expr-item.ftl" />
 </#if>
 </#list>        

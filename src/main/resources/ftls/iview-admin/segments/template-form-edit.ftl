@@ -5,7 +5,7 @@ ${spaces!}        </Row>
 <#else>
 <#list opt.attrs as attr >
 ${spaces!}            <Col span="11">
-${spaces!}                <FormItem label="${attr.label!}" prop="${attr.name!}" <#if attr.required! == "1">required</#if>>
+${spaces!}                <FormItem label="${attr.name!}" prop="${attr.code!}" <#if attr.required! == 1>required</#if>>
 <#include "template-formitem-component.ftl" />
 ${spaces!}                </FormItem>
 ${spaces!}            </Col>

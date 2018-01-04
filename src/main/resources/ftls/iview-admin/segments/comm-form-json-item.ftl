@@ -1,5 +1,5 @@
 <#if attr.type! == "radio" >
-                    ${attr.name}: '<#if attr.defaultValue! == "">0</#if>',
+                    ${attr.code}: '<#if attr.defaultValue! == "">0</#if>',
 <#else>
-                    ${attr.name}: '${attr.defaultValue!}',
+                    ${attr.code}: '${attr.defaultValue!}',
 </#if>

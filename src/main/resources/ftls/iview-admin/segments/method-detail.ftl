@@ -3,7 +3,7 @@
             this.showModal${optName?cap_first}(id);
 <#elseif opt.mode! == "page">
             this.$router.push({
-                name: '<#if opt.preUrl! == "" >${opt.name!}_${opt.type!}<#else>${opt.preUrl!}</#if>',
+                name: '<#if opt.preUrl! == "" >${opt.code!}_${opt.type!}<#else>${opt.preUrl!}</#if>',
                 params: {
                     id: id
                 },
@@ -18,7 +18,7 @@
                 if (res.status === 200) {
                     if (res.data.<#include "spec/res-success.ftl" />) {
 <#list opt.attrs as attr>
-                        _self.optForm.${optName!}.${attr.name!} = res.data.content.${attr.name!};
+                        _self.optForm.${optName!}.${attr.code!} = res.data.content.${attr.code!};
 </#list>
                     }
                 }

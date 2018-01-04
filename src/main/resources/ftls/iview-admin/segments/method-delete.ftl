@@ -1,8 +1,8 @@
         go${optName?cap_first} (id) {
             let _self = this;
             this.$Modal.confirm({
-                title: '${opt.label!}',
-                content: '确定要${opt.label!}？',
+                title: '${opt.name!}',
+                content: '确定要${opt.name!}？',
                 loading: true,
                 onOk: () => {
                     let _modal = this.$Modal;

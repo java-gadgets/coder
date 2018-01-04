@@ -4,7 +4,7 @@
         },
         doQueryClear () {
 <#list opt.attrs as attr >
-            this.optForm.queryForm.${attr.name!} = '';
+            this.optForm.queryForm.${attr.code!} = '';
 </#list>
             this.doQuery();
         },

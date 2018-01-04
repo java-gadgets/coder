@@ -8,7 +8,7 @@
 <#else>
 <#list opt.attrs as attr >
             <Col span="11">
-                <FormItem label="${attr.label!}" prop="${attr.name!}">
+                <FormItem label="${attr.name!}" prop="${attr.code!}">
 <#include "template-formitem-component.ftl" />
                 </FormItem>
             </Col>

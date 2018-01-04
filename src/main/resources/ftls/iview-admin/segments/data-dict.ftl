@@ -1,6 +1,6 @@
 <#list attrs as attr >
 <#if attr.type! == "select" || attr.type! == "radio" >
-                ${attr.name!}: [
+                ${attr.code!}: [
 <#if attr.dict?? >
 <#list attr.dict.dictItems as dictItem >
                     {

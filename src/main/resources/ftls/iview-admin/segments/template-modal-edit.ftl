@@ -1,6 +1,6 @@
 <#list opts as opt >
-<#if (opt.type == "add" || opt.type == "save" || opt.type == "update") && opt.mode == "modal" >
-<#assign optName = opt.name + opt.type?cap_first />
+<#if (opt.type! == "add" || opt.type! == "save" || opt.type! == "update") && opt.mode! == "modal" >
+<#assign optName = opt.code + opt.type?cap_first />
 <#assign spaces = "    "/>
 <Modal width="800" v-model="optModal.${optName!}.show" :mask-closable="false" :loading="optModal.${optName!}.okLoading" @on-ok="do${optName?cap_first}" :title="optModal.${optName!}.title">
     <Card :bordered="false" dis-hover>
