@@ -79,9 +79,8 @@ public class OptController {
 	}
 	
 	@PostMapping(path="/bindAttr/{oid}")
-	public Map<String, Object> onPostBindAttr(@PathVariable("oid") String oid, @RequestBody List<String> aids) {
-		List<OptAttr> optAttrs = aids.stream().map(aid -> new OptAttr(oid, aid)).collect(Collectors.toList());
-		optAttrService.bindAttr(oid, optAttrs);
+	public Map<String, Object> onPostBindAttr(@PathVariable("oid") Long oid, @RequestBody List<Long> aids) {
+		optService.bindAttrByPrimaryKey(oid, aids);
 		return ResHelper.success();
 	}
 	
