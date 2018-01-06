@@ -2,13 +2,10 @@ package org.pplm.gadgets.coder.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptExample;
-import org.pplm.gadgets.coder.entity.OptAttr;
-import org.pplm.gadgets.coder.service.OptAttrService;
 import org.pplm.gadgets.coder.service.OptService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +25,6 @@ public class OptController {
 	
 	@Autowired
 	private OptService optService;
-	
-//	@Autowired
-	private OptAttrService optAttrService;
 	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetList(@RequestParam(name = "fid", required = true) Long fid, Pageable pageable){

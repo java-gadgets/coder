@@ -23,7 +23,7 @@
 	            let _self = this;
 	            util.ajax.get('${opt.preUrl!}?id=' + id).then(res => {
 	                if (res.status === 200) {
-	                    if (res.data.<#include "../spec/res-success.ftl" />) {
+	                    if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
 	                        _self.prepare${optName?cap_first}Form(res.data.content);
 	                    }
 	                }

@@ -4,19 +4,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
 
-import javax.websocket.server.PathParam;
-
-import org.pplm.gadgets.coder.entity.Base;
-import org.pplm.gadgets.coder.entity.Dict;
 import org.pplm.gadgets.coder.bean.Func;
+import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.Record;
-import org.pplm.gadgets.coder.entity.Opt;
-import org.pplm.gadgets.coder.entity.Project;
-import org.pplm.gadgets.coder.repository.DictRepository;
-import org.pplm.gadgets.coder.repository.FuncRepository;
-import org.pplm.gadgets.coder.repository.OptRepository;
-import org.pplm.gadgets.coder.repository.ProjectRepository;
 import org.pplm.gadgets.coder.service.FuncService;
+import org.pplm.gadgets.coder.service.OptService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -25,7 +17,6 @@ import org.springframework.ui.freemarker.SpringTemplateLoader;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import freemarker.cache.TemplateLoader;
@@ -39,15 +30,26 @@ public class GeneratorController {
 
 	@Autowired
 	private FuncService funcService;
+	
+	@Autowired
+	private OptService optService;
 
 	@PostMapping(path = "/func/{framework}/{type}/{fid}")
-	public Map<String, Object> onPostGenOpt(@PathVariable(name = "framework", required = true) String framework,
+	public Map<String, Object> onPostGenFunc(@PathVariable(name = "framework", required = true) String framework,
 			@PathVariable(name = "type", required = true) String type,
 			@PathVariable(name = "fid", required = true) Long fid) throws IOException, TemplateException {
 		Func func = funcService.selectWithProjectAndOptsByPrimaryKey(fid);
-		return ResHelper.success(genCode(func, framework + "/list.ftl"));
+		return ResHelper.success(genCode(func, framework + "/" + type + ".ftl"));
 	}
 
+	@PostMapping(path = "/opt/{framework}/{type}/{oid}")
+	public Map<String, Object> onPostGenOpt(@PathVariable(name = "framework", required = true) String framework,
+			@PathVariable(name = "type", required = true) String type,
+			@PathVariable(name = "oid", required = true) Long oid) throws IOException, TemplateException {
+			Opt opt = optService.selectWithAttrAndProjectByPrimaryKey(oid);
+		return ResHelper.success(genCode(opt, framework + "/" + type + ".ftl"));
+	}
+	
 /*	@PostMapping(path = "/vue/{id}")
 	public Map<String, Object> onPostList(@PathVariable(name = "id") String id,
 			@RequestParam(name = "type", required = false, defaultValue = "list") String type)
@@ -59,7 +61,7 @@ public class GeneratorController {
 		return ResHelper.success(genCode(func, type + ".ftl", "/iview-admin"));
 	}*/
 
-	@PostMapping(path = "/vue/dict/{id}")
+/*	@PostMapping(path = "/vue/dict/{id}")
 	public Map<String, Object> onPostDictGen(@PathVariable(name = "id") String id)
 			throws IOException, TemplateException {
 		Dict dict = null; // dictRepository.findOne(id);
@@ -100,7 +102,7 @@ public class GeneratorController {
 		template.process(base, stringWriter);
 		System.out.println(stringWriter.toString());
 		return stringWriter.toString();
-	}
+	}*/
 	
 	private String genCode(Record record, String templateFile) throws IOException, TemplateException {
 		Configuration config = new Configuration(Configuration.VERSION_2_3_26);

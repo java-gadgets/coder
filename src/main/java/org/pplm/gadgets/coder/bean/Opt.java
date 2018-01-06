@@ -5,9 +5,19 @@ import java.util.List;
 
 public class Opt extends Record {
 	
+	private Project project;
+	
 	private List<Attr> attrs;
 
-    public List<Attr> getAttrs() {
+    public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public List<Attr> getAttrs() {
 		return attrs;
 	}
 

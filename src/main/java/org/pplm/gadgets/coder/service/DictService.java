@@ -61,17 +61,23 @@ public class DictService extends BaseService<Dict, DictExample> {
 		if (did == null) {
 			return -1;
 		}
-		insertDictItems(did, dict.getDictItems());
+		processDictItems(did, dict.getDictItems());
 		return flag;
 	}
 	
 	public int updateByPrimaryKeySelective(Dict dict) {
-		if (dict.getDeleteFlag() != 1) {
+		if (dict.getDeleteFlag() == null || dict.getDeleteFlag() != 1) {
 			Long did = dict.getId();
 			deleteDictItems(did);
-			insertDictItems(did, dict.getDictItems());
+			processDictItems(did, dict.getDictItems());
 		}
 		return super.updateByPrimaryKeySelective(dict);
+	}
+	
+	private void processDictItems(Long did, List<DictItem> dictItems) {
+		if (dictItems != null) {
+			insertDictItems(did, dictItems);
+		}
 	}
 	
 	private List<DictItem> selectDictItems(Long did) {

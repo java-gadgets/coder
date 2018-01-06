@@ -4,7 +4,7 @@
 <#if attr.dict?? >
 <#list attr.dict.dictItems as dictItem >
                     {
-                        label: '${dictItem.label!}',
+                        label: '${dictItem.name!}',
                         value: '${dictItem.value!}'
                     },
 </#list>

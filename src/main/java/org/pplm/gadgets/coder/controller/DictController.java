@@ -3,8 +3,10 @@ package org.pplm.gadgets.coder.controller;
 import java.util.Map;
 
 import org.pplm.gadgets.coder.bean.DictExample;
+import org.pplm.gadgets.coder.bean.Func;
 import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.service.DictService;
+import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +25,9 @@ public class DictController {
 	@Autowired
 	private DictService dictService;
 	
+	@Autowired
+	private FuncService funcService;
+	
 	@GetMapping(path = "/list")
 	public Map<String, Object> onGetList(@RequestParam(name = "pid", required = false) Long pid, Pageable pageable) {
 		DictExample dictExample = new DictExample();
@@ -33,10 +38,21 @@ public class DictController {
 	}	
 	
 	@GetMapping(path = "/listAll")
-	public Map<String, Object> onGetAllList(@RequestParam(name = "pid", required = true) Long pid) {
+	public Map<String, Object> onGetAllList(@RequestParam(name = "pid", required = false) Long pid, @RequestParam(name = "fid", required = false) Long fid) {
+		if (fid != null) {
+			Func func = funcService.selectByPrimaryKey(fid);
+			if (func != null) {
+				if (func.getPid() != null) {
+					pid = func.getPid();
+				}
+			}
+		}
 		DictExample dictExample = new DictExample();
-		dictExample.createCriteria().andPidEqualTo(pid);
-		return ResHelper.success(dictService.selectByExample(dictExample));
+		if (pid != null) {
+			dictExample.createCriteria().andPidEqualTo(pid);
+			return ResHelper.success(dictService.selectByExample(dictExample));
+		}
+		return ResHelper.error(ResHelper.MESSAGE_ERROR_ID);
 	}
 	
 	@PostMapping(path = "/save")

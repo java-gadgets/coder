@@ -18,7 +18,7 @@
                     let _modal = this.$Modal;
                     util.ajax.post('${opt.exeUrl!}?id=' + id).then(res => {
                         if (res.status === 200) {
-                            if (res.data.<#include "../spec/res-success.ftl" />) {
+                            if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
                                 _self.getTableData();
                                 _self.$Message.info(res.data.message);
                             } else {
@@ -33,7 +33,19 @@
                 }
             });
 <#elseif opt.mode! == "switch" >
-
+            let _self = this;
+            util.ajax.post('${opt.exeUrl!}/' + id).then(res => {
+                if (res.status === 200) {
+                    if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
+                        _self.getTableData();
+                        _self.$Message.info(res.data.message);
+                    } else {
+                        _self.$Message.error(res.data.message);
+                    }
+                }
+            }).catch(err => {
+                console.log(err);
+            });
 </#if>
         },
 <#if opt.mode! == "modal" >

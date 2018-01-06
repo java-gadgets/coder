@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.pplm.gadgets.coder.bean.AttrExample;
+import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptAttr;
 import org.pplm.gadgets.coder.bean.OptAttrExample;
@@ -22,7 +23,10 @@ public class AttrService extends BaseService<Attr, AttrExample> {
 
 	@Autowired
 	private OptAttrMapper optAttrMapper;
-
+	
+	@Autowired
+	private DictService dictService;
+	
 	@Autowired
 	public AttrService(AttrMapper mapper) {
 		super(mapper);
@@ -48,6 +52,12 @@ public class AttrService extends BaseService<Attr, AttrExample> {
 
 	public int updateByPrimaryKeySelective(Attr attr) {
 		Long aid = attr.getId();
+		Dict dict = attr.getDict();
+		if (dict != null) {
+			if (dict.getId() != null) {
+				attr.setDid(dict.getId());
+			}
+		}
 		List<Opt> opts = attr.getOpts();
 		if (opts != null) {
 			OptAttrExample example = new OptAttrExample();
@@ -72,12 +82,20 @@ public class AttrService extends BaseService<Attr, AttrExample> {
 		List<Opt> opts = optAttrMapper.selectOptByAttrPrimaryKey(id);
 		Attr attr = super.selectByPrimaryKey(id);
 		attr.setOpts(opts);
+		if (attr.getDid() != null) {
+			attr.setDict(dictService.selectByPrimaryKey(attr.getDid()));
+		}
 		return attr;
 	}
 
-	public List<Attr> selectByExampleDeep(AttrExample example) {
-
-		return null;
+	public List<Attr> selectWithDictByExample(AttrExample example) {
+		List<Attr> attrs = super.selectByExample(example);
+		attrs.forEach(attr -> {
+			if (attr.getDid() != null) {
+				attr.setDict(dictService.selectByPrimaryKey(attr.getDid()));
+			}
+		});
+		return attrs;
 	}
-
+	
 }

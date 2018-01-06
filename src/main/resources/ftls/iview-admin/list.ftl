@@ -73,7 +73,7 @@ export default {
     },
     mounted () {
 <#if relaAttr! != "" >
-        this.optForm.${relaAttr} = this.$route.params.id
+        this.optForm.${relaAttr} = this.$route.params.id;
 </#if>
         this.page.current = 1;
         this.getTableData();
@@ -96,8 +96,18 @@ export default {
             };
 <#include "spec/" + project.code + "/queryform-page.ftl" />
 <#if relaAttr! != "" >
-            queryForm.${relaAttr} = this.project.code
+            queryForm.${relaAttr} = this.optForm.${relaAttr};
 </#if>
+            return queryForm;
+        },
+        getTableData () {
+            let _self = this;
+<#list opts as opt >
+<#if opt.type! == "query" && opt.exeUrl! != "" >
+<#assign getTableDataUrl = opt.exeUrl />
+<#break>
+</#if>
+</#list>
 <#if getTableDataUrl! == "" >
 <#list opts as opt >
 <#if opt.type! == "list" && opt.exeUrl! != "" >
@@ -183,7 +193,7 @@ export default {
                     width: 60 * optCount,
                     render: (h, params) => {
                         return h('div', opts.map(optItem => {
-                            return h(optItem.widget, optItem.attrs(params), optItem.label);
+                            return h(optItem.widget, optItem.attrs(params), typeof optItem.label == 'function' ? optItem.label(params) : optItem.label);
                         }));
                     }
                 });

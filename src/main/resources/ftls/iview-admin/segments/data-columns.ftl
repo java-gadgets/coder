@@ -4,7 +4,9 @@
                 {
                     title: '${attr.name!}',
                     key: '${attr.code!}',
+<#if attr.type! != "textarea" >
                     width: 150,
+</#if>
                     sortable: true,
 <#if attr.type! == "select" || attr.type! == "radio">
                     render: (h, params) => {

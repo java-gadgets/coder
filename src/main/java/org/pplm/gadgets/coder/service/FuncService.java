@@ -2,6 +2,7 @@ package org.pplm.gadgets.coder.service;
 
 import org.pplm.gadgets.coder.bean.FuncExample;
 import org.pplm.gadgets.coder.bean.OptExample;
+import org.pplm.gadgets.coder.bean.Project;
 import org.pplm.gadgets.coder.mapper.FuncMapper;
 import org.pplm.gadgets.coder.bean.AttrExample;
 import org.pplm.gadgets.coder.bean.Func;
@@ -32,11 +33,21 @@ public class FuncService extends BaseService<Func, FuncExample> {
 		func.setOpts(optService.selectWithAttrsByExample(optExample));
 		AttrExample attrExample = new AttrExample();
 		attrExample.createCriteria().andFidEqualTo(id);
-		func.setAttrs(attrService.selectByExample(attrExample));
+		func.setAttrs(attrService.selectWithDictByExample(attrExample));
 		if (func.getPid() != null) {
 			func.setProject(projectService.selectByPrimaryKey(func.getPid()));
 		}
 		return func;
+	}
+	
+	public Project selectProjectByPrimayKey(Long id) {
+		Func func = super.selectByPrimaryKey(id);
+		if (func != null) {
+			if (func.getPid() != null) {
+				return projectService.selectByPrimaryKey(func.getPid());
+			}
+		}
+		return null;
 	}
 	
 }

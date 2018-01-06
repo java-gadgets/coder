@@ -8,7 +8,6 @@ import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptAttr;
 import org.pplm.gadgets.coder.bean.OptAttrExample;
-import org.pplm.gadgets.coder.mapper.DictMapper;
 import org.pplm.gadgets.coder.mapper.OptAttrMapper;
 import org.pplm.gadgets.coder.mapper.OptMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,10 @@ public class OptService extends BaseService<Opt, OptExample> {
 	private OptAttrMapper optAttrMapper;
 	
 	@Autowired
-	private DictMapper dictMapper;
+	private DictService dictService;
+	
+	@Autowired
+	private FuncService funcService;
 	
 	@Autowired
 	public OptService(OptMapper mapper) {
@@ -32,6 +34,17 @@ public class OptService extends BaseService<Opt, OptExample> {
 
 	public List<Attr> selectAttrByOptPrimaryKey(Long oid) {
 		return optAttrMapper.selectAttrByOptPrimaryKey(oid);
+	}
+	
+	public Opt selectWithAttrAndProjectByPrimaryKey(Long id) {
+		Opt opt = super.selectByPrimaryKey(id);
+		if (opt != null) {
+			opt.setAttrs(getAttrsWithDict(id));
+		}
+		if (opt.getFid() != null) {
+			opt.setProject(funcService.selectProjectByPrimayKey(opt.getFid()));
+		}
+		return opt;
 	}
 	
 	public void bindAttrByPrimaryKey(Long oid, List<Long> aids) {
@@ -46,14 +59,21 @@ public class OptService extends BaseService<Opt, OptExample> {
 	public List<Opt> selectWithAttrsByExample(OptExample example) {
 		List<Opt> opts = super.selectByExample(example);
 		opts.forEach(opt -> {
-			List<Attr> attrs = selectAttrByOptPrimaryKey(opt.getId());
-			attrs.forEach(attr -> {
-				if (attr.getDid() != null) {
-					attr.setDict(dictMapper.selectByPrimaryKey(attr.getDid()));
-				}
-			});
-			opt.setAttrs(attrs);
+			opt.setAttrs(getAttrsWithDict(opt.getId()));
 		});
 		return opts;
 	}
+	
+	private List<Attr> getAttrsWithDict(Long oid) {
+		List<Attr> attrs = selectAttrByOptPrimaryKey(oid);
+		if (attrs != null) {
+			attrs.forEach(attr -> {
+				if (attr.getDid() != null) {
+					attr.setDict(dictService.selectByPrimaryKey(attr.getDid()));
+				}
+			});
+		}
+		return attrs;
+	}
+	
 }

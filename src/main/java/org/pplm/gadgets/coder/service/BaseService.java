@@ -62,7 +62,7 @@ public abstract class BaseService<R extends Record, E extends Example> {
     
     public R selectByPrimaryKey(Long id) {
     	R record = mapper.selectByPrimaryKey(id);
-    	if (record.getDeleteFlag() == 0) {
+    	if (record.getDeleteFlag() != null && record.getDeleteFlag() == 0) {
     		return record;
     	}
     	return null;
