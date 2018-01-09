@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
 
+import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.bean.Func;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.Record;
+import org.pplm.gadgets.coder.service.DictService;
 import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.service.OptService;
 import org.pplm.gadgets.coder.utils.ResHelper;
@@ -33,6 +35,9 @@ public class GeneratorController {
 	
 	@Autowired
 	private OptService optService;
+	
+	@Autowired
+	private DictService dictService;
 
 	@PostMapping(path = "/func/{framework}/{type}/{fid}")
 	public Map<String, Object> onPostGenFunc(@PathVariable(name = "framework", required = true) String framework,
@@ -61,13 +66,13 @@ public class GeneratorController {
 		return ResHelper.success(genCode(func, type + ".ftl", "/iview-admin"));
 	}*/
 
-/*	@PostMapping(path = "/vue/dict/{id}")
-	public Map<String, Object> onPostDictGen(@PathVariable(name = "id") String id)
+	@PostMapping(path = "/vue/dict/{id}")
+	public Map<String, Object> onPostDictGen(@PathVariable(name = "id") Long id)
 			throws IOException, TemplateException {
-		Dict dict = null; // dictRepository.findOne(id);
+		Dict dict = dictService.selectByPrimaryKey(id);
 		return ResHelper.success(genCode(dict, "dict.ftl", ""));
 	}
-
+/*
 	@PostMapping(path = "/vue/permission/{pid}")
 	public Map<String, Object> onPermissionGen(@PathVariable(name = "pid") String pid)
 			throws IOException, TemplateException {
@@ -91,18 +96,18 @@ public class GeneratorController {
 		}
 		return ResHelper.success(genCode(opt, templateFileName, ""));
 	}
-
-	private String genCode(Base base, String templateFileName, String path) throws IOException, TemplateException {
+*/
+	private String genCode(Record record, String templateFileName, String path) throws IOException, TemplateException {
 		Configuration config = new Configuration(Configuration.VERSION_2_3_26);
 		config.setDefaultEncoding("utf-8");
 		TemplateLoader templateLoader = new SpringTemplateLoader(new DefaultResourceLoader(), "ftls" + path);
 		config.setTemplateLoader(templateLoader);
 		Template template = config.getTemplate(templateFileName, "utf-8");
 		StringWriter stringWriter = new StringWriter();
-		template.process(base, stringWriter);
+		template.process(record, stringWriter);
 		System.out.println(stringWriter.toString());
 		return stringWriter.toString();
-	}*/
+	}
 	
 	private String genCode(Record record, String templateFile) throws IOException, TemplateException {
 		Configuration config = new Configuration(Configuration.VERSION_2_3_26);

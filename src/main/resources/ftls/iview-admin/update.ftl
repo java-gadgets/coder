@@ -49,6 +49,19 @@ export default {
             dict: {
 <#include "segments/data-dict.ftl" />
             },
+            upload: {
+                url: util.uploadUrl,
+<#list attrs as attr >
+<#if attr.type! == "pics" >
+                ${attr.code}: {
+                    imageUrl: '',
+                    visible: false,
+                    uploadList: [],
+                    defaultUploadList: [],
+                },
+</#if>
+</#list>
+            },
         }
     },
     mounted () {
@@ -57,6 +70,11 @@ export default {
     },
     methods: {
         init () {
+<#list attrs as attr >
+<#if attr.type! == "pics" >
+            this.upload.${attr.code}.uploadList = this.$refs.${attr.code}Upload.fileList;
+</#if>
+</#list>
             let _self = this;
             util.ajax.get('${preUrl}/' + this.optForm.${optName}.id).then(res => {
                 if (res.status === 200) {
@@ -86,7 +104,7 @@ export default {
         },
         prepare${optName?cap_first}Form (form) {
             this.optForm.${optName!}.id = form.id;
-<#list attrs as attr>
+<#list attrs as attr >
 <#if attr.code! != "id" >
             this.optForm.${optName!}.${attr.code!} = form.${attr.code!}.toString();
 </#if>
@@ -95,6 +113,30 @@ export default {
         doBack() {
             this.$router.go(-1);
         },
+<#list attrs as attr >
+<#if attr.type! == "pics" >
+        ${attr.code}HandleView (url) {
+            this.upload.${attr.code}.imageUrl = url;
+            this.upload.${attr.code}.visible = true;
+        },
+        ${attr.code}HandleRemove (file) {
+            util.removeArray(this.upload.${attr.code}.uploadList, file);
+        },
+        ${attr.code}HandleFormatError (file) {
+            this.$Message.warning(file.name + '图片格式无效，只能是jpg或者png格式.');
+        },
+        ${attr.code}HandleMaxSize (file) {
+            this.$Message.warning('图片大小不能超过2mb.');
+        },
+        ${attr.code}HandleBeforeUpload () {
+            const check = this.upload.${attr.code}.uploadList.length < 5;
+            if (!check) {
+                this.$Message.warning('最多只能上传5张图片');
+            }
+            return check;
+        },
+</#if>
+</#list>
     }
 }
 </script>
