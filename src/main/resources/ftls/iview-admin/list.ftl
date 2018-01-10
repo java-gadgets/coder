@@ -75,14 +75,12 @@ export default {
 <#if relaAttr! != "" >
         this.optForm.${relaAttr} = this.$route.params.id;
 </#if>
+<#include "spec/" + project.code + "/mounted-permission.ftl" ignore_missing=true />
         this.page.current = 1;
         this.getTableData();
-        this.init();
+        this.setOpts();
     },
     methods: {
-        init () {
-        	this.setOpts();
-        },
         processQueryForm () {
             let queryForm = {
 <#list opts as opt >
@@ -166,7 +164,7 @@ export default {
                             style: {
                                 marginRight: '5px',
 <#if opt.permissionTag! != "" >
-                                display: this.$store.getters.hasPermission('${opt.permissionTag!}') ? 'inline' : 'none',
+                                display: <#include "spec/" + project.code + "/opt-permission.ftl" ignore_missing=true />'inline',
 <#else>
                                 display: 'inline',
 </#if>
