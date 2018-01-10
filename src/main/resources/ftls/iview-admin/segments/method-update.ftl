@@ -100,4 +100,7 @@
             };
             return form;
         },
+        cancel${optName?cap_first} () {
+            this.$refs.${optName}Form.resetFields();
+        },
 </#if>

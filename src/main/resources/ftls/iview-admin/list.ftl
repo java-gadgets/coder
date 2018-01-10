@@ -183,21 +183,21 @@ export default {
 </#if>
 </#list>
             ];
-            let optCount = opts.filter(opt => opt.attrs().style.display !== 'none').length;
-            if (optCount > 0) {
-                this.columns.push({
-                    title: '操作',
-                    key: 'action',
-                    fixed: 'right',
-                    align: 'center',
-                    width: 60 * optCount,
-                    render: (h, params) => {
-                        return h('div', opts.map(optItem => {
-                            return h(optItem.widget, optItem.attrs(params), typeof optItem.label == 'function' ? optItem.label(params) : optItem.label);
-                        }));
-                    }
-                });
-            }
+            this.columns.push({
+                title: '操作',
+                key: 'action',
+                fixed: 'right',
+                align: 'center',
+                render: (h, params) => {
+                    let actions = opts.map(optItem => {
+                        return h(optItem.widget, optItem.attrs(params), typeof optItem.label == 'function' ? optItem.label(params) : optItem.label);
+                        }
+                    );
+                    let count = actions.filter(action => action.data.style.display != "none").length;
+                    params.column.width = count * 70;
+                    return h('div', actions);
+                }
+            });
         },
     }
 };

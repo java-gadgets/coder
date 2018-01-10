@@ -85,4 +85,7 @@
 </#if>
 </#list>        
         },
+        cancel${optName?cap_first} () {
+            this.$refs.${optName}Form.resetFields();
+        },
 </#if>
