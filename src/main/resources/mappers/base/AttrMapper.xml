@@ -9,6 +9,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="datatype" jdbcType="VARCHAR" property="datatype" />
     <result column="length" jdbcType="INTEGER" property="length" />
     <result column="precise" jdbcType="INTEGER" property="precise" />
     <result column="required" jdbcType="INTEGER" property="required" />
@@ -78,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, delete_flag, fid, did, name, code, type, length, precise, required, default_value, 
-    remark, creator_id, create_date, updator_id, update_date
+    id, delete_flag, fid, did, name, code, type, datatype, length, precise, required, 
+    default_value, remark, creator_id, create_date, updator_id, update_date
   </sql>
   <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.AttrExample" resultMap="BaseResultMap">
     select
@@ -114,18 +115,18 @@
   <insert id="insert" parameterType="org.pplm.gadgets.coder.bean.Attr">
     insert into attr (id, delete_flag, fid, 
       did, name, code, type, 
-      length, precise, required, 
-      default_value, remark, creator_id, 
-      create_date, updator_id, update_date
-      )
+      datatype, length, precise, 
+      required, default_value, remark, 
+      creator_id, create_date, updator_id, 
+      update_date)
     values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER}, #{fid,jdbcType=BIGINT}, 
       #{did,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{length,jdbcType=INTEGER}, #{precise,jdbcType=INTEGER}, #{required,jdbcType=INTEGER}, 
-      #{defaultValue,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}
-      )
+      #{datatype,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, #{precise,jdbcType=INTEGER}, 
+      #{required,jdbcType=INTEGER}, #{defaultValue,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{creatorId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, 
+      #{updateDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="org.pplm.gadgets.coder.bean.Attr">
+  <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.Attr">
     insert into attr
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -148,6 +149,9 @@
       </if>
       <if test="type != null">
         type,
+      </if>
+      <if test="datatype != null">
+        datatype,
       </if>
       <if test="length != null">
         length,
@@ -198,6 +202,9 @@
       </if>
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null">
+        #{datatype,jdbcType=VARCHAR},
       </if>
       <if test="length != null">
         #{length,jdbcType=INTEGER},
@@ -258,6 +265,9 @@
       <if test="record.type != null">
         type = #{record.type,jdbcType=VARCHAR},
       </if>
+      <if test="record.datatype != null">
+        datatype = #{record.datatype,jdbcType=VARCHAR},
+      </if>
       <if test="record.length != null">
         length = #{record.length,jdbcType=INTEGER},
       </if>
@@ -299,6 +309,7 @@
       name = #{record.name,jdbcType=VARCHAR},
       code = #{record.code,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
+      datatype = #{record.datatype,jdbcType=VARCHAR},
       length = #{record.length,jdbcType=INTEGER},
       precise = #{record.precise,jdbcType=INTEGER},
       required = #{record.required,jdbcType=INTEGER},
@@ -332,6 +343,9 @@
       </if>
       <if test="type != null">
         type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="datatype != null">
+        datatype = #{datatype,jdbcType=VARCHAR},
       </if>
       <if test="length != null">
         length = #{length,jdbcType=INTEGER},
@@ -371,6 +385,7 @@
       name = #{name,jdbcType=VARCHAR},
       code = #{code,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
+      datatype = #{datatype,jdbcType=VARCHAR},
       length = #{length,jdbcType=INTEGER},
       precise = #{precise,jdbcType=INTEGER},
       required = #{required,jdbcType=INTEGER},

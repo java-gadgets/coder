@@ -1,5 +1,5 @@
 <#if opt.attrs? size gt 0 >
-    <p slot="title">${opt.label!}</p>
+    <p slot="title">${opt.name!}</p>
 <#assign optName = "queryForm" />
     <Form :model="optForm.${optName!}" :label-width="100">
         <Row>

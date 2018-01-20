@@ -1,4 +1,4 @@
-        go${optName?cap_first} (id) {
+        go${optName?cap_first} (row) {
             let _self = this;
             this.$Modal.confirm({
                 title: '${opt.name!}',
@@ -6,7 +6,7 @@
                 loading: true,
                 onOk: () => {
                     let _modal = this.$Modal;
-                    util.ajax.post('${opt.exeUrl!}?id=' + id).then(res => {
+                    util.ajax.post('${opt.exeUrl!}?id=' + row.id).then(res => {
                         if (res.status === 200) {
                             if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
                                 _self.getTableData();

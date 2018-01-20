@@ -15,15 +15,15 @@
         <Col span="24" class="table-top-opt">
 <#list opts as opt >
 <#if opt.type! == "export" >
-            <Button type="success" icon="archive" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="do${opt.code?cap_first}${opt.type?cap_first}">${opt.name!}</Button>
+            <Button type="success" icon="archive" size="small" <#include "spec/" + project.code + "/component-permission.ftl" ignore_missing=true />@click="do${opt.code?cap_first}${opt.type?cap_first}">${opt.name!}</Button>
 </#if>
 </#list>
 <#list opts as opt >
 <#if opt.type! == "add" >
-            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.code?cap_first}${opt.type?cap_first}()">${opt.name!}</Button>
+            <Button type="primary" icon="plus" size="small" <#include "spec/" + project.code + "/component-permission.ftl" ignore_missing=true />@click="go${opt.code?cap_first}${opt.type?cap_first}()">${opt.name!}</Button>
 </#if>
 <#if opt.type! == "save" >
-            <Button type="primary" icon="plus" size="small" <#if opt.permissionTag! != "" >v-if="$store.getters.hasPermission('${opt.permissionTag!}')"</#if> @click="go${opt.code?cap_first}${opt.type?cap_first}()">添加</Button>
+            <Button type="primary" icon="plus" size="small" <#include "spec/" + project.code + "/component-permission.ftl" ignore_missing=true />@click="go${opt.code?cap_first}${opt.type?cap_first}()">添加</Button>
 </#if>
 </#list>
         </Col>
@@ -47,6 +47,7 @@ import util from '@/libs/util';
 export default {
     data () {
         return {
+<#include "spec/" + project.code + "/data-permission.ftl" ignore_missing=true />
             tableData: [],
             page: {
                 total: 0,
@@ -171,7 +172,7 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                    this.go${opt.code?cap_first}${opt.type?cap_first}(params.row.id);
+                                    this.go${opt.code?cap_first}${opt.type?cap_first}(params.row);
                                 }
                             }
                         };
@@ -181,22 +182,24 @@ export default {
 </#if>
 </#list>
             ];
-            this.columns.push({
-                title: '操作',
-                key: 'action',
-                fixed: 'right',
-                align: 'center',
-                render: (h, params) => {
-                    let actions = opts.map(optItem => {
-                        return h(optItem.widget, optItem.attrs(params), typeof optItem.label == 'function' ? optItem.label(params) : optItem.label);
-                        }
-                    );
-                    let count = actions.filter(action => action.data.style.display != "none").length;
-                    params.column.width = count * 70;
-                    return h('div', actions);
-                }
-            });
+            if (opts.length > 0) {
+	            this.columns.push({
+	                title: '操作',
+	                key: 'action',
+	                fixed: 'right',
+	                align: 'center',
+	                render: (h, params) => {
+	                    let actions = opts.map(optItem => {
+	                        return h(optItem.widget, optItem.attrs(params), typeof optItem.label == 'function' ? optItem.label(params) : optItem.label);
+	                        }
+	                    );
+	                    let count = actions.filter(action => action.data.style.display != "none").length;
+	                    params.column.width = count * 70;
+	                    return h('div', actions);
+	                }
+	            });
+            }
         },
-    }
+    },
 };
 </script>

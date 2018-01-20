@@ -2,8 +2,10 @@ package org.pplm.gadgets.coder.controller;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanMap;
 import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.bean.Func;
 import org.pplm.gadgets.coder.bean.Opt;
@@ -11,6 +13,7 @@ import org.pplm.gadgets.coder.bean.Record;
 import org.pplm.gadgets.coder.service.DictService;
 import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.service.OptService;
+import org.pplm.gadgets.coder.utils.Camel2Underline;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -97,6 +100,7 @@ public class GeneratorController {
 		return ResHelper.success(genCode(opt, templateFileName, ""));
 	}
 */
+	
 	private String genCode(Record record, String templateFileName, String path) throws IOException, TemplateException {
 		Configuration config = new Configuration(Configuration.VERSION_2_3_26);
 		config.setDefaultEncoding("utf-8");
@@ -114,9 +118,12 @@ public class GeneratorController {
 		config.setDefaultEncoding("utf-8");
 		TemplateLoader templateLoader = new SpringTemplateLoader(new DefaultResourceLoader(), "ftls" + "");
 		config.setTemplateLoader(templateLoader);
+		Map<Object, Object> map = new HashMap<>();
+		map.putAll(new BeanMap(record));
+		map.put("c2u", new Camel2Underline());
 		Template template = config.getTemplate(templateFile, "utf-8");
 		StringWriter stringWriter = new StringWriter();
-		template.process(record, stringWriter);
+		template.process(map, stringWriter);
 		System.out.println(stringWriter.toString());
 		return stringWriter.toString();
 	}

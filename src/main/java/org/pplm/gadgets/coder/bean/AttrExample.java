@@ -554,7 +554,77 @@ public class AttrExample extends Example {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+        
+        public Criteria andDatatypeIsNull() {
+            addCriterion("datatype is null");
+            return (Criteria) this;
+        }
 
+        public Criteria andDatatypeIsNotNull() {
+            addCriterion("datatype is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeEqualTo(String value) {
+            addCriterion("datatype =", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeNotEqualTo(String value) {
+            addCriterion("datatype <>", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeGreaterThan(String value) {
+            addCriterion("datatype >", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeGreaterThanOrEqualTo(String value) {
+            addCriterion("datatype >=", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeLessThan(String value) {
+            addCriterion("datatype <", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeLessThanOrEqualTo(String value) {
+            addCriterion("datatype <=", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeLike(String value) {
+            addCriterion("datatype like", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeNotLike(String value) {
+            addCriterion("datatype not like", value, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeIn(List<String> values) {
+            addCriterion("datatype in", values, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeNotIn(List<String> values) {
+            addCriterion("datatype not in", values, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeBetween(String value1, String value2) {
+            addCriterion("datatype between", value1, value2, "datatype");
+            return (Criteria) this;
+        }
+
+        public Criteria andDatatypeNotBetween(String value1, String value2) {
+            addCriterion("datatype not between", value1, value2, "datatype");
+            return (Criteria) this;
+        }
+        
         public Criteria andLengthIsNull() {
             addCriterion("length is null");
             return (Criteria) this;

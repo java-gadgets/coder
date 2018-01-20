@@ -28,7 +28,7 @@ ${spaces!}                            <Progress v-if="item.showProgress" :percen
 ${spaces!}                        </template>
 ${spaces!}                    </div>
 ${spaces!}                    <Upload
-${spaces!}                        ref="picsUpload"
+${spaces!}                        ref="${attr.code}Upload"
 ${spaces!}<#include "../spec/" + project.code + "/upload-component-attrs.ftl" ignore_missing=true />
 ${spaces!}                        :show-upload-list="false"
 ${spaces!}                        :default-file-list="upload.${attr.code}.defaultUploadList"

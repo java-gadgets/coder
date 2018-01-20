@@ -89,17 +89,21 @@ export default {
             });
         },
         do${optName}() {
-            util.ajax.post('${exeUrl}', this.optForm.${optName}).then(res => {
-                if (res.status === 200) {
-                    if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
-                        this.$Message.info(res.data.message); 
-                        this.doBack();
-                    } else {
-                        this.$Message.info(res.data.message);
-                    }
-                }
-            }).catch(err => {
-                console.log(err);
+            this.$refs.${optName!}Form.validate((valid) => {
+                if (valid) {
+	                util.ajax.post('${exeUrl}', this.optForm.${optName}).then(res => {
+	                    if (res.status === 200) {
+	                        if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
+	                            this.$Message.info(res.data.message); 
+	                            this.doBack();
+	                        } else {
+	                            this.$Message.info(res.data.message);
+	                        }
+	                    }
+	                }).catch(err => {
+	                    console.log(err);
+	                });
+	            }
             });
         },
         prepare${optName?cap_first}Form (form) {

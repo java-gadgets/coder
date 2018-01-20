@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Attr extends Record {
-	
+
 	private Dict dict;
 	private List<Opt> opts;
 	
@@ -23,7 +23,7 @@ public class Attr extends Record {
 	public void setOpts(List<Opt> opts) {
 		this.opts = opts;
 	}
-
+	
 	private Long id;
 
     private Integer deleteFlag;
@@ -37,6 +37,8 @@ public class Attr extends Record {
     private String code;
 
     private String type;
+
+    private String datatype;
 
     private Integer length;
 
@@ -110,6 +112,14 @@ public class Attr extends Record {
 
     public void setType(String type) {
         this.type = type == null ? null : type.trim();
+    }
+
+    public String getDatatype() {
+        return datatype;
+    }
+
+    public void setDatatype(String datatype) {
+        this.datatype = datatype == null ? null : datatype.trim();
     }
 
     public Integer getLength() {

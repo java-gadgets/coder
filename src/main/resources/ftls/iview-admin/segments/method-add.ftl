@@ -45,7 +45,8 @@
 <#if attr.code! != "id" >
             this.optForm.${optName!}.${attr.code} = '${attr.defaultValue!}';
 </#if>
-</#list>        
+</#list>
+            this.$refs.${optName}Form.resetFields();
         },
         cancel${optName?cap_first} () {
             this.$refs.${optName}Form.resetFields();

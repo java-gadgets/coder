@@ -1,12 +1,12 @@
-        go${optName?cap_first} (id) {
+        go${optName?cap_first} (row) {
 <#if opt.mode! == "modal" >
-            this.showModal${optName?cap_first}(id);
+            this.showModal${optName?cap_first}(row);
 <#elseif opt.mode! == "page" >
-            if (id) {
+            if (row) {
 	            this.$router.push({
 	                name: '${opt.code!}_${opt.type!}_update',
 	                params: {
-	                    id: id
+	                    id: row.id
 	                },
 	            });
             } else {
@@ -17,11 +17,15 @@
 </#if>
         },
 <#if opt.mode! == "modal" >
-        showModal${optName?cap_first} (id) {
-	        if (id) {
+        showModal${optName?cap_first} (row) {
+	        if (row) {
 	            this.optModal.${optName!}.title = '编辑${opt.name!}';
+<#if opt.preUrl! == "" >
+            this.prepare${optName?cap_first}Form(row);
+            this.optModal.${optName!}.loading = false;
+<#else>
 	            let _self = this;
-	            util.ajax.get('${opt.preUrl!}?id=' + id).then(res => {
+	            util.ajax.get('${opt.preUrl!}?id=' + row.id).then(res => {
 	                if (res.status === 200) {
 	                    if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
 	                        _self.prepare${optName?cap_first}Form(res.data.content);
@@ -32,6 +36,7 @@
 	                this.optModal.${optName!}.loading = false;
 	                console.log(err);
 	            });
+</#if>
 	        } else {
 	            this.clear${optName?cap_first}Form ();
                 this.optModal.${optName!}.loading = false;
@@ -58,11 +63,11 @@
                 }
             });
         },
-        prepare${optName?cap_first}Form (form) {
-            this.optForm.${optName!}.id = form.id;
+        prepare${optName?cap_first}Form (data) {
+            this.optForm.${optName!}.id = data.id;
 <#list opt.attrs as attr>
 <#if attr.code! != "id" >
-            this.optForm.${optName!}.${attr.code!} = form.${attr.code!}.toString();
+            this.optForm.${optName!}.${attr.code!} = data.${attr.code!}.toString();
 </#if>
 </#list>        
         },
@@ -83,7 +88,8 @@
 <#if attr.code! != "id" >
 <#include "comm-form-expr-item.ftl" />
 </#if>
-</#list>        
+</#list>
+            this.$refs.${optName!}Form.resetFields();
         },
         cancel${optName?cap_first} () {
             this.$refs.${optName}Form.resetFields();

@@ -26,6 +26,7 @@
 		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="code" jdbcType="VARCHAR" property="code" />
 		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="datatype" jdbcType="VARCHAR" property="datatype" />
 		<result column="length" jdbcType="INTEGER" property="length" />
 		<result column="precise" jdbcType="INTEGER" property="precise" />
 		<result column="required" jdbcType="INTEGER" property="required" />
@@ -45,7 +46,7 @@
 	</sql>
 	<sql id="Attr_Column_List">
 		a.id, a.delete_flag, a.fid, a.did, a.name, a.code, a.type,
-		a.length, a.precise, required,
+		a.datatype, a.length, a.precise, required,
 		a.default_value, a.remark, a.creator_id,
 		a.create_date, a.updator_id, a.update_date
 	</sql>
