@@ -91,7 +91,7 @@ export default {
         do${optName}() {
             this.$refs.${optName!}Form.validate((valid) => {
                 if (valid) {
-	                util.ajax.post('${exeUrl}', this.optForm.${optName}).then(res => {
+	                util.ajax.post('${exeUrl}', this.process${optName?cap_first}Form()).then(res => {
 	                    if (res.status === 200) {
 	                        if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
 	                            this.$Message.info(res.data.message); 
@@ -111,8 +111,39 @@ export default {
 <#list attrs as attr >
 <#if attr.code! != "id" >
             this.optForm.${optName!}.${attr.code!} = form.${attr.code!}.toString();
+<#if attr.type! == "pics" || attr.type! == "pic" >
+            if (form.${attr.code!}) {
+                let ${attr.code!} = form.${attr.code!}.split(',');
+                ${attr.code!}.forEach(item => this.upload.${attr.code!}.uploadList.push(
+                	{
+                		response: {
+                			content: decodeURIComponent(item), 
+                		},
+                		status: 'finished',
+                	}			
+                ));
+            }
 </#if>
-</#list>        
+</#if>
+</#list>
+        },
+        process${optName?cap_first}Form () {
+			let form = {
+				id: this.optForm.${optName!}.id,
+<#list attrs as attr >
+<#if attr.code! != "id" >
+				${attr.code!}: this.optForm.${optName!}.${attr.code!},
+</#if>
+</#list>
+			};
+<#list attrs as attr >
+<#if attr.code! != "id" && (attr.type! == "pics" || attr.type! == "pic") >
+			if (this.upload.${attr.code!}.uploadList.length > 0) {
+				form.${attr.code!} = this.upload.${attr.code!}.uploadList.map(item => encodeURIComponent(item.response.content)).join(",");		
+			}
+</#if>
+</#list>
+			return form;
         },
         doBack() {
             this.$router.go(-1);
