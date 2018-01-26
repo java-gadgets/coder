@@ -81,6 +81,48 @@ class ${code?cap_first}Controller extends Controller
         ];
         return $this->exports($list, $title);
     }
+
+<#elseif opt.type! == "save" >
+    public function ${code!}${opt.type?cap_first} (Request $request, $id) {
+    
+    }
+    
+    public function ${code!}${opt.type?cap_first}Prepare (Request $Request) {
+    }
+    
+<#elseif opt.type! == "update" >
+    public function ${code!}${opt.type?cap_first} (Request $request) {
+    	$id = $request->input("id");
+    	
+    	$${code!} = ${code?cap_first}::where('id', $id)->first();
+    	if (empty($${code!})) {
+    		return $this->getResponseMessage(1, "id不存在");
+    	}
+
+<#list attrs as attr >
+        $${attr.code!} = $request->input('${attr.code!}');
+</#list>
+
+<#list attrs as attr >
+        if (!(empty($${attr.code!}) && $${attr.code!} !== '0')) $${code!}->${c2u(attr.code)} = $${attr.code!};
+</#list>
+
+        $${code!}->save();
+		
+        return $this->getResponseMessage(0, '操作成功');
+    }
+
+    public function ${code!}${opt.type?cap_first}Prepare (Request $Request) {
+    	$id = $request->input("id");
+    	
+    	$${code!} = ${code?cap_first}::where('id', $id)->first();
+    	if (empty($${code!})) {
+    		return $this->getResponseMessage(1, "id不存在");
+    	}
+    	
+    	return $this->getResponseMessage(0, '操作成功', $${code!});
+    }
+
 <#else>
 </#if>
 </#list>

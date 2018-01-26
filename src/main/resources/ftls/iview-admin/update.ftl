@@ -106,14 +106,14 @@ export default {
 	            }
             });
         },
-        prepare${optName?cap_first}Form (form) {
-            this.optForm.${optName!}.id = form.id;
+        prepare${optName?cap_first}Form (data) {
+            this.optForm.${optName!}.id = data.id;
 <#list attrs as attr >
 <#if attr.code! != "id" >
-            this.optForm.${optName!}.${attr.code!} = form.${attr.code!}.toString();
+            this.optForm.${optName!}.${attr.code!} = data.${attr.code!}.toString();
 <#if attr.type! == "pics" || attr.type! == "pic" >
-            if (form.${attr.code!}) {
-                let ${attr.code!} = form.${attr.code!}.split(',');
+            if (data.${attr.code!}) {
+                let ${attr.code!} = data.${attr.code!}.split(',');
                 ${attr.code!}.forEach(item => this.upload.${attr.code!}.uploadList.push(
                 	{
                 		response: {
