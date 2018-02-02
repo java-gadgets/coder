@@ -31,7 +31,7 @@ class ${code?cap_first}Controller extends Controller
 <#list opts as optInner >
 <#if optInner.type! == "query" >
 <#list optInner.attrs as attr >
-        if (${attr.code!}) $query->where('${c2u(attr.code)}'<#if attr.datatype! == "string" >, 'like'</#if>, "${attr.code!}<#if attr.datatype! == "string" >%</#if>");
+        if (isset(${attr.code!})) $query->where('${c2u(attr.code)}'<#if attr.datatype! == "string" >, 'like'</#if>, "${attr.code!}<#if attr.datatype! == "string" >%</#if>");
 </#list>
 <#break>
 </#if>
@@ -48,6 +48,14 @@ class ${code?cap_first}Controller extends Controller
             '${c2u(attr.code)} as ${attr.code}',
 </#list>
         ]);
+<#list opts as optInner >
+<#if optInner.type! == "query" >
+<#list optInner.attrs as attr >
+        if (isset(${attr.code!})) $query->where('${c2u(attr.code)}'<#if attr.datatype! == "string" >, 'like'</#if>, "${attr.code!}<#if attr.datatype! == "string" >%</#if>");
+</#list>
+<#break>
+</#if>
+</#list>
         $list = $query->get();
 <#assign dictFlag = false />
 <#list opt.attrs as attr >
@@ -104,7 +112,7 @@ class ${code?cap_first}Controller extends Controller
 </#list>
 
 <#list attrs as attr >
-        if (!(empty($${attr.code!}) && $${attr.code!} !== '0')) $${code!}->${c2u(attr.code)} = $${attr.code!};
+        if (isset($${attr.code!})) $${code!}->${c2u(attr.code)} = $${attr.code!};
 </#list>
 
         $${code!}->save();
