@@ -18,7 +18,7 @@
                     let _modal = this.$Modal;
                     util.ajax.post('${opt.exeUrl!}?id=' + row.id).then(res => {
                         if (res.status === 200) {
-                            if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
+                            if (res.data.<#include "../spec/" + project.custom + "/res-success.ftl" />) {
                                 _self.getTableData();
                                 _self.$Message.info(res.data.message);
                             } else {
@@ -36,7 +36,7 @@
             let _self = this;
             util.ajax.post('${opt.exeUrl!}/' + row.id).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
+                    if (res.data.<#include "../spec/" + project.custom + "/res-success.ftl" />) {
                         _self.getTableData();
                         _self.$Message.info(res.data.message);
                     } else {
@@ -57,7 +57,7 @@
             let _self = this;
             util.ajax.get('${opt.preUrl!}?id=' + row.id).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "../spec/" + project.code + "/res-success.ftl" />) {
+                    if (res.data.<#include "../spec/" + project.custom + "/res-success.ftl" />) {
                         _self.prepare${optName?cap_first}Form(res.data.content);
                     }
                 }

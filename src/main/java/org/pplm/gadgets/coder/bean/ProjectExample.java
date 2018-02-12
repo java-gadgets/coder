@@ -12,7 +12,7 @@ public class ProjectExample extends Example {
     protected List<BaseCriteria> oredCriteria;
 
     public ProjectExample() {
-        oredCriteria = new ArrayList<>();
+        oredCriteria = new ArrayList<BaseCriteria>();
     }
 
     public void setOrderByClause(String orderByClause) {
@@ -362,6 +362,76 @@ public class ProjectExample extends Example {
 
         public Criteria andCodeNotBetween(String value1, String value2) {
             addCriterion("code not between", value1, value2, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomIsNull() {
+            addCriterion("custom is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomIsNotNull() {
+            addCriterion("custom is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomEqualTo(String value) {
+            addCriterion("custom =", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomNotEqualTo(String value) {
+            addCriterion("custom <>", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomGreaterThan(String value) {
+            addCriterion("custom >", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomGreaterThanOrEqualTo(String value) {
+            addCriterion("custom >=", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomLessThan(String value) {
+            addCriterion("custom <", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomLessThanOrEqualTo(String value) {
+            addCriterion("custom <=", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomLike(String value) {
+            addCriterion("custom like", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomNotLike(String value) {
+            addCriterion("custom not like", value, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomIn(List<String> values) {
+            addCriterion("custom in", values, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomNotIn(List<String> values) {
+            addCriterion("custom not in", values, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomBetween(String value1, String value2) {
+            addCriterion("custom between", value1, value2, "custom");
+            return (Criteria) this;
+        }
+
+        public Criteria andCustomNotBetween(String value1, String value2) {
+            addCriterion("custom not between", value1, value2, "custom");
             return (Criteria) this;
         }
 
@@ -768,5 +838,4 @@ public class ProjectExample extends Example {
             this(condition, value, secondValue, null);
         }
     }
-
 }

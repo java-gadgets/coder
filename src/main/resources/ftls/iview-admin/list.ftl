@@ -15,15 +15,15 @@
         <Col span="24" class="table-top-opt">
 <#list opts as opt >
 <#if opt.type! == "export" >
-            <Button type="success" icon="archive" size="small" <#include "spec/" + project.code + "/component-permission.ftl" ignore_missing=true />@click="do${opt.code?cap_first}${opt.type?cap_first}">${opt.name!}</Button>
+            <Button type="success" icon="archive" size="small" <#include "spec/" + project.custom + "/component-permission.ftl" ignore_missing=true />@click="do${opt.code?cap_first}${opt.type?cap_first}">${opt.name!}</Button>
 </#if>
 </#list>
 <#list opts as opt >
 <#if opt.type! == "add" >
-            <Button type="primary" icon="plus" size="small" <#include "spec/" + project.code + "/component-permission.ftl" ignore_missing=true />@click="go${opt.code?cap_first}${opt.type?cap_first}()">${opt.name!}</Button>
+            <Button type="primary" icon="plus" size="small" <#include "spec/" + project.custom + "/component-permission.ftl" ignore_missing=true />@click="go${opt.code?cap_first}${opt.type?cap_first}()">${opt.name!}</Button>
 </#if>
 <#if opt.type! == "save" >
-            <Button type="primary" icon="plus" size="small" <#include "spec/" + project.code + "/component-permission.ftl" ignore_missing=true />@click="go${opt.code?cap_first}${opt.type?cap_first}()">添加</Button>
+            <Button type="primary" icon="plus" size="small" <#include "spec/" + project.custom + "/component-permission.ftl" ignore_missing=true />@click="go${opt.code?cap_first}${opt.type?cap_first}()">添加</Button>
 </#if>
 </#list>
         </Col>
@@ -47,7 +47,7 @@ import util from '@/libs/util';
 export default {
     data () {
         return {
-<#include "spec/" + project.code + "/data-permission.ftl" ignore_missing=true />
+<#include "spec/" + project.custom + "/data-permission.ftl" ignore_missing=true />
             tableData: [],
             page: {
                 total: 0,
@@ -76,7 +76,7 @@ export default {
 <#if relaAttr! != "" >
         this.optForm.${relaAttr} = this.$route.params.id;
 </#if>
-<#include "spec/" + project.code + "/mounted-permission.ftl" ignore_missing=true />
+<#include "spec/" + project.custom + "/mounted-permission.ftl" ignore_missing=true />
         this.page.current = 1;
         this.getTableData();
         this.setOpts();
@@ -93,7 +93,7 @@ export default {
 </#if>
 </#list>
             };
-<#include "spec/" + project.code + "/queryform-page.ftl" />
+<#include "spec/" + project.custom + "/queryform-page.ftl" />
 <#if relaAttr! != "" >
             queryForm.${relaAttr} = this.optForm.${relaAttr};
 </#if>
@@ -117,8 +117,8 @@ export default {
 </#if>
             util.ajax.get('${getTableDataUrl!}', { params: this.processQueryForm() }).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
-<#include "spec/" + project.code + "/res-pageable.ftl" />
+                    if (res.data.<#include "spec/" + project.custom + "/res-success.ftl" />) {
+<#include "spec/" + project.custom + "/res-pageable.ftl" />
                     } else {
                         _self.$Message.error(res.data.message);
                     }
@@ -165,7 +165,7 @@ export default {
                             style: {
                                 marginRight: '5px',
 <#if opt.permissionTag! != "" >
-                                display: <#include "spec/" + project.code + "/opt-permission.ftl" ignore_missing=true />'inline',
+                                display: <#include "spec/" + project.custom + "/opt-permission.ftl" ignore_missing=true />'inline',
 <#else>
                                 display: 'inline',
 </#if>

@@ -71,7 +71,7 @@ export default {
             let _self = this;
             util.ajax.get('${exeUrl!}?id=' + this.$route.params.id).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
+                    if (res.data.<#include "spec/" + project.custom + "/res-success.ftl" />) {
                         _self.perpare${optName?cap_first} (res.data.content);
                     } else {
                         _self.$Message.error(res.data.message)

@@ -29,7 +29,7 @@ ${spaces!}                        </template>
 ${spaces!}                    </div>
 ${spaces!}                    <Upload
 ${spaces!}                        ref="${attr.code}Upload"
-${spaces!}<#include "../spec/" + project.code + "/upload-component-attrs.ftl" ignore_missing=true />
+${spaces!}<#include "../spec/" + project.custom + "/upload-component-attrs.ftl" ignore_missing=true />
 ${spaces!}                        :show-upload-list="false"
 ${spaces!}                        :default-file-list="upload.${attr.code}.defaultUploadList"
 ${spaces!}                        :format="['jpg','jpeg','png']"

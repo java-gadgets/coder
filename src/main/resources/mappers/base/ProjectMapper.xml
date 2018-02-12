@@ -6,6 +6,7 @@
     <result column="delete_flag" jdbcType="INTEGER" property="deleteFlag" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="custom" jdbcType="VARCHAR" property="custom" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, delete_flag, name, code, remark, creator_id, create_date, updator_id, update_date
+    id, delete_flag, name, code, custom, remark, creator_id, create_date, updator_id, 
+    update_date
   </sql>
   <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.ProjectExample" resultMap="BaseResultMap">
     select
@@ -105,13 +107,13 @@
   </delete>
   <insert id="insert" parameterType="org.pplm.gadgets.coder.bean.Project">
     insert into project (id, delete_flag, name, 
-      code, remark, creator_id, 
-      create_date, updator_id, update_date
-      )
+      code, custom, remark, 
+      creator_id, create_date, updator_id, 
+      update_date)
     values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{code,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT}, 
-      #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}
-      )
+      #{code,jdbcType=VARCHAR}, #{custom,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{creatorId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, 
+      #{updateDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.Project">
     insert into project
@@ -127,6 +129,9 @@
       </if>
       <if test="code != null">
         code,
+      </if>
+      <if test="custom != null">
+        custom,
       </if>
       <if test="remark != null">
         remark,
@@ -156,6 +161,9 @@
       </if>
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="custom != null">
+        #{custom,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
@@ -195,6 +203,9 @@
       <if test="record.code != null">
         code = #{record.code,jdbcType=VARCHAR},
       </if>
+      <if test="record.custom != null">
+        custom = #{record.custom,jdbcType=VARCHAR},
+      </if>
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
@@ -221,6 +232,7 @@
       delete_flag = #{record.deleteFlag,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       code = #{record.code,jdbcType=VARCHAR},
+      custom = #{record.custom,jdbcType=VARCHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       creator_id = #{record.creatorId,jdbcType=BIGINT},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
@@ -241,6 +253,9 @@
       </if>
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="custom != null">
+        custom = #{custom,jdbcType=VARCHAR},
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
@@ -265,6 +280,7 @@
     set delete_flag = #{deleteFlag,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       code = #{code,jdbcType=VARCHAR},
+      custom = #{custom,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
       creator_id = #{creatorId,jdbcType=BIGINT},
       create_date = #{createDate,jdbcType=TIMESTAMP},

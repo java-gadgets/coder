@@ -80,7 +80,7 @@ export default {
                 if (valid) {
 	                util.ajax.post('${exeUrl}', this.optForm.${optName}).then(res => {
 	                    if (res.status === 200) {
-	                        if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
+	                        if (res.data.<#include "spec/" + project.custom + "/res-success.ftl" />) {
 	                            this.$Message.info(res.data.message); 
 	                            this.doBack();
 	                        } else {

@@ -11,6 +11,8 @@ public class Project extends Record {
 
     private String code;
 
+    private String custom;
+
     private String remark;
 
     private Long creatorId;
@@ -51,6 +53,14 @@ public class Project extends Record {
 
     public void setCode(String code) {
         this.code = code == null ? null : code.trim();
+    }
+
+    public String getCustom() {
+        return custom;
+    }
+
+    public void setCustom(String custom) {
+        this.custom = custom == null ? null : custom.trim();
     }
 
     public String getRemark() {

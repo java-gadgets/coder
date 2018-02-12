@@ -78,7 +78,7 @@ export default {
             let _self = this;
             util.ajax.get('${preUrl}/' + this.optForm.${optName}.id).then(res => {
                 if (res.status === 200) {
-                    if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
+                    if (res.data.<#include "spec/" + project.custom + "/res-success.ftl" />) {
                         _self.prepare${optName?cap_first}Form (res.data.content);
                     } else {
                         _self.$Message.error(res.data.message);
@@ -93,7 +93,7 @@ export default {
                 if (valid) {
 	                util.ajax.post('${exeUrl}', this.process${optName?cap_first}Form()).then(res => {
 	                    if (res.status === 200) {
-	                        if (res.data.<#include "spec/" + project.code + "/res-success.ftl" />) {
+	                        if (res.data.<#include "spec/" + project.custom + "/res-success.ftl" />) {
 	                            this.$Message.info(res.data.message); 
 	                            this.doBack();
 	                        } else {
