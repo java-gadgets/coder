@@ -4,6 +4,9 @@ import org.pplm.gadgets.coder.bean.FuncExample;
 import org.pplm.gadgets.coder.bean.OptExample;
 import org.pplm.gadgets.coder.bean.Project;
 import org.pplm.gadgets.coder.mapper.FuncMapper;
+
+import java.util.List;
+
 import org.pplm.gadgets.coder.bean.AttrExample;
 import org.pplm.gadgets.coder.bean.Func;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ public class FuncService extends BaseService<Func, FuncExample> {
 		super(funcMapper);
 	}
 	
-	public Func selectWithProjectAndOptsByPrimaryKey(Long id) {
+	public Func selectWithProjectOptsAttrsByPrimaryKey(Long id) {
 		Func func = super.selectByPrimaryKey(id);
 		OptExample optExample = new OptExample();
 		optExample.createCriteria().andFidEqualTo(id);
@@ -34,8 +37,10 @@ public class FuncService extends BaseService<Func, FuncExample> {
 		AttrExample attrExample = new AttrExample();
 		attrExample.createCriteria().andFidEqualTo(id);
 		func.setAttrs(attrService.selectWithDictByExample(attrExample));
-		if (func.getPid() != null) {
-			func.setProject(projectService.selectByPrimaryKey(func.getPid()));
+		if (func != null) {
+			if (func.getPid() != null) {
+				func.setProject(projectService.selectByPrimaryKey(func.getPid()));
+			}
 		}
 		return func;
 	}
@@ -48,6 +53,21 @@ public class FuncService extends BaseService<Func, FuncExample> {
 			}
 		}
 		return null;
+	}
+	
+	public List<Func> selectWithOptsAndAttrsByExample(FuncExample example) {
+		List<Func> funcs = super.selectByExample(example);
+		if (funcs != null) {
+			funcs.forEach(func -> {
+				OptExample optExample = new OptExample();
+				optExample.createCriteria().andFidEqualTo(func.getId());
+				func.setOpts(optService.selectWithAttrsByExample(optExample));
+				AttrExample attrExample = new AttrExample();
+				attrExample.createCriteria().andFidEqualTo(func.getId());
+				func.setAttrs(attrService.selectWithDictByExample(attrExample));
+			});
+		}
+		return funcs;
 	}
 	
 }

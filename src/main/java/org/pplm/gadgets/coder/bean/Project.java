@@ -1,9 +1,21 @@
 package org.pplm.gadgets.coder.bean;
 
 import java.util.Date;
+import java.util.List;
 
 public class Project extends Record {
-    private Long id;
+	
+	private List<Func> funcs;
+	
+    public List<Func> getFuncs() {
+		return funcs;
+	}
+
+	public void setFuncs(List<Func> funcs) {
+		this.funcs = funcs;
+	}
+
+	private Long id;
 
     private Integer deleteFlag;
 

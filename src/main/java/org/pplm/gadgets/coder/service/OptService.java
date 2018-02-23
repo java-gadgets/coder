@@ -36,7 +36,7 @@ public class OptService extends BaseService<Opt, OptExample> {
 		return optAttrMapper.selectAttrByOptPrimaryKey(oid);
 	}
 	
-	public Opt selectWithAttrAndProjectByPrimaryKey(Long id) {
+	public Opt selectWithAttrProjectByPrimaryKey(Long id) {
 		Opt opt = super.selectByPrimaryKey(id);
 		if (opt != null) {
 			opt.setAttrs(getAttrsWithDict(id));
