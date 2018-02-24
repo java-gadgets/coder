@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.bean.Opt;
-import org.pplm.gadgets.coder.bean.OptExample;
+import org.pplm.gadgets.coder.bean.base.OptExample;
 import org.pplm.gadgets.coder.service.OptService;
 import org.pplm.gadgets.coder.utils.ResHelper;
 import org.springframework.beans.factory.annotation.Autowired;

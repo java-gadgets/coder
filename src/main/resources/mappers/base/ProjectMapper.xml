@@ -75,7 +75,7 @@
     id, delete_flag, name, code, custom, remark, creator_id, create_date, updator_id, 
     update_date
   </sql>
-  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.ProjectExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.ProjectExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -99,7 +99,7 @@
     delete from project
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.ProjectExample">
+  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.base.ProjectExample">
     delete from project
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -182,7 +182,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.ProjectExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.base.ProjectExample" resultType="java.lang.Long">
     select count(*) from project
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

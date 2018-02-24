@@ -31,6 +31,8 @@
 		<result column="precise" jdbcType="INTEGER" property="precise" />
 		<result column="required" jdbcType="INTEGER" property="required" />
 		<result column="default_value" jdbcType="VARCHAR" property="defaultValue" />
+		<result column="db_flag" jdbcType="INTEGER" property="dbFlag" />
+		<result column="db_idx_flag" jdbcType="INTEGER" property="dbIdxFlag" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="creator_id" jdbcType="BIGINT" property="creatorId" />
 		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -47,7 +49,8 @@
 	<sql id="Attr_Column_List">
 		a.id, a.delete_flag, a.fid, a.did, a.name, a.code, a.type,
 		a.datatype, a.length, a.precise, required,
-		a.default_value, a.remark, a.creator_id,
+		a.default_value, a.remark,
+		a.creator_id,
 		a.create_date, a.updator_id, a.update_date
 	</sql>
 	<select id="selectOptByAttrPrimaryKey" resultMap="OptResultMap">

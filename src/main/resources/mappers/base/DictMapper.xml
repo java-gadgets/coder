@@ -73,7 +73,7 @@
   <sql id="Base_Column_List">
     id, delete_flag, pid, name, remark, creator_id, create_date, updator_id, update_date
   </sql>
-  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.DictExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.DictExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -97,7 +97,7 @@
     delete from dict
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.DictExample">
+  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.base.DictExample">
     delete from dict
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -174,7 +174,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.DictExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.base.DictExample" resultType="java.lang.Long">
     select count(*) from dict
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

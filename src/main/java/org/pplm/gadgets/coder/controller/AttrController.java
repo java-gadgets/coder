@@ -3,7 +3,7 @@ package org.pplm.gadgets.coder.controller;
 import java.util.List;
 import java.util.Map;
 
-import org.pplm.gadgets.coder.bean.AttrExample;
+import org.pplm.gadgets.coder.bean.base.AttrExample;
 import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.service.AttrService;
 import org.pplm.gadgets.coder.utils.ResHelper;

@@ -10,7 +10,7 @@ import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.bean.Func;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.Project;
-import org.pplm.gadgets.coder.bean.Record;
+import org.pplm.gadgets.coder.bean.base.Record;
 import org.pplm.gadgets.coder.service.DictService;
 import org.pplm.gadgets.coder.service.FuncService;
 import org.pplm.gadgets.coder.service.OptService;
@@ -52,6 +52,9 @@ public class GeneratorController {
 			@PathVariable(name = "type", required = true) String type,
 			@PathVariable(name = "fid", required = true) Long fid) throws IOException, TemplateException {
 		Func func = funcService.selectWithProjectOptsAttrsByPrimaryKey(fid);
+		if ("database".equals(framework)) {
+			return ResHelper.success(genCode(func, "database/" + type + "/table.ftl"));
+		}
 		return ResHelper.success(genCode(func, framework + "/" + type + ".ftl"));
 	}
 
@@ -64,10 +67,10 @@ public class GeneratorController {
 	}
 
 	@PostMapping(path = "/project/database/{type}/{pid}")
-	public Map<String, Object> onPostGenDatabase(@PathVariable(name = "type", required = true) String type,
+	public Map<String, Object> onPostGenSchema(@PathVariable(name = "type", required = true) String type,
 			@PathVariable(name = "pid", required = true) Long pid) throws IOException, TemplateException {
 		Project project = projectService.selectWithFuncsByPrimaryKey(pid);
-		return ResHelper.success(genCode(project, "database/" + type + ".ftl"));
+		return ResHelper.success(genCode(project, "database/" + type + "/schema.ftl"));
 	}
 
 	/*

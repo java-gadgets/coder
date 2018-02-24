@@ -78,7 +78,7 @@
     id, delete_flag, pid, name, code, rela_attr, permission_tag, remark, sov, creator_id, 
     create_date, updator_id, update_date
   </sql>
-  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.FuncExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.FuncExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -102,7 +102,7 @@
     delete from func
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.FuncExample">
+  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.base.FuncExample">
     delete from func
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -205,7 +205,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.FuncExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.base.FuncExample" resultType="java.lang.Long">
     select count(*) from func
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

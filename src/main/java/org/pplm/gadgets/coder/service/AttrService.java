@@ -3,11 +3,11 @@ package org.pplm.gadgets.coder.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.pplm.gadgets.coder.bean.AttrExample;
+import org.pplm.gadgets.coder.bean.base.AttrExample;
 import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptAttr;
-import org.pplm.gadgets.coder.bean.OptAttrExample;
+import org.pplm.gadgets.coder.bean.base.OptAttrExample;
 import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.mapper.AttrMapper;
 import org.pplm.gadgets.coder.mapper.OptAttrMapper;

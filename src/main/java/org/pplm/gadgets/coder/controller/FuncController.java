@@ -2,8 +2,8 @@ package org.pplm.gadgets.coder.controller;
 
 import java.util.Map;
 
-import org.pplm.gadgets.coder.bean.FuncExample;
-import org.pplm.gadgets.coder.bean.AttrExample;
+import org.pplm.gadgets.coder.bean.base.FuncExample;
+import org.pplm.gadgets.coder.bean.base.AttrExample;
 import org.pplm.gadgets.coder.bean.Func;
 import org.pplm.gadgets.coder.service.AttrService;
 import org.pplm.gadgets.coder.service.FuncService;

@@ -1,8 +1,8 @@
 package org.pplm.gadgets.coder.service;
 
-import org.pplm.gadgets.coder.bean.DictExample;
+import org.pplm.gadgets.coder.bean.base.DictExample;
 import org.pplm.gadgets.coder.bean.DictItem;
-import org.pplm.gadgets.coder.bean.DictItemExample;
+import org.pplm.gadgets.coder.bean.base.DictItemExample;
 import org.pplm.gadgets.coder.mapper.DictItemMapper;
 import org.pplm.gadgets.coder.mapper.DictMapper;
 

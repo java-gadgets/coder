@@ -2,7 +2,7 @@ package org.pplm.gadgets.coder.controller;
 
 import java.util.Map;
 
-import org.pplm.gadgets.coder.bean.DictExample;
+import org.pplm.gadgets.coder.bean.base.DictExample;
 import org.pplm.gadgets.coder.bean.Func;
 import org.pplm.gadgets.coder.bean.Dict;
 import org.pplm.gadgets.coder.service.DictService;

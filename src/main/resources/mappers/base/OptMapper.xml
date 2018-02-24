@@ -80,7 +80,7 @@
     id, delete_flag, fid, name, code, mode, type, pre_url, exe_url, permission_tag, sov, 
     creator_id, create_date, updator_id, update_date
   </sql>
-  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.OptExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.OptExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -104,7 +104,7 @@
     delete from opt
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.OptExample">
+  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.base.OptExample">
     delete from opt
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -219,7 +219,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.OptExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.base.OptExample" resultType="java.lang.Long">
     select count(*) from opt
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

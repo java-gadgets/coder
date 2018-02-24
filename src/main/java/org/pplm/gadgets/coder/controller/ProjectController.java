@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.pplm.gadgets.coder.bean.ProjectExample;
+import org.pplm.gadgets.coder.bean.base.ProjectExample;
 import org.pplm.gadgets.coder.bean.Project;
 import org.pplm.gadgets.coder.service.ProjectService;
 import org.pplm.gadgets.coder.utils.ResHelper;

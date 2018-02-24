@@ -14,6 +14,8 @@
     <result column="precise" jdbcType="INTEGER" property="precise" />
     <result column="required" jdbcType="INTEGER" property="required" />
     <result column="default_value" jdbcType="VARCHAR" property="defaultValue" />
+    <result column="db_flag" jdbcType="INTEGER" property="dbFlag" />
+    <result column="db_idx_flag" jdbcType="INTEGER" property="dbIdxFlag" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
@@ -80,9 +82,10 @@
   </sql>
   <sql id="Base_Column_List">
     id, delete_flag, fid, did, name, code, type, datatype, length, precise, required, 
-    default_value, remark, creator_id, create_date, updator_id, update_date
+    default_value, db_flag, db_idx_flag, remark, creator_id, create_date, updator_id, 
+    update_date
   </sql>
-  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.AttrExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.AttrExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -106,7 +109,7 @@
     delete from attr
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.AttrExample">
+  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.base.AttrExample">
     delete from attr
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -116,15 +119,17 @@
     insert into attr (id, delete_flag, fid, 
       did, name, code, type, 
       datatype, length, precise, 
-      required, default_value, remark, 
-      creator_id, create_date, updator_id, 
-      update_date)
+      required, default_value, db_flag, 
+      db_idx_flag, remark, creator_id, 
+      create_date, updator_id, update_date
+      )
     values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER}, #{fid,jdbcType=BIGINT}, 
       #{did,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{datatype,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, #{precise,jdbcType=INTEGER}, 
-      #{required,jdbcType=INTEGER}, #{defaultValue,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{creatorId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, 
-      #{updateDate,jdbcType=TIMESTAMP})
+      #{required,jdbcType=INTEGER}, #{defaultValue,jdbcType=VARCHAR}, #{dbFlag,jdbcType=INTEGER}, 
+      #{dbIdxFlag,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.Attr">
     insert into attr
@@ -164,6 +169,12 @@
       </if>
       <if test="defaultValue != null">
         default_value,
+      </if>
+      <if test="dbFlag != null">
+        db_flag,
+      </if>
+      <if test="dbIdxFlag != null">
+        db_idx_flag,
       </if>
       <if test="remark != null">
         remark,
@@ -218,6 +229,12 @@
       <if test="defaultValue != null">
         #{defaultValue,jdbcType=VARCHAR},
       </if>
+      <if test="dbFlag != null">
+        #{dbFlag,jdbcType=INTEGER},
+      </if>
+      <if test="dbIdxFlag != null">
+        #{dbIdxFlag,jdbcType=INTEGER},
+      </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
@@ -235,7 +252,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.AttrExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.base.AttrExample" resultType="java.lang.Long">
     select count(*) from attr
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -280,6 +297,12 @@
       <if test="record.defaultValue != null">
         default_value = #{record.defaultValue,jdbcType=VARCHAR},
       </if>
+      <if test="record.dbFlag != null">
+        db_flag = #{record.dbFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.dbIdxFlag != null">
+        db_idx_flag = #{record.dbIdxFlag,jdbcType=INTEGER},
+      </if>
       <if test="record.remark != null">
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
@@ -314,6 +337,8 @@
       precise = #{record.precise,jdbcType=INTEGER},
       required = #{record.required,jdbcType=INTEGER},
       default_value = #{record.defaultValue,jdbcType=VARCHAR},
+      db_flag = #{record.dbFlag,jdbcType=INTEGER},
+      db_idx_flag = #{record.dbIdxFlag,jdbcType=INTEGER},
       remark = #{record.remark,jdbcType=VARCHAR},
       creator_id = #{record.creatorId,jdbcType=BIGINT},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
@@ -359,6 +384,12 @@
       <if test="defaultValue != null">
         default_value = #{defaultValue,jdbcType=VARCHAR},
       </if>
+      <if test="dbFlag != null">
+        db_flag = #{dbFlag,jdbcType=INTEGER},
+      </if>
+      <if test="dbIdxFlag != null">
+        db_idx_flag = #{dbIdxFlag,jdbcType=INTEGER},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -390,6 +421,8 @@
       precise = #{precise,jdbcType=INTEGER},
       required = #{required,jdbcType=INTEGER},
       default_value = #{defaultValue,jdbcType=VARCHAR},
+      db_flag = #{dbFlag,jdbcType=INTEGER},
+      db_idx_flag = #{dbIdxFlag,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       creator_id = #{creatorId,jdbcType=BIGINT},
       create_date = #{createDate,jdbcType=TIMESTAMP},

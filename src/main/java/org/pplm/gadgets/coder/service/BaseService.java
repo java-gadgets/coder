@@ -3,9 +3,9 @@ package org.pplm.gadgets.coder.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.pplm.gadgets.coder.bean.Example;
-import org.pplm.gadgets.coder.bean.Example.BaseCriteria;
-import org.pplm.gadgets.coder.bean.Record;
+import org.pplm.gadgets.coder.bean.base.Example;
+import org.pplm.gadgets.coder.bean.base.Example.BaseCriteria;
+import org.pplm.gadgets.coder.bean.base.Record;
 import org.pplm.gadgets.coder.mapper.BaseMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,13 +1,13 @@
 package org.pplm.gadgets.coder.service;
 
-import org.pplm.gadgets.coder.bean.OptExample;
+import org.pplm.gadgets.coder.bean.base.OptExample;
 
 import java.util.List;
 
 import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptAttr;
-import org.pplm.gadgets.coder.bean.OptAttrExample;
+import org.pplm.gadgets.coder.bean.base.OptAttrExample;
 import org.pplm.gadgets.coder.mapper.OptAttrMapper;
 import org.pplm.gadgets.coder.mapper.OptMapper;
 import org.springframework.beans.factory.annotation.Autowired;

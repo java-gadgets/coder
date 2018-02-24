@@ -1,13 +1,13 @@
 package org.pplm.gadgets.coder.service;
 
-import org.pplm.gadgets.coder.bean.FuncExample;
-import org.pplm.gadgets.coder.bean.OptExample;
+import org.pplm.gadgets.coder.bean.base.FuncExample;
+import org.pplm.gadgets.coder.bean.base.OptExample;
 import org.pplm.gadgets.coder.bean.Project;
 import org.pplm.gadgets.coder.mapper.FuncMapper;
 
 import java.util.List;
 
-import org.pplm.gadgets.coder.bean.AttrExample;
+import org.pplm.gadgets.coder.bean.base.AttrExample;
 import org.pplm.gadgets.coder.bean.Func;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

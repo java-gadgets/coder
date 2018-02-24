@@ -3,7 +3,7 @@ package org.pplm.gadgets.coder.service;
 import java.util.List;
 
 import org.pplm.gadgets.coder.bean.User;
-import org.pplm.gadgets.coder.bean.UserExample;
+import org.pplm.gadgets.coder.bean.base.UserExample;
 import org.pplm.gadgets.coder.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

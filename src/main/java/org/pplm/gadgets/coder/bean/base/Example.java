@@ -1,4 +1,4 @@
-package org.pplm.gadgets.coder.bean;
+package org.pplm.gadgets.coder.bean.base;
 
 import java.util.List;
 

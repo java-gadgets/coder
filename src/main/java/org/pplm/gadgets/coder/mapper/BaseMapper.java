@@ -3,8 +3,8 @@ package org.pplm.gadgets.coder.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.pplm.gadgets.coder.bean.Example;
-import org.pplm.gadgets.coder.bean.Record;
+import org.pplm.gadgets.coder.bean.base.Example;
+import org.pplm.gadgets.coder.bean.base.Record;
 
 public interface BaseMapper <R extends Record, E extends Example> {
 

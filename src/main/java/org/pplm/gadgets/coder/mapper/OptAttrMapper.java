@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.pplm.gadgets.coder.bean.Attr;
 import org.pplm.gadgets.coder.bean.Opt;
 import org.pplm.gadgets.coder.bean.OptAttr;
-import org.pplm.gadgets.coder.bean.OptAttrExample;
+import org.pplm.gadgets.coder.bean.base.OptAttrExample;
 
 @Mapper
 public interface OptAttrMapper extends BaseMapper<OptAttr, OptAttrExample> {

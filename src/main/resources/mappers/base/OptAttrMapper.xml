@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     id, aid, oid, sov
   </sql>
-  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.OptAttrExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.OptAttrExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -92,7 +92,7 @@
     delete from opt_attr
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.OptAttrExample">
+  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.base.OptAttrExample">
     delete from opt_attr
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.OptAttrExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.base.OptAttrExample" resultType="java.lang.Long">
     select count(*) from opt_attr
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

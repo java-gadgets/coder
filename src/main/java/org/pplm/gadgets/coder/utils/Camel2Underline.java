@@ -24,7 +24,7 @@ public class Camel2Underline implements TemplateMethodModelEx {
 		}
 		camel = String.valueOf(camel.charAt(0)).toUpperCase().concat(camel.substring(1));
 		StringBuffer stringBuffer = new StringBuffer();
-		Pattern pattern = Pattern.compile("[A-Z]([a-z\\d]+)?");
+		Pattern pattern = Pattern.compile("[A-Z]([a-z\\d_]+)?");
 		Matcher matcher = pattern.matcher(camel);
 		while (matcher.find()) {
 			String word = matcher.group();

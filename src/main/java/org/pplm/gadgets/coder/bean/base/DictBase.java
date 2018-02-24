@@ -1,23 +1,25 @@
-package org.pplm.gadgets.coder.bean;
+package org.pplm.gadgets.coder.bean.base;
 
 import java.util.Date;
 
-public abstract class Record {
-    private Long id;
+public class DictBase extends Record {
+	private Long id;
 
-    private Integer deleteFlag;
-    
-    private Long creatorId;
+	private Integer deleteFlag;
 
-    private Date createDate;
+	private Long pid;
 
-    private Long updatorId;
+	private String name;
 
-    private Date updateDate;
+	private String remark;
 
-	public Record() {
-		super();
-	}
+	private Long creatorId;
+
+	private Date createDate;
+
+	private Long updatorId;
+
+	private Date updateDate;
 
 	public Long getId() {
 		return id;
@@ -33,6 +35,30 @@ public abstract class Record {
 
 	public void setDeleteFlag(Integer deleteFlag) {
 		this.deleteFlag = deleteFlag;
+	}
+
+	public Long getPid() {
+		return pid;
+	}
+
+	public void setPid(Long pid) {
+		this.pid = pid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
 	}
 
 	public Long getCreatorId() {
@@ -66,5 +92,4 @@ public abstract class Record {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-
 }

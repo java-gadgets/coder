@@ -29,30 +29,39 @@
 
 		<javaClientGenerator targetPackage="org.pplm.gadgets.coder.mapper" targetProject="src/main/java" type="XMLMAPPER" />
 
-  		<table tableName="project" domainObjectName="Project">
+<!--
+  		<table tableName="project" domainObjectName="ProjectBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Project, ProjectExample&gt;" />
 		</table>
-		<table tableName="func" domainObjectName="Func">
+		
+		<table tableName="func" domainObjectName="FuncBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Func, FuncExample&gt;" />
 		</table>
-		<table tableName="opt" domainObjectName="Opt">
+		
+		<table tableName="opt" domainObjectName="OptBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Opt, OptExample&gt;" />
 		</table>
-		<table tableName="attr" domainObjectName="Attr">
+
+		<table tableName="attr" domainObjectName="AttrBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Attr, AttrExample&gt;" />
 		</table>
-        <table tableName="dict" domainObjectName="Dict">
+
+        <table tableName="dict" domainObjectName="DictBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Dict, DictExample&gt;" />
 		</table>
-		<table tableName="user" domainObjectName="User">
+		
+		<table tableName="user" domainObjectName="UserBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;User, UserExample&gt;" />
 		</table>
-		<table tableName="dict_item" domainObjectName="DictItem">
+		
+		<table tableName="dict_item" domainObjectName="DictItemBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;DictItem, DictItemExample&gt;" />
 		</table>
-		<table tableName="opt_attr" domainObjectName="OptAttr">
+		
+		<table tableName="opt_attr" domainObjectName="OptAttrBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;OptAttr, OptAttrExample&gt;" />
 		</table>
+-->
 	</context>
 
 </generatorConfiguration>
