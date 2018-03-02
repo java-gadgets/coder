@@ -635,6 +635,76 @@ public class OptExample extends Example {
             return (Criteria) this;
         }
 
+        public Criteria andPreMethodIsNull() {
+            addCriterion("pre_method is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodIsNotNull() {
+            addCriterion("pre_method is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodEqualTo(String value) {
+            addCriterion("pre_method =", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodNotEqualTo(String value) {
+            addCriterion("pre_method <>", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodGreaterThan(String value) {
+            addCriterion("pre_method >", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodGreaterThanOrEqualTo(String value) {
+            addCriterion("pre_method >=", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodLessThan(String value) {
+            addCriterion("pre_method <", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodLessThanOrEqualTo(String value) {
+            addCriterion("pre_method <=", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodLike(String value) {
+            addCriterion("pre_method like", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodNotLike(String value) {
+            addCriterion("pre_method not like", value, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodIn(List<String> values) {
+            addCriterion("pre_method in", values, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodNotIn(List<String> values) {
+            addCriterion("pre_method not in", values, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodBetween(String value1, String value2) {
+            addCriterion("pre_method between", value1, value2, "preMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andPreMethodNotBetween(String value1, String value2) {
+            addCriterion("pre_method not between", value1, value2, "preMethod");
+            return (Criteria) this;
+        }
+
         public Criteria andExeUrlIsNull() {
             addCriterion("exe_url is null");
             return (Criteria) this;
@@ -702,6 +772,76 @@ public class OptExample extends Example {
 
         public Criteria andExeUrlNotBetween(String value1, String value2) {
             addCriterion("exe_url not between", value1, value2, "exeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodIsNull() {
+            addCriterion("exe_method is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodIsNotNull() {
+            addCriterion("exe_method is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodEqualTo(String value) {
+            addCriterion("exe_method =", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodNotEqualTo(String value) {
+            addCriterion("exe_method <>", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodGreaterThan(String value) {
+            addCriterion("exe_method >", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodGreaterThanOrEqualTo(String value) {
+            addCriterion("exe_method >=", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodLessThan(String value) {
+            addCriterion("exe_method <", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodLessThanOrEqualTo(String value) {
+            addCriterion("exe_method <=", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodLike(String value) {
+            addCriterion("exe_method like", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodNotLike(String value) {
+            addCriterion("exe_method not like", value, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodIn(List<String> values) {
+            addCriterion("exe_method in", values, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodNotIn(List<String> values) {
+            addCriterion("exe_method not in", values, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodBetween(String value1, String value2) {
+            addCriterion("exe_method between", value1, value2, "exeMethod");
+            return (Criteria) this;
+        }
+
+        public Criteria andExeMethodNotBetween(String value1, String value2) {
+            addCriterion("exe_method not between", value1, value2, "exeMethod");
             return (Criteria) this;
         }
 

@@ -7,7 +7,7 @@ ${spaces!}                    <DatePicker v-model="optForm.${optName!}.${attr.co
 <#elseif attr.type! == "month">
 ${spaces!}                    <DatePicker v-model="optForm.${optName!}.${attr.code!}" format="yyyy-MM" type="date" placement="bottom-end" placeholder="请选择${attr.name!}"></DatePicker>
 <#elseif attr.type! == "select">
-${spaces!}                    <Select v-model="optForm.${optName!}.${attr.code!}" clearable placeholder="请选择${attr.name!}">
+${spaces!}                    <Select v-model="optForm.${optName!}.${attr.code!}"<#if attr.defaultValue! == "" > clearable</#if> placeholder="请选择${attr.name!}">
 ${spaces!}                        <Option v-for="item in dict.${attr.code!}" :value="item.value" :key="item.value">{{ item.label }}</Option>
 ${spaces!}                    </Select>
 <#elseif attr.type! == "radio">

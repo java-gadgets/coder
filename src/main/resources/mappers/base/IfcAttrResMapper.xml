@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.pplm.gadgets.coder.mapper.IfcAttrResMapper">
+  <resultMap id="BaseResultMap" type="org.pplm.gadgets.coder.bean.IfcAttrRes">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="iid" jdbcType="BIGINT" property="iid" />
+    <result column="aid" jdbcType="BIGINT" property="aid" />
+    <result column="sov" jdbcType="INTEGER" property="sov" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, iid, aid, sov
+  </sql>
+  <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.IfcAttrResExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ifc_attr_res
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ifc_attr_res
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ifc_attr_res
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.pplm.gadgets.coder.bean.base.IfcAttrResExample">
+    delete from ifc_attr_res
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.pplm.gadgets.coder.bean.base.IfcAttrResBase">
+    insert into ifc_attr_res (id, iid, aid, sov
+      )
+    values (#{id,jdbcType=BIGINT}, #{iid,jdbcType=BIGINT}, #{aid,jdbcType=BIGINT}, #{sov,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.base.IfcAttrResBase">
+    insert into ifc_attr_res
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="iid != null">
+        iid,
+      </if>
+      <if test="aid != null">
+        aid,
+      </if>
+      <if test="sov != null">
+        sov,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="iid != null">
+        #{iid,jdbcType=BIGINT},
+      </if>
+      <if test="aid != null">
+        #{aid,jdbcType=BIGINT},
+      </if>
+      <if test="sov != null">
+        #{sov,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.pplm.gadgets.coder.bean.base.IfcAttrResExample" resultType="java.lang.Long">
+    select count(*) from ifc_attr_res
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ifc_attr_res
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.iid != null">
+        iid = #{record.iid,jdbcType=BIGINT},
+      </if>
+      <if test="record.aid != null">
+        aid = #{record.aid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sov != null">
+        sov = #{record.sov,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ifc_attr_res
+    set id = #{record.id,jdbcType=BIGINT},
+      iid = #{record.iid,jdbcType=BIGINT},
+      aid = #{record.aid,jdbcType=BIGINT},
+      sov = #{record.sov,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.pplm.gadgets.coder.bean.base.IfcAttrResBase">
+    update ifc_attr_res
+    <set>
+      <if test="iid != null">
+        iid = #{iid,jdbcType=BIGINT},
+      </if>
+      <if test="aid != null">
+        aid = #{aid,jdbcType=BIGINT},
+      </if>
+      <if test="sov != null">
+        sov = #{sov,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.pplm.gadgets.coder.bean.base.IfcAttrResBase">
+    update ifc_attr_res
+    set iid = #{iid,jdbcType=BIGINT},
+      aid = #{aid,jdbcType=BIGINT},
+      sov = #{sov,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

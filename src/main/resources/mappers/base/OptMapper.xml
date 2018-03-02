@@ -10,7 +10,9 @@
     <result column="mode" jdbcType="VARCHAR" property="mode" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="pre_url" jdbcType="VARCHAR" property="preUrl" />
+    <result column="pre_method" jdbcType="VARCHAR" property="preMethod" />
     <result column="exe_url" jdbcType="VARCHAR" property="exeUrl" />
+    <result column="exe_method" jdbcType="VARCHAR" property="exeMethod" />
     <result column="permission_tag" jdbcType="VARCHAR" property="permissionTag" />
     <result column="sov" jdbcType="INTEGER" property="sov" />
     <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
@@ -77,8 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, delete_flag, fid, name, code, mode, type, pre_url, exe_url, permission_tag, sov, 
-    creator_id, create_date, updator_id, update_date
+    id, delete_flag, fid, name, code, mode, type, pre_url, pre_method, exe_url, exe_method, 
+    permission_tag, sov, creator_id, create_date, updator_id, update_date
   </sql>
   <select id="selectByExample" parameterType="org.pplm.gadgets.coder.bean.base.OptExample" resultMap="BaseResultMap">
     select
@@ -110,19 +112,21 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.pplm.gadgets.coder.bean.Opt">
+  <insert id="insert" parameterType="org.pplm.gadgets.coder.bean.base.OptBase">
     insert into opt (id, delete_flag, fid, 
       name, code, mode, type, 
-      pre_url, exe_url, permission_tag, 
-      sov, creator_id, create_date, 
-      updator_id, update_date)
+      pre_url, pre_method, exe_url, 
+      exe_method, permission_tag, sov, 
+      creator_id, create_date, updator_id, 
+      update_date)
     values (#{id,jdbcType=BIGINT}, #{deleteFlag,jdbcType=INTEGER}, #{fid,jdbcType=BIGINT}, 
       #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{mode,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{preUrl,jdbcType=VARCHAR}, #{exeUrl,jdbcType=VARCHAR}, #{permissionTag,jdbcType=VARCHAR}, 
-      #{sov,jdbcType=INTEGER}, #{creatorId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updatorId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP})
+      #{preUrl,jdbcType=VARCHAR}, #{preMethod,jdbcType=VARCHAR}, #{exeUrl,jdbcType=VARCHAR}, 
+      #{exeMethod,jdbcType=VARCHAR}, #{permissionTag,jdbcType=VARCHAR}, #{sov,jdbcType=INTEGER}, 
+      #{creatorId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{updatorId,jdbcType=BIGINT}, 
+      #{updateDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.Opt">
+  <insert id="insertSelective" parameterType="org.pplm.gadgets.coder.bean.base.OptBase">
     insert into opt
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -149,8 +153,14 @@
       <if test="preUrl != null">
         pre_url,
       </if>
+      <if test="preMethod != null">
+        pre_method,
+      </if>
       <if test="exeUrl != null">
         exe_url,
+      </if>
+      <if test="exeMethod != null">
+        exe_method,
       </if>
       <if test="permissionTag != null">
         permission_tag,
@@ -196,8 +206,14 @@
       <if test="preUrl != null">
         #{preUrl,jdbcType=VARCHAR},
       </if>
+      <if test="preMethod != null">
+        #{preMethod,jdbcType=VARCHAR},
+      </if>
       <if test="exeUrl != null">
         #{exeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="exeMethod != null">
+        #{exeMethod,jdbcType=VARCHAR},
       </if>
       <if test="permissionTag != null">
         #{permissionTag,jdbcType=VARCHAR},
@@ -252,8 +268,14 @@
       <if test="record.preUrl != null">
         pre_url = #{record.preUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.preMethod != null">
+        pre_method = #{record.preMethod,jdbcType=VARCHAR},
+      </if>
       <if test="record.exeUrl != null">
         exe_url = #{record.exeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exeMethod != null">
+        exe_method = #{record.exeMethod,jdbcType=VARCHAR},
       </if>
       <if test="record.permissionTag != null">
         permission_tag = #{record.permissionTag,jdbcType=VARCHAR},
@@ -288,7 +310,9 @@
       mode = #{record.mode,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
       pre_url = #{record.preUrl,jdbcType=VARCHAR},
+      pre_method = #{record.preMethod,jdbcType=VARCHAR},
       exe_url = #{record.exeUrl,jdbcType=VARCHAR},
+      exe_method = #{record.exeMethod,jdbcType=VARCHAR},
       permission_tag = #{record.permissionTag,jdbcType=VARCHAR},
       sov = #{record.sov,jdbcType=INTEGER},
       creator_id = #{record.creatorId,jdbcType=BIGINT},
@@ -299,7 +323,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.pplm.gadgets.coder.bean.Opt">
+  <update id="updateByPrimaryKeySelective" parameterType="org.pplm.gadgets.coder.bean.base.OptBase">
     update opt
     <set>
       <if test="deleteFlag != null">
@@ -323,8 +347,14 @@
       <if test="preUrl != null">
         pre_url = #{preUrl,jdbcType=VARCHAR},
       </if>
+      <if test="preMethod != null">
+        pre_method = #{preMethod,jdbcType=VARCHAR},
+      </if>
       <if test="exeUrl != null">
         exe_url = #{exeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="exeMethod != null">
+        exe_method = #{exeMethod,jdbcType=VARCHAR},
       </if>
       <if test="permissionTag != null">
         permission_tag = #{permissionTag,jdbcType=VARCHAR},
@@ -347,7 +377,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.pplm.gadgets.coder.bean.Opt">
+  <update id="updateByPrimaryKey" parameterType="org.pplm.gadgets.coder.bean.base.OptBase">
     update opt
     set delete_flag = #{deleteFlag,jdbcType=INTEGER},
       fid = #{fid,jdbcType=BIGINT},
@@ -356,7 +386,9 @@
       mode = #{mode,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       pre_url = #{preUrl,jdbcType=VARCHAR},
+      pre_method = #{preMethod,jdbcType=VARCHAR},
       exe_url = #{exeUrl,jdbcType=VARCHAR},
+      exe_method = #{exeMethod,jdbcType=VARCHAR},
       permission_tag = #{permissionTag,jdbcType=VARCHAR},
       sov = #{sov,jdbcType=INTEGER},
       creator_id = #{creatorId,jdbcType=BIGINT},

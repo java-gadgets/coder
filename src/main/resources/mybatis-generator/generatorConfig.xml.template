@@ -18,7 +18,7 @@
 			connectionURL="jdbc:mysql://localhost:3306/code_gen?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
 			userId="root" password="changeit" />
 
-		<javaModelGenerator targetPackage="org.pplm.gadgets.coder.bean"
+		<javaModelGenerator targetPackage="org.pplm.gadgets.coder.bean.base"
 			targetProject="src/main/java">
 			<property name="trimStrings" value="true" />
 			<property name="rootClass" value="org.pplm.gadgets.coder.bean.Record" />
@@ -28,7 +28,6 @@
 			targetProject="src/main/resources" />
 
 		<javaClientGenerator targetPackage="org.pplm.gadgets.coder.mapper" targetProject="src/main/java" type="XMLMAPPER" />
-
 <!--
   		<table tableName="project" domainObjectName="ProjectBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Project, ProjectExample&gt;" />
@@ -38,10 +37,6 @@
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Func, FuncExample&gt;" />
 		</table>
 		
-		<table tableName="opt" domainObjectName="OptBase">
-			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Opt, OptExample&gt;" />
-		</table>
-
 		<table tableName="attr" domainObjectName="AttrBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Attr, AttrExample&gt;" />
 		</table>
@@ -58,10 +53,20 @@
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;DictItem, DictItemExample&gt;" />
 		</table>
 		
+		<table tableName="opt" domainObjectName="OptBase">
+			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Opt, OptExample&gt;" />
+		</table>
+		
 		<table tableName="opt_attr" domainObjectName="OptAttrBase">
 			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;OptAttr, OptAttrExample&gt;" />
 		</table>
+		
+		<table tableName="ifc" domainObjectName="IfcBase">
+			<property name="rootInterface" value="org.pplm.gadgets.coder.mapper.BaseMapper&lt;Ifc, IfcExample&gt;" />
+		</table>
 -->
+
+	</context>
 	</context>
 
 </generatorConfiguration>

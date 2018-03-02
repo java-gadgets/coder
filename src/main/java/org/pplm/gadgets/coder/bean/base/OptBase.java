@@ -3,7 +3,7 @@ package org.pplm.gadgets.coder.bean.base;
 import java.util.Date;
 
 public class OptBase extends Record {
-	private Long id;
+    private Long id;
 
     private Integer deleteFlag;
 
@@ -19,7 +19,11 @@ public class OptBase extends Record {
 
     private String preUrl;
 
+    private String preMethod;
+
     private String exeUrl;
+
+    private String exeMethod;
 
     private String permissionTag;
 
@@ -97,12 +101,28 @@ public class OptBase extends Record {
         this.preUrl = preUrl == null ? null : preUrl.trim();
     }
 
+    public String getPreMethod() {
+        return preMethod;
+    }
+
+    public void setPreMethod(String preMethod) {
+        this.preMethod = preMethod == null ? null : preMethod.trim();
+    }
+
     public String getExeUrl() {
         return exeUrl;
     }
 
     public void setExeUrl(String exeUrl) {
         this.exeUrl = exeUrl == null ? null : exeUrl.trim();
+    }
+
+    public String getExeMethod() {
+        return exeMethod;
+    }
+
+    public void setExeMethod(String exeMethod) {
+        this.exeMethod = exeMethod == null ? null : exeMethod.trim();
     }
 
     public String getPermissionTag() {

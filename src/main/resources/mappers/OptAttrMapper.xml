@@ -42,16 +42,16 @@
 	<sql id="Opt_Column_List">
 		o.id, o.delete_flag, o.fid, o.name, o.code, o.mode, o.type,
 		o.pre_url,
-		o.exe_url, o.permission_tag, o.sov, o.creator_id,
-		o.create_date, o.updator_id,
-		o.update_date
+		o.pre_method, o.exe_url, o.exe_method,
+		o.permission_tag,
+		o.sov, o.creator_id, o.create_date, o.updator_id, o.update_date
 	</sql>
 	<sql id="Attr_Column_List">
-		a.id, a.delete_flag, a.fid, a.did, a.name, a.code, a.type,
-		a.datatype, a.length, a.precise, required,
-		a.default_value, a.remark,
-		a.creator_id,
-		a.create_date, a.updator_id, a.update_date
+		a.id, a.delete_flag, a.fid, a.did, a.name, a.code, a.type, a.datatype,
+		a.length, a.precise, a.required,
+		a.default_value, a.db_flag, a.db_idx_flag, a.remark, a.creator_id, a.create_date,
+		a.updator_id,
+		a.update_date
 	</sql>
 	<select id="selectOptByAttrPrimaryKey" resultMap="OptResultMap">
 		SELECT
